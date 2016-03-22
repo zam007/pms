@@ -6,6 +6,6 @@ class IndexController extends Controller {
          echo '你好，这是服务器的生产环境1';
      }
     public function index1(){
-         echo '你好，这是服务器的生产环境测试语句2';
+         echo '你好，这是服务器的生产环境测试语句22';
      }
 }

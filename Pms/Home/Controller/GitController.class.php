@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class IndexController extends Controller {
+class GitController extends Controller {
     public function git(){
         error_reporting ( E_ALL );
 		$dir = '/www/test1/';//该目录为git检出目录

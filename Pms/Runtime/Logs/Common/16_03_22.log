@@ -22,3 +22,9 @@ INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
 INFO: [ app_init ] --END-- [ RunTime:0.000447s ]
 ERR: 无法加载模块:Pms
 
+[ 2016-03-22T16:33:14+08:00 ] ::1 /push
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000428s ]
+ERR: 无法加载模块:Push
+

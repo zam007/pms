@@ -8,4 +8,7 @@ class IndexController extends Controller {
     public function index1(){
          echo '你好，这是服务器的生产环境测试语句22';
      }
+    public function hello($name='thinkphp'){
+        echo 'hello,'.$name.'!';
+    }
 }

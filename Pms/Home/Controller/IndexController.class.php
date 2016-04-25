@@ -6,6 +6,6 @@ class IndexController extends Controller {
          $this->display();
      }
      public function login(){
-         echo 1232;
+         echo 123221;
      }
 }

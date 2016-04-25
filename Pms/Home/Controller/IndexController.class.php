@@ -3,12 +3,9 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
-         echo '数据库设计阶段，敬请期待kaishi！';
+         $this->display();
      }
-    public function index1(){
-         echo '你好，这是服务器的生产环境测试语句22';
+     public function login(){
+         echo 1232;
      }
-    public function hello($name='thinkphp'){
-        echo 'hello,'.$name.'!';
-    }
 }

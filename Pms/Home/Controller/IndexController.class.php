@@ -40,7 +40,7 @@ class IndexController extends Controller {
 //             $this->display();
          }else{
              $update["login_err"] = $error+1;
-             echo $index->modify($info,$update);
+             $index->modify($info,$update);
              echo "用户名或密码错误";
          }
      }

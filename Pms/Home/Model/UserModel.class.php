@@ -6,7 +6,7 @@ class UserModel extends Model {
     
     public function getUser($user) {
         $User = M("User"); // 实例化User对象
-        $userInfo = $User->where($user)->find(); echo $User->getLastSql();
+        $userInfo = $User->where($user)->find();
         return $userInfo;
     }
     

@@ -5,6 +5,6 @@ return array(
 
 'URL_ROUTE_RULES' => array( //定义路由规则
     'new/:name'    => 'Home/Index/hello',
-	),
-
+),
+'PWD_KEY'=>'wuxingcaishang',//加密字符
 );

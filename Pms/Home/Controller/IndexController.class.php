@@ -8,9 +8,6 @@ class IndexController extends Controller {
          $this->display("login");
      }
      
-     public function loginhtml(){
-         $this->display("login");
-     }
      /**
       * 用户登录
       */

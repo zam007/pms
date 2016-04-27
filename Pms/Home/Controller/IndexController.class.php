@@ -13,20 +13,26 @@ class IndexController extends Controller {
       */
      public function login(){
          $index = D("user");
-         $info["user_name"] = I("userName");
-         $filed = "login_err";
+         $userNmae = I("userName");
+         $password = I("password");
+         if(empty($userNmae) or empty($password)){
+             echo "用户名或密码不能为空";exit;
+         }
+         
          //判断用户登录错误次数
+         $user["user_name"] = $userNmae;
+         $filed = "login_err";
          $error = $index->getUserField($user,$filed);
          if($error >= 3){
             $code = I("code");
             if(!check_verify($code)){
-               echo "验证码错误";
+               echo "验证码错误";exit;
             }else{
-                echo "验证码正确"; 
+                echo "验证码正确"; exit;
             }
          }
-         $user["user_name"] = I("userName");
-         $user["password"] = md5(I("password").C("PWD_KEY"));
+         
+         $user["password"] = md5($password.C("PWD_KEY"));
          $user["status"] = 1;//用户状态
          $user["flag"] = 1;
          $userInfo = $index->getUser($user);
@@ -36,12 +42,13 @@ class IndexController extends Controller {
              $where["user_id"] = $userInfo["user_id"];
              $index->modify($where,$update);//清空登录错误次数
              SESSION("userName",$userInfo["user_name"]);
-             echo "登录成功";
+             SESSION("userId",$userInfo["user_id"]);
+             echo "登录成功";exit;
 //             $this->display();
          }else{
              $update["login_err"] = $error+1;
              $index->modify($info,$update);
-             echo "用户名或密码错误";
+             echo "用户名或密码错误";exit;
          }
      }
     

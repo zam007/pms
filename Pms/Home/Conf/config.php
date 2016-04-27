@@ -1,9 +1,5 @@
 <?php
 return array(
-    //开启分组
-    'APP_GROUP_LIST' => 'Index,PmsFIQ',
-    //默认分组
-    'DEFAULT_GROUP' => 'Index',
     // 添加数据库配置信息
     'DB_TYPE'=>'mysql',// 数据库类型
     'DB_HOST'=>'112.74.73.22',// 服务器地址

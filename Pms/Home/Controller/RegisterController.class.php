@@ -2,10 +2,10 @@
 namespace Home\Controller;
 use Think\Controller;
 
-class IndexController extends Controller {
+class RegisterController extends Controller {
     
     public function index(){
-         $this->display("index");
+         $this->display("register");
      }
 
 }

@@ -8,7 +8,7 @@ return array(
 	'URL_MODEL'             =>  2,
 	//定义路由规则
 	'URL_ROUTE_RULES' => array(
-	    'new/:name'    => 'Home/Index/hello',
+	    'new/:name' => 'Home/Index/hello',
 	),
 	//加密字符
 	'PWD_KEY'=>'wuxingcaishang',

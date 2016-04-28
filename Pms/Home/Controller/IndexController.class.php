@@ -11,6 +11,7 @@ class IndexController extends Controller {
 	 *登陆
 	 */
 	public function login(){
+	     $this->display("login");
 	     $index = D("user");
 	     $info["user_name"] = I("userName");
 	     $filed = "login_err";
@@ -41,7 +42,6 @@ class IndexController extends Controller {
 	         $index->modify($info,$update);
 	         echo "用户名或密码错误";
 	     }
-	     $this->display("login");
 	 }
 	 /**
 	  * 图片验证码

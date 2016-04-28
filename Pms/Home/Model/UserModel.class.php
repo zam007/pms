@@ -3,19 +3,19 @@ namespace Home\Model;
 use Think\Model;
 class UserModel extends Model {
     protected $tablePrefix = '';
-    
+
     public function getUser($user) {
         $User = M("User"); // 实例化User对象
         $userInfo = $User->where($user)->find();
         return $userInfo;
     }
-    
+
     public function getUserField($user,$filed){
         $User = M("User"); // 实例化User对象
         $userInfo = $User->where($user)->getField($filed);
         return $userInfo;
     }
-    
+
     /**
      * 修改用户
      * @param array $where  修改条件

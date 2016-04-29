@@ -16,6 +16,7 @@ class IndexController extends Controller {
 	     $user["user_name"] = I("userName");
 	     $filed = "login_err";
 	     //判断用户登录错误次数
+	     $error = $index->getUserField($user,$filed);
 	     if($error >= 3){
 	        $code = I("code");
 	        if(!check_verify($code)){
@@ -24,7 +25,6 @@ class IndexController extends Controller {
 	            echo "验证码正确";
 	        }
 	     }
-	     $user["user_name"] = I("userName");
 	     $user["password"] = md5(I("password").C("PWD_KEY"));
 	     $user["status"] = 1;//用户状态
 	     $user["flag"] = 1;

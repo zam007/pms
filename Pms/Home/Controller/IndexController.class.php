@@ -13,7 +13,7 @@ class IndexController extends Controller {
 	public function login(){
 	     $this->display("login");
 	     $index = D("user");
-	     $info["user_name"] = I("userName");
+	     $user["user_name"] = I("userName");
 	     $filed = "login_err";
 	     //判断用户登录错误次数
 	     $error = $index->getUserField($user,$filed);

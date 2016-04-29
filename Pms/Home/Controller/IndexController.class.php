@@ -16,7 +16,6 @@ class IndexController extends Controller {
 	     $user["user_name"] = I("userName");
 	     $filed = "login_err";
 	     //判断用户登录错误次数
-	     $error = $index->getUserField($user,$filed);
 	     if($error >= 3){
 	        $code = I("code");
 	        if(!check_verify($code)){

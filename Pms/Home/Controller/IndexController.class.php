@@ -61,5 +61,12 @@ class IndexController extends Controller {
 	 */
 	public function register(){
 		$this->display("register");
+		$index = D("user");
+	    $user["userAccount"] = I("userAccount");
+	    $user["password"] = md5(I("password").C("PWD_KEY"));
+	    $user["regtime"] = date('Y-m-d H:i:s',time());
+	    $user["status"] = 1;//用户状态
+	    $user["flag"] = 1;
+	    $userInfo = $index->addUser($user);
 	}
 }

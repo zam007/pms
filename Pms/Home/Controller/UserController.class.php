@@ -30,7 +30,7 @@ class UserController extends BaseController {
     }
 
     /**
-     * 补全资料
+     * 补全资料1
      */
     public function completion(){
         

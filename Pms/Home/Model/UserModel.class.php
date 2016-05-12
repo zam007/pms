@@ -4,37 +4,33 @@ use Think\Model;
 class UserModel extends Model {
     protected $tablePrefix = '';
 
-    public function getUser($user) {
+    
+    public function getUser($user,$filed = '*') {
         $User = M("User"); // 实例化User对象
         $userInfo = $User->where($user)->find();
         return $userInfo;
     }
 
-    public function getUserField($user,$filed){
+    public function getUserField($userId,$filed = '*'){
         $User = M("User"); // 实例化User对象
-        $userInfo = $User->where($user)->getField($filed);
+        $userInfo = $User->where('user_id='.$userId)->getField($filed);
         return $userInfo;
     }
 
     /**
      * 修改用户
-     * @param array $where  修改条件
-     * @param array $update 修改结果
+     * @param type $userId 用户id
+     * @param array $update 修改参数
      * @return type
      */
-    public function modify(array $where,array $update){
+    public function modify( $userId,array $update){
         $User = M("User"); // 实例化User对象
         $update["update"] = date("Y-m-d H:i:s", time());
-        return $User->where($where)->save($update);
+        return $User->where('user_id='.$userid)->save($update);
     }
 
-    public function addUser($user){
+    public function addUser($data){
         $User = M("User");//实例化User对象
-        $data["user_id"] = $user["userAccount"];
-        $data["password"] = $user["password"];
-        $data["reg_time"] = $user["regtime"];
-        $data["status"] =  $user["status"];
-        $data["flag"] = $user["flag"];
         $User->add($data);
     }
 }

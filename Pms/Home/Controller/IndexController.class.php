@@ -25,6 +25,7 @@ class IndexController extends Controller {
                   echo "验证码错误";exit;
                }
             }
+            echo 11;exit;
             $user["password"] = md5(I("password").C("PWD_KEY"));
             $user["status"] = 1;//用户状态
             $user["flag"] = 1;

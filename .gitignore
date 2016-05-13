@@ -2,3 +2,5 @@
 git tool.sh
 /Pms/Runtime
 /.settings
+.buildpath
+.project

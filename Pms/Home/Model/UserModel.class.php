@@ -26,7 +26,7 @@ class UserModel extends Model {
     public function modify( $userId,array $update){
         $User = M("User"); // 实例化User对象
         $update["update"] = date("Y-m-d H:i:s", time());
-        return $User->where('user_id='.$userid)->save($update);
+        return $User->where('user_id='.$userId)->save($update);
     }
 
     public function addUser($data){

@@ -4,6 +4,9 @@ use Think\Controller;
 
 class UserController extends BaseController {
     
+    public function improveHtml(){
+        $this->display("improve");
+    }
     /**
      * 完善资料
      */
@@ -18,8 +21,7 @@ class UserController extends BaseController {
             }else{
                 echo "请输入正确的邮箱";exit;
             }
-        }
-        else if(!$user['mobile']){
+        }else if(!$user['mobile']){
             if(strlen(trim ($userName)) == 11){
                 $info['mobile'] = $userName;
             }else{
@@ -30,7 +32,7 @@ class UserController extends BaseController {
     }
 
     /**
-     * 补全资料1
+     * 补全资料
      */
     public function completion(){
         

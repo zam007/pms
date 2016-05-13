@@ -12,7 +12,6 @@ class IndexController extends Controller {
 	 */
 	public function login(){
             
-            $this->display("login");
             $index = D("user");
             $user['email'] = I("userName");
             $user['mobile'] = I("userName");
@@ -34,11 +33,28 @@ class IndexController extends Controller {
                 $update["login_err"] = 0;
                 $index->modify($userInfo["user_id"],$update);//清空登录错误次数
                 SESSION("user_id",$userInfo["user_id"]);
+                if(!$userInfo['mobile'] or !$userInfo['email']){
+                    if(!$userInfo['mobile']){
+                        $value = '手机号';
+                    }else{
+                        $value = '邮箱';
+                    }
+                    $this->assign('value',$value);
+                    $this->display('User/improve');exit;
+                }
+                if($userInfo['status'] == 0){
+                    echo '完善资料';exit;
+                }
+                if($userInfo['status'] == 9){
+                    echo "用户被冻结";exit;
+                }
                 echo "登录成功";exit;
        //             $this->display();
             }else{
-                $update["login_err"] = $error['login_err']+1;
-                $index->modify($error['user_id'],$update);
+                if($error){
+                    $update["login_err"] = $error['login_err']+1;
+                    $index->modify($error['user_id'],$update);
+                }
                 echo "用户名或密码错误";exit;
             }
         }
@@ -72,5 +88,6 @@ class IndexController extends Controller {
 	    $user["password"] = md5(I("password").C("PWD_KEY"));
 	    $user["regtime"] = date('Y-m-d H:i:s',time());
 	    $userInfo = $index->addUser($user);
+            $this->display("user/improve");
 	}
 }

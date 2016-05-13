@@ -15,7 +15,7 @@ class IndexController extends Controller {
             $index = D("user");
             $user['email'] = I("userName");
             $user['mobile'] = I("userName");
-            $user['_logic'] = 'OR';
+            $user['_logic'] = 'OR';echo 11;exit;
 //            $filed = "login_err";
             //判断用户登录错误次数
             $error = $index->getUser($user);

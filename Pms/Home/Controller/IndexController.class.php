@@ -11,40 +11,56 @@ class IndexController extends Controller {
 	 *登陆
 	 */
 	public function login(){
-	     $this->display("login");
-	     $index = D("user");
-	     $user["user_name"] = I("userName");
-	     $filed = "login_err";
-	     //判断用户登录错误次数
-	     $error = $index->getUserField($user,$filed);
-	     if($error >= 3){
-	        $code = I("code");
-	        if(!check_verify($code)){
-	           echo "验证码错误";
-	        }else{
-	            echo "验证码正确";
-	        }
-	     }
-	     $user["password"] = md5(I("password").C("PWD_KEY"));
-	     $user["status"] = 1;//用户状态
-	     $user["flag"] = 1;
-	     $userInfo = $index->getUser($user);
-	     if($userInfo){
-	         $update["login_err"] = 0;
-	         $where["user_id"] = $userInfo["user_id"];
-	         $index->modify($where,$update);//清空登录错误次数
-	         SESSION("userName",$userInfo["user_name"]);
-	         echo "登录成功";
-	//             $this->display();
-	     }else{
-	         $update["login_err"] = $error+1;
-	         $index->modify($info,$update);
-	         echo "用户名或密码错误";
-	     }
-	 }
-	 /**
-	  * 图片验证码
-	  */
+            $index = D("user");
+            $user['email'] = I("userName");
+            $user['mobile'] = I("userName");
+            $user['_logic'] = 'OR';
+//            $filed = "login_err";
+            //判断用户登录错误次数
+            $error = $index->getUser($user);
+            if($error['login_err'] >= 3){
+               $code = I("code");
+               if(!check_verify($code)){
+                  echo "验证码错误";exit;
+               }
+            }
+            echo 11;exit;
+            $user["password"] = md5(I("password").C("PWD_KEY"));
+            $user["status"] = 1;//用户状态
+            $user["flag"] = 1;
+            $userInfo = $index->getUser($user);
+            if($userInfo){
+                $update["login_err"] = 0;
+                $index->modify($userInfo["user_id"],$update);//清空登录错误次数
+                SESSION("user_id",$userInfo["user_id"]);
+                if(!$userInfo['mobile'] or !$userInfo['email']){
+                    if(!$userInfo['mobile']){
+                        $value = '手机号';
+                    }else{
+                        $value = '邮箱';
+                    }
+                    $this->assign('value',$value);
+                    $this->display('User/improve');exit;
+                }
+                if($userInfo['status'] == 0){
+                    echo '完善资料';exit;
+                }
+                if($userInfo['status'] == 9){
+                    echo "用户被冻结";exit;
+                }
+                echo "登录成功";exit;
+       //             $this->display();
+            }else{
+                if($error){
+                    $update["login_err"] = $error['login_err']+1;
+                    $index->modify($error['user_id'],$update);
+                }
+                echo "用户名或密码错误";exit;
+            }
+        }
+        /**
+         * 图片验证码
+         */
 	public function verify(){
 	    $Verify = new \Think\Verify();
 	    $Verify->fontSize = 18;
@@ -60,12 +76,23 @@ class IndexController extends Controller {
 	 * 注册
 	 */
 	public function register(){
+<<<<<<< HEAD
 		$index = D("user");
 	    $user["userAccount"] = I("userAccount");
+=======
+            $index = D("user");
+	    $userName = I("userName");
+            if(strstr(I("userName"), '@')){
+                $user['email'] = I("userName");
+            }else if(strlen(I("userName")) == 11 and !I("userName")){
+                $user['mobile'] = I("userName");
+            }else{
+                echo "请输入正确的手机或邮箱！";exit;
+            }
+>>>>>>> fb1006975f82efcfccfd2365e292c463a9e78ce3
 	    $user["password"] = md5(I("password").C("PWD_KEY"));
 	    $user["regtime"] = date('Y-m-d H:i:s',time());
-	    $user["status"] = 1;//用户状态
-	    $user["flag"] = 1;
 	    $userInfo = $index->addUser($user);
+            $this->display("user/improve");
 	}
 }

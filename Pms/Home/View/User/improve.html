@@ -1,9 +1,8 @@
 <html>
     <body>
-        <form action="/home/Index/login" method="post">
-        <p><span>用户名：</span><input type="text" name="userName"></p>
-        <p><span>密　码：</span><input type="password" name="password"></p>
-        <p><span>验证码：</span><img src="/home/Index/verify" title="点击刷新" id="logincodeimg" onclick="reloadcode('logincodeimg')"align="absmiddle"/></p>
+    <form action="/home/Index/login">
+        <p><span>{$value}：</span><input type="text" name="userName"></p>
+        <p><span>验证码：</span><img src="/home/Index/verify" title="点击发送" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/></p>
         <p><span>验证码：</span><input type="text" name="code"></p>
         <input type="submit" value="提交">
 		<script>

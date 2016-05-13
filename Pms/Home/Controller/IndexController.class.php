@@ -5,7 +5,7 @@ use Think\Controller;
 class IndexController extends Controller {
 
     public function index(){
-         $this->display("login");
+         $this->display("register");
      }
 	/**
 	 *登陆
@@ -60,7 +60,6 @@ class IndexController extends Controller {
 	 * 注册
 	 */
 	public function register(){
-		$this->display("register");
 		$index = D("user");
 	    $user["userAccount"] = I("userAccount");
 	    $user["password"] = md5(I("password").C("PWD_KEY"));

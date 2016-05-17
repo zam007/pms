@@ -11,7 +11,7 @@ class IndexController extends Controller {
 	 *登陆
 	 */
 	public function login(){
-            
+            echo 1232;exit;
             $index = D("user");
             if(!I("userName")){
             	echo 'empty';exit;

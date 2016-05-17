@@ -31,6 +31,6 @@ class UserModel extends Model {
 
     public function addUser($data){
         $User = M("User");//实例化User对象
-        $User->add($data);
+        return $User->add($data);
     }
 }

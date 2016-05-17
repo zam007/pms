@@ -5,26 +5,30 @@ use Think\Controller;
 class IndexController extends Controller {
 
     public function index(){
-         $this->display("register");
+         $this->display("login");
      }
 	/**
 	 *登陆
 	 */
 	public function login(){
+            
             $index = D("user");
-            $user['email'] = I("userName");
-            $user['mobile'] = I("userName");
-            $user['_logic'] = 'OR';echo 11;exit;
+            if(!I("userName")){
+            	echo 'empty';exit;
+            }
+            $info['email'] = I("userName");
+            $info['mobile'] = I("userName");
+            $info['_logic'] = 'OR';
 //            $filed = "login_err";
             //判断用户登录错误次数
-            $error = $index->getUser($user);
+            $error = $index->getUser($info);
             if($error['login_err'] >= 3){
                $code = I("code");
                if(!check_verify($code)){
                   echo "验证码错误";exit;
                }
             }
-            echo 11;exit;
+            $user['user_id'] = $error['user_id'];
             $user["password"] = md5(I("password").C("PWD_KEY"));
             $user["status"] = 1;//用户状态
             $user["flag"] = 1;
@@ -72,27 +76,29 @@ class IndexController extends Controller {
 	    //$Verify->expire = 600;
 	    $Verify->entry();
 	}
+	public function reg(){
+		$this->display("register");
+	}
 	/**
 	 * 注册
 	 */
 	public function register(){
-<<<<<<< HEAD
-		$index = D("user");
-	    $user["userAccount"] = I("userAccount");
-=======
-            $index = D("user");
+        $index = D("user");
 	    $userName = I("userName");
             if(strstr(I("userName"), '@')){
                 $user['email'] = I("userName");
-            }else if(strlen(I("userName")) == 11 and !I("userName")){
+                $value = '手机号';
+            }else if(strlen(I("userName")) == 11){
                 $user['mobile'] = I("userName");
+                $value = '邮箱';
             }else{
                 echo "请输入正确的手机或邮箱！";exit;
             }
->>>>>>> fb1006975f82efcfccfd2365e292c463a9e78ce3
 	    $user["password"] = md5(I("password").C("PWD_KEY"));
 	    $user["regtime"] = date('Y-m-d H:i:s',time());
 	    $userInfo = $index->addUser($user);
-            $this->display("user/improve");
+	    SESSION("user_id",$userInfo);
+	    $this->assign('value',$value);
+        $this->display("user/improve");
 	}
 }

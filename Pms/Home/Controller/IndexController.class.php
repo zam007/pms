@@ -16,10 +16,14 @@ class IndexController extends Controller {
             if(!I("userName")){
             	echo 'empty';exit;
             }
-            $info['email'] = I("userName");
-            $info['mobile'] = I("userName");
-            $info['_logic'] = 'OR';
-//            $filed = "login_err";
+            $userName = I("userName");
+            if(strstr(I("userName"), '@')){
+                $info['email'] = I("userName");
+            }else if(strlen(I("userName")) == 11){
+                $info['mobile'] = I("userName");
+            }else{
+                echo "请输入正确的手机或邮箱！";exit;
+            }
             //判断用户登录错误次数
             $error = $index->getUser($info);
             if($error['login_err'] >= 3){
@@ -30,7 +34,6 @@ class IndexController extends Controller {
             }
             $user['user_id'] = $error['user_id'];
             $user["password"] = md5(I("password").C("PWD_KEY"));
-            $user["status"] = 1;//用户状态
             $user["flag"] = 1;
             $userInfo = $index->getUser($user);
             if($userInfo){

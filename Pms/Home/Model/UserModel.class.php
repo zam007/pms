@@ -5,15 +5,15 @@ class UserModel extends Model {
     protected $tablePrefix = '';
 
     
-    public function getUser($user,$filed = '*') {
-        $User = M("User"); // 实例化User对象
-        $userInfo = $User->where($user)->find();
+    public function getUser($info,$filed = '*') {
+        $user = M("User"); // 实例化User对象
+        $userInfo = $user->where($info)->find();
         return $userInfo;
     }
 
     public function getUserField($userId,$filed = '*'){
-        $User = M("User"); // 实例化User对象
-        $userInfo = $User->where('user_id='.$userId)->getField($filed);
+        $user = M("User"); // 实例化User对象
+        $userInfo = $user->where('user_id='.$userId)->getField($filed);
         return $userInfo;
     }
 
@@ -24,13 +24,13 @@ class UserModel extends Model {
      * @return type
      */
     public function modify( $userId,array $update){
-        $User = M("User"); // 实例化User对象
+        $user = M("User"); // 实例化User对象
         $update["update"] = date("Y-m-d H:i:s", time());
-        return $User->where('user_id='.$userId)->save($update);
+        return $user->where('user_id='.$userId)->save($update);
     }
 
     public function addUser($data){
-        $User = M("User");//实例化User对象
-        return $User->add($data);
+        $user = M("User");//实例化User对象
+        return $user->add($data);
     }
 }

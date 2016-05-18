@@ -7,9 +7,6 @@ class IndexController extends Controller {
     public function index(){
          $this->display("login");
      }
-     public function improveHtml(){
-        $this->display("improve");
-    }
 	/**
 	 *登陆
 	 */
@@ -90,7 +87,12 @@ class IndexController extends Controller {
 	 */
 	public function register(){
         $index = D("user");
-	    $userName = I("userName");
+        if (!$User->create()){
+                 // 如果创建失败 表示验证没有通过 输出错误提示信息
+            exit($User->getError());
+            }else{
+                // 验证通过 可以进行其他数据操作
+            $userName = I("userName");
             if(strstr(I("userName"), '@')){
                 $user['email'] = I("userName");
                 $value = '手机号';
@@ -100,11 +102,12 @@ class IndexController extends Controller {
             }else{
                 echo "请输入正确的手机或邮箱！";exit;
             }
-	    $user["password"] = md5(I("password").C("PWD_KEY"));
-	    $user["regtime"] = date('Y-m-d H:i:s',time());
-	    $userInfo = $index->addUser($user);
-	    SESSION("user_id",$userInfo);
-	    $this->assign('value',$value);
+        $user["password"] = md5(I("password").C("PWD_KEY"));
+        $user["regtime"] = date('Y-m-d H:i:s',time());
+        $userInfo = $index->addUser($user);
+        SESSION("user_id",$userInfo);
+        $this->assign('value',$value);
         $this->display("user/improve");
-	}
+    }
+}
 }

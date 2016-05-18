@@ -7,6 +7,9 @@ class IndexController extends Controller {
     public function index(){
          $this->display("login");
      }
+     public function improveHtml(){
+        $this->display("improve");
+    }
 	/**
 	 *登陆
 	 */

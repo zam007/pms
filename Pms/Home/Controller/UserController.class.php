@@ -3,7 +3,6 @@ namespace Home\Controller;
 use Think\Controller;
 
 class UserController extends BaseController {
-    
     public function improveHtml(){
         $this->display("improve");
     }

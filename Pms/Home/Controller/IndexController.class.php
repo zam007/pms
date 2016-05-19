@@ -109,5 +109,16 @@ class IndexController extends Controller {
         $this->assign('value',$value);
         $this->display("user/improve");
     }
-}
+    
+    }
+    /**
+     * 发送邮件
+     */
+    public function send(){
+//        $email = I('email');
+        $email = '1435626505@qq.com';
+        $title = '标题';
+        $content = '内容';
+        SendMail($email,$title,$content);
+    }
 }

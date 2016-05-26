@@ -5,9 +5,12 @@ use Think\Controller;
 class IndexController extends Controller {
 
     public function index(){
-         $this->display("login");
+         $this->display("home");
      }
-
+    public function log(){
+        //重定向到指定的URL地址
+        $this->display("login");
+    }
 	/**
 	 *登陆
 	 */
@@ -81,6 +84,7 @@ class IndexController extends Controller {
     	    //$Verify->expire = 600;
     	    $Verify->entry();
 	}
+
 	public function reg(){
 		    $this->display("register");
 	}

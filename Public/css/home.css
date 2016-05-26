@@ -1,0 +1,16 @@
+/*home*/
+body{
+	font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+.header{background-color: #fff;}
+.wrap-header-content{height: 100px;overflow: hidden;}
+.link{height: 100px;line-height: 100px;}
+.link a{text-decoration: none;color: #333;}
+.link .hover{border: 1px solid #fff;}
+.link .hover:hover{border: 1px solid #19b7f0;border-radius: 15px;color: #19b7f0;}
+
+.content{min-height: 642px;padding: 100px 0;background: url('../img/bg-home.jpg') no-repeat;color: #fff;}
+.home-list{margin-top: 40px;}
+.home-list li{display: table;width: 616px;height: 105px;margin-bottom: 20px;background-color: rgba(255,255,255,.1);}
+.home-list li .home-list-img{display: table-cell;width: 42px;padding: 0 30px;vertical-align: middle;}
+.home-list li .home-list-option{display: table-cell;vertical-align: middle;background: url('../img/');}

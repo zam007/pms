@@ -1,0 +1,66 @@
+.wrap{background-color: #fff;}
+.bg-blue{background-color: #29b7f0;height: 368px;}
+.login-box{
+	position: absolute;
+	top: 110px;
+	left: 50%;
+	margin-left: -207px;
+	box-sizing: border-box;
+}
+.login-title{
+	padding: 10px 0;
+	color: #333;
+	font-size: 20px;
+	border-bottom: 1px solid #eee;
+}
+.login-header{
+	padding: 10px;
+	color: #333;
+}
+.login-form{
+	padding: 10px;
+	background-color: #fafdfd;
+	border: 1px solid #f2f2f2;
+	color: #989898;
+	font-size: 14px;
+}
+.form-box{
+	padding: 10px 0;
+}
+.form-box input[type='text'],
+.form-box input[type='password']{
+	width: 390px;
+	height: 50px;
+	line-height: 50px;
+	text-indent: 10px;
+	border: 1px solid #eaefee;
+	border-radius: 5px;
+	margin: 0 auto;
+}
+.form-box input[class*='account']{
+	background: url('../img/user.png') no-repeat 95% 50% #fff;
+}
+.form-box input[type='password']{
+	background: url('../img/pwd.png') no-repeat 95% 50% #fff;
+}
+.btn-login{
+	width: 390px;
+	margin: 0 auto;
+	background-color: #29b7f0;
+	font: inherit;
+	border: none;
+	outline: none;
+	padding: 10px 0;
+	color: #fff;
+	font-size: 20px;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+.form-box a,
+.login-help-link a{
+	text-decoration: none;
+	color: #2ab5ef;
+}
+.login-help-link {
+	padding: 0 0 30px;
+}

@@ -11,6 +11,10 @@ class IndexController extends Controller {
         $pwd = I("pwd");
         $code = I("code");
         
+        if(empty($memberName) or empty($pwd)){
+            echo "用户名或密码不能为空";exit;
+        }
+        
         if(empty($code) ){
             echo "验证码不能为空";exit;
         }
@@ -29,7 +33,7 @@ class IndexController extends Controller {
         if(empty($memberInfo)){
             echo "用户名货密码错误";exit;
         }else{
-            SESSION("member_id",$memberInfo["member_id"]);
+            SESSION("id",$memberInfo["id"]);
             $this->display("User/userList");
         }
     }

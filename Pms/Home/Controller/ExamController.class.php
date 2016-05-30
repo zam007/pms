@@ -17,8 +17,13 @@ class ExamController extends BaseController {
         $util = new Util();
         $age = $util->diffDate($brith, Date('Y-m-d',time()))['year'];
         
+        //获取基础难度
         $lavelMode = D("lavel");
-        $classfy = $lavelMode->getLavel();
+        $where['min_age'] = array('egt',$age);
+        $where['max_age'] = array('elt',$age);
+        $classfy = $lavelMode->getLavel($where);
+        
+        //生成答卷
          
     }
     

@@ -93,17 +93,38 @@ class IndexController extends Controller {
 	 * 注册
 	 */
 	public function register(){
+        echo "test";
+        echo I('account');
+        die;
+        if (condition) {
+            # code...
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
          //动态自动验证表单信息
-        $rules = array(
+        /*$rules = array(
              array('verify','require','验证码必须！'), //默认情况下用正则进行验证
              array('userName','','帐号名称已经存在！',0,'unique',1), // 在新增的时候验证name字段是否唯一
              //array('value',array(1,2,3),'值的范围不正确！',2,'in'), // 当值不为空的时候判断是否在一个范围内
              array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致
              array('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式
-        );
+        );*/
 
-        $index = D("user");
+        /*$index = D("user");
         if (!$index->validate($rules)->create()){
                  // 如果创建失败 表示验证没有通过 输出错误提示信息
             exit($this->ajaxReturn($index->getError()));
@@ -125,7 +146,7 @@ class IndexController extends Controller {
             SESSION("user_id",$userInfo);
             $this->assign('value',$value);
             $this->display("user/improve");
-    }
+    }*/
 
     }
     /**

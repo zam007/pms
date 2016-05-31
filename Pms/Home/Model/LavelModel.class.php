@@ -5,10 +5,9 @@ class LavelModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
     
-    public function getLavel($info,$filed = '*') {
-        $user = M("Lavel");
-        $userInfo = $user->where($info)->find();
-        return $userInfo;
+    public function getLavel($where,$filed = '*') {
+        $lavel = M("Lavel");
+        return $lavel->where($where)->find();
     }
 
 }

@@ -24,7 +24,7 @@ class ExamController extends BaseController {
         $classfy = $lavelMode->getLavel($where);
         
         //生成答卷
-         
+         $examMode = D("exam");
     }
     
 }

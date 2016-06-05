@@ -21,10 +21,20 @@ class ExamController extends BaseController {
         $lavelMode = D("lavel");
         $where['min_age'] = array('egt',$age);
         $where['max_age'] = array('elt',$age);
-        $classfy = $lavelMode->getLavel($where);
+        $filed = 'leavel_id';
+        $leavel = $lavelMode->getLavel($where);
         
-        //生成答卷
+        //生成答卷,开始答题
          $examMode = D("exam");
+         if($examMode->addSheet($leavel,$userId)){
+         	
+         }
+    }
+    
+    //生成试题
+    public function answersController(){
+    	$userId = $this->userId;
+    	$exam = M();
     }
     
 }

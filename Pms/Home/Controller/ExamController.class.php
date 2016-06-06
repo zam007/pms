@@ -27,7 +27,7 @@ class ExamController extends BaseController {
         //生成答卷,开始答题
          $examMode = D("exam");
          if($examMode->addSheet($leavel,$userId)){
-         	
+         	answersController();
          }
     }
     

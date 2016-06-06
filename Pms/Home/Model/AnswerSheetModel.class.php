@@ -4,8 +4,8 @@ use Think\Model;
 class ClassifySheetModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
-    //生成答卷类型
-    public function generateClassifySheet($leavel,$userId){
+	//生成试题
+    public function generateClassifySheet($classify,$userId){
     	//查询用户试卷
     	$answerSheet = M("answer_sheet");
     	$answer = $answerSheet->where('is_over=0 and user_id='.$userId)->find('sheet_id,answers,leavel_id');

@@ -4,7 +4,9 @@ use Think\Model;
 class ExamModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
-    //生成试卷
+    /**
+     * 生成试卷
+     */
     public function addSheet($leavel,$userId){
     	$sheet = M("answer_sheet");
     	$sheet->startTrans();
@@ -18,12 +20,14 @@ class ExamModel extends Model {
     		$sheet->rollback();
     		return false;
     	}
+    	//查询问题分类
     	$classify = M("classify");
     	$classification = $classify->where('lavel=2 and flag=1')->find('classify_id');
     	if(!$classification){
     		$sheet->rollback();
     		return false;
     	}
+    	//添加分类试卷
     	$classifySheet = M("classify_sheet");
     	foreach($classification as $res){
     		$info = array(
@@ -36,6 +40,7 @@ class ExamModel extends Model {
     			return false;
     		}
     	}
+    	//修改用户状态
     	$user = M("user");
     	if($user->where('user_id='.$userId)->setField('answer',1)){
     		$sheet->rollback();

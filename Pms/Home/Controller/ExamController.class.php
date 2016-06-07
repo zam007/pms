@@ -5,6 +5,12 @@ use Util\Util;
 
 class ExamController extends BaseController {
 	
+	public function __construct(){
+		parent::__construct();
+		$userId = $this->userId;
+		$user = D('user');
+		$status = $user->getUserField($userId,'answer');
+	}
 	/**
 	 * 测试
 	 */
@@ -34,7 +40,7 @@ class ExamController extends BaseController {
     //生成试题
     public function answersController(){
     	$userId = $this->userId;
-    	$exam = M();
+    	$exam = M('ClassifySheet');
     }
     
 }

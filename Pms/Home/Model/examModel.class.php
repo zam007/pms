@@ -7,12 +7,14 @@ class ExamModel extends Model {
     /**
      * 生成试卷
      */
-    public function addSheet($leavel,$userId){
+    public function addSheet($leavelId,$userId){
     	$sheet = M("answer_sheet");
     	$sheet->startTrans();
     	$sheetInfo = array(
     		'user_id' => $userId,
-    		'leavel_id' => $leavel,
+    		'leavel_id' => $leavelId,
+    		'difficulty' => 3,
+    		'relative_difficulty' => 3,
     		'start_time' => date('Y-m-d H:i:s',time())
     	);
     	$sheet_id = $sheet->add($sheetInfo);

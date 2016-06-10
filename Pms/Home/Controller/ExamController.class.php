@@ -12,7 +12,7 @@ class ExamController extends BaseController {
 		$status = $user->getUserField($userId,'answer');
 	}
 	/**
-	 * 测试
+	 * 开始测试
 	 */
     public function userExamController(){
     	$userId = $this->userId;
@@ -33,14 +33,27 @@ class ExamController extends BaseController {
         //生成答卷,开始答题
          $examMode = D("exam");
          if($examMode->addSheet($leavel,$userId)){
-         	answersController();
+         	answersController($userId);
          }
     }
     
     //生成试题
-    public function answersController(){
-    	$userId = $this->userId;
-    	$exam = M('ClassifySheet');
+    public function answersController($userId){
+    	//试题分类
+    	$classifySheetMode = M('ClassifySheet');
+    	$classifySheet = $classifySheetMode->generateClassifySheet($userId);
+    	$questionHave = $classify['question'];
+    	
+    	
+    	//获取同类试题
+    	$questionMode = D('question');
+
+    	$where['leavel_id'] = array('eq',$classifySheet['leavel_id']);
+    	$where['difficult'] = array('eq',$classifySheet['difficulty']);
+    	
+    	$question = getQuestion($where);
+    	//array_diff()比较数组，返回差集（只比较键值）。
+    	
     }
     
 }

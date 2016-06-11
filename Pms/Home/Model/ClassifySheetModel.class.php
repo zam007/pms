@@ -25,4 +25,9 @@ class ClassifySheetModel extends Model {
     	return array_rand($classify);//随机数组
     }
 
+	public function getClassifySheet($info,$filed = '*') {
+        $user = M("classify_sheet"); // 实例化User对象
+        $userInfo = $user->where($info)->find($filed);
+        return $userInfo;
+    }
 }

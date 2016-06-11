@@ -5,7 +5,7 @@ class ClassifySheetModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
 	//生成试题
-    public function generateClassifySheet($classify,$userId){
+    public function generateAnswerSheet($classify,$userId){
     	//查询用户试卷
     	$answerSheet = M("answer_sheet");
     	$answer = $answerSheet->where('is_over=0 and user_id='.$userId)->find('sheet_id,answers,leavel_id');
@@ -25,4 +25,9 @@ class ClassifySheetModel extends Model {
     	return array_rand($classify);//随机数组
     }
 
+    public function getAnswerSheet($info,$filed = '*') {
+        $user = M("answer_sheet"); // 实例化User对象
+        $userInfo = $user->where($info)->find($filed);
+        return $userInfo;
+    }
 }

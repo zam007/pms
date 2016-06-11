@@ -7,7 +7,7 @@ class LavelModel extends Model {
     
     public function getLavel($where,$filed = '*') {
         $lavel = M("Lavel");
-        return $lavel->where($where)->find($filed);
+        return $lavel->filed($filed)->where($where)->find();
     }
 
 }

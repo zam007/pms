@@ -26,8 +26,12 @@ class ClassifySheetModel extends Model {
     }
 
 	public function getClassifySheet($info,$filed = '*') {
-        $user = M("classify_sheet"); // 实例化User对象
-        $userInfo = $user->where($info)->find($filed);
-        return $userInfo;
+        $info = M("classify_sheet"); 
+        return $info->filed($filed)->where($info)->find();
+    }
+    
+    public function modify( $classifySheetId,$update){
+        $info = M("classify_sheet"); 
+        return $info->where('class_sheet_id='.$classifySheetId)->save($update);
     }
 }

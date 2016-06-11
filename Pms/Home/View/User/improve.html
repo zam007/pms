@@ -1,21 +1,81 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>完善用户信息</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/login.css">
+    <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js">
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="bg-blue"></div>
+        <div class="login-box">
+            <div class="login-header">
+                <img class="inline-block" src="" alt="logo">
+                <div class="inline-block">
+                    <h1 class="fz-20 fw-500 fff">西南财经大学五行财商研究中心</h1>
+                    <h3 class="fz-14 fw-100 fff">财商测评系统（v1.0）</h3>
+                </div>
+            </div>
+            <div class="login-form">
+                <div class="login-title"><span>注册成功！为了您的账号安全，请设置密码</span></div>
+                <form id="reg2" class="pt20" method="post" action="{:U('User/improve')}">
+                    <div class="form-box">
+                        <input type="text" name="username" class="account text" placeholder="{$value}">
+                    </div>
+                    <div class="form-box">
+                        <input type="text" name="password" class="account text" placeholder="密码">
+                    </div>
+                   <div class="form-box">
+                        <input type="text" name="repassword" class="account text" placeholder="确认密码">
+                    </div>
+                    <div class="form-box">
+                        <input type="text" name="verify" placeholder="请输入{$value}验证码" style="width:200px;"> <a href="#">发送验证码</a>
+                    </div>
+                    <button onclick="submit()" class="btn-login">注册并登录</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" language="javascript">
+        /**
+        *提交注册用户表单
+        */
+        function submit(){
+                $('reg2').submit();
+    }
+</script>
+</html>
+<!-- <html>
+<head>
+    <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js"></script>
+</head>
     <body>
     <h2>完善资料</h2>
-    <form action="/home/Index/login">
+    <form id="improve" method="post" action="{:U('Index/login')}>
         <p><span>{$value}：</span><input type="text" name="userName"></p>
         <p><span>验证码：</span><img src="/home/Index/verify" title="点击发送" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/></p>
         <p><span>验证码：</span><input type="text" name="code"></p>
-        <input type="submit" value="提交">
+        <button onclick="submit()" class="btn-login">提交</button>
 		<script>
-		/**
-        *刷新验证码
-        */
-		function reloadcode(id)
-		{
-		 var yucodeurl = document.getElementById(id).src;
-		 document.getElementById(id).src = yucodeurl +'?'+ Math.random();
-		}
+    		/**
+            *刷新验证码
+            */
+    		function reloadcode(id)
+    		{
+    		 var yucodeurl = document.getElementById(id).src;
+    		 document.getElementById(id).src = yucodeurl +'?'+ Math.random();
+    		}
+            /**
+            *提交补充信息
+            */
+            function submit(){
+             $('improve').submit();
 		</script>
     </form>
     </body>
-</html>
+</html> -->

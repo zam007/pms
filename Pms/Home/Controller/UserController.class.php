@@ -9,31 +9,60 @@ class UserController extends BaseController {
     /**
      * 完善资料
      */
-    public function improve(){
-        $userModel = D("user");
-        $info['user_id'] = $this->userId;
-        $user = $userModel->getUserField($info);
-        $userName = I('userName');
-        if(!$user['email']){
-            if(strstr($userName, '@')){
-                $info['email'] = $userName;
-            }else{
-                echo "请输入正确的邮箱";exit;
+    public function improve($username = '',$password = '',$repassword = '',$verify = ''){
+        if (IS_POST) {
+
+            /* 检测验证码 */
+            // if(!check_verify($verify)){
+            //     $this->error('验证码输入错误！');
+            // }
+
+            /* 检测验用户名是手机号码或者邮箱 */
+            $index = D("user");
+            /**
+             * 检测之前输入的是邮箱还是手机号码
+             */
+            $userId = $this->userId;
+            $info = $index->getUserField($userId,'mobile,email');
+            /**
+             * 如果手机号存在，则存入Email，反之，存为mobile
+             */
+            if ($info['email']) {
+                if (strlen(I("username")) == 11) {
+                    $user['mobile'] = I("username");
+                } else {
+                    echo "请输入正确的手机号码！";exit;
+                }
+
+            } else if ($info['mobile']) {
+                if (strstr(I("username"), '@')) {
+                    $user['email'] = I("username");
+                } else {
+                    echo "请输入正确的邮箱！"; exit;
+                }
+
             }
-        }else if(!$user['mobile']){
-            if(strlen(trim ($userName)) == 11){
-                $info['mobile'] = $userName;
-            }else{
-                echo "请输入正确的手机号";exit;
+            $userInfo = $index->modify($userId,$user);
+            /**
+             * 密码设置
+             */
+            $rules = array(
+                 array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致
+                 array('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式
+            );
+            if (!$index->validate($rules)->create()) {
+                //密码检验不通过，输出错误信息
+                exit($this->ajaxReturn($index->getError()));
             }
+            $user["password"] = md5(I("password").C("PWD_KEY"));
+            $index->modify($userId,$user);
         }
-        $userModel->modify($info['user_id'],$user);
     }
 
     /**
      * 补全资料
      */
     public function completion(){
-        
+
     }
 }

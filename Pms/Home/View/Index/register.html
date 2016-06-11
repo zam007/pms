@@ -22,9 +22,9 @@
             </div>
             <div class="login-form">
                 <div class="login-title"><span>欢迎注册</span></div>
-                <form id="from1" class="pt20" method="post" action="{:U('Index/register')}">
+                <form id="reg1" class="pt20" method="post" action="{:U('Index/register')}">
                     <div class="form-box">
-                        <input type="text" name="account" class="account text" placeholder="请输入手机号/邮箱">
+                        <input type="text" name="username" class="account text" placeholder="请输入手机号/邮箱">
                     </div>
                     <div class="form-box">
                         <input type="text" name="verify" placeholder="请输入短信/邮箱验证码" style="width:200px;"> <a href="#">发送验证码</a>
@@ -40,8 +40,11 @@
     </div>
 </body>
 <script type="text/javascript" language="javascript">
-function submit(){
-		$('form1').submit();alert(1);
+        /**
+        *提交注册用户表单
+        */
+        function submit(){
+        		$('reg1').submit();
 	}
 </script>
 </html>

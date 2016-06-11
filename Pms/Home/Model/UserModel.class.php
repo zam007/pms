@@ -7,13 +7,13 @@ class UserModel extends Model {
     
     public function getUser($info,$filed = '*') {
         $user = M("User"); // 实例化User对象
-        $userInfo = $user->where($info)->find();
+        $userInfo = $user->field($filed)->where($info)->find();
         return $userInfo;
     }
 
     public function getUserField($userId,$filed = '*'){
         $user = M("User"); // 实例化User对象
-        $userInfo = $user->where('user_id='.$userId)->getField($filed);
+        $userInfo = $user->field($filed)->where('user_id='.$userId)->find();
         return $userInfo;
     }
 
@@ -23,10 +23,10 @@ class UserModel extends Model {
      * @param array $update 修改参数
      * @return type
      */
-    public function modify( $userId,array $update){
+    public function modify( $userId,$update){
         $user = M("User"); // 实例化User对象
-        $update["update"] = date("Y-m-d H:i:s", time());
-        return $user->where('user_id='.$userId)->save($update);
+        $update["update_time"] = date("Y-m-d H:i:s", time());
+        $user->where('user_id='.$userId)->save($update);
     }
 
     public function addUser($data){

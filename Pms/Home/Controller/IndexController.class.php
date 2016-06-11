@@ -16,7 +16,6 @@ class IndexController extends Controller {
 	 */
 	public function login($username = '',$password = '',$verify = ''){
         if (IS_POST) {
-
             $index = D("user");
             //判断用户名
             if(!I("username")){
@@ -25,7 +24,7 @@ class IndexController extends Controller {
             $userName = I("username");
             if(strstr(I("username"), '@')){
                 $info['email'] = I("username");
-            }else if(strlen(I("userName")) == 11){
+            }else if(strlen(I("username")) == 11){
                 $info['mobile'] = I("username");
             }else{
                 echo "请输入正确的手机或邮箱！";exit;

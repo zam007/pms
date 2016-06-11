@@ -16,10 +16,7 @@ class IndexController extends Controller {
 	 */
 	public function login($username = '',$password = '',$verify = ''){
         if (IS_POST) {
-            //判断验证码
-            if(!check_verify($verify)){
-                $this->error('验证码输入错误！');
-            }
+
             $index = D("user");
             //判断用户名
             if(!I("username")){
@@ -36,7 +33,7 @@ class IndexController extends Controller {
             //判断用户登录错误次数
             $error = $index->getUser($info);
             if($error['login_err'] >= 3){
-               $code = I("code");
+               $code = I("verify");
                if(!check_verify($code)){
                   echo "验证码错误";exit;
                }

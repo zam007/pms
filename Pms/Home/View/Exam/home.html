@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>五行财商研究中心</title>
+</head>
+<body>
+	<form id="reg1" class="pt20" method="post" action="{:U('Exam/answers')}">
+		<p><span>问题：</span>{$question.question}</p>
+		<div>
+			<foreach name="question.answer" item="item">
+		        <span><input type="radio" value="{$item.selected}">{$item.selected}、{$item.answer}</span>
+		    </foreach>
+			
+		</div>
+		<input type='submit' value="提交">
+	</form>
+</body>
+</html>

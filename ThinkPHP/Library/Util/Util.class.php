@@ -9,8 +9,10 @@ class Util {
 	 * 计算时间差，年月日
 	 */
     public function diffDate($date1,$date2){ 
-		$datestart= date('Y-m-d',strtotime($date1));
-		
+		$datestart= $date1;
+		$y = 0;
+		$m = 0;
+		$d = 0;
 		if(strtotime($datestart)>strtotime($date2)){ 
 			$tmp=$date2; 
 			$date2=$datestart; 

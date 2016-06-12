@@ -14,25 +14,22 @@ class ExamController extends BaseController {
 	/**
 	 * 开始测试
 	 */
-    public function userExamController(){
+    public function userExam(){
     	if($this->answer == 1){
     		$this->giveQuestion();
     	}
     	$userId = $this->userId;
     	$userModel = D("User");
-    	$user['user_id'] = $userId;
-        $brith = $userModel->getUserField($user,'brith')['brith'];
+        $user = $userModel->getUserField($userId,'birth');
+        $brith = $user['birth'];
         //计算年龄
-        $util = new Util();
-        $age = $util->diffDate($brith, Date('Y-m-d',time()))['year'];
-        
+        $age = Date('Y',time())-substr($brith,0,4);
         //获取基础难度
         $lavelMode = D("Lavel");
         $where['min_age'] = array('egt',$age);
         $where['max_age'] = array('elt',$age);
-        $filed = 'leavel_id';
-        $leavel = $lavelMode->getLavel($where);
-        
+        $filed = 'lavel_id';
+        $leavel = $lavelMode->getLavel($where,$filed);
         //生成答卷,开始答题
          $examMode = D("Exam");
          if($examMode->addSheet($leavel,$userId)){
@@ -97,7 +94,7 @@ class ExamController extends BaseController {
     }
     
     //答题
-    public function answersController(){
+    public function answers(){
     	$userId = $this->userId;
     	$question_id = I('session.question_id',0);
     	$answerSheetId = I('session.answer_sheet_id',0);

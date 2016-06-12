@@ -2,8 +2,8 @@
 namespace Home\Model;
 use Think\Model;
 class ExamModel extends Model {
-//    protected $tablePrefix = '';
-//    protected $patchValidate = true;
+    protected $tablePrefix = '';
+    protected $patchValidate = true;
     /**
      * 生成试卷
      */

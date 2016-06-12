@@ -54,14 +54,14 @@ class IndexController extends Controller {
                     $this->assign('value',$value);
                     $this->display('User/improve');exit;
                 }
-                if($userInfo['status'] == 0){
-                    echo '完善资料';exit;
+                if(!$userInfo['status']){
+                    $this->display("User/completion");exit;
                 }
                 if($userInfo['status'] == 9){
                     echo "用户被冻结";exit;
                 }
                 echo "登录成功";exit;
-       //             $this->display();
+       //           $this->display();
             }else{
                 if($error){
                     $update["login_err"] = $error['login_err']+1;

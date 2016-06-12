@@ -63,6 +63,15 @@ class UserController extends BaseController {
      * 补全资料
      */
     public function completion(){
-
+            $index = D("user");
+            $userId = $this->userId;
+            $userInfo = $index->modify($userId,$user);
+            $user["name"] = I("name");
+            $user["work_id"] = I("work_id");
+            $user["status"] = 1;
+            echo $user["work_id"];
+            echo $user["name"];
+            $user["update_time"] = date('Y-m-d H:i:s',time());
+            $index->modify($userId,$user);
     }
 }

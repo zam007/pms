@@ -26,13 +26,13 @@ class ExamController extends BaseController {
         $age = Date('Y',time())-substr($brith,0,4);
         //获取基础难度
         $lavelMode = D("Lavel");
-        $where['min_age'] = array('egt',$age);
-        $where['max_age'] = array('elt',$age);
-        $filed = 'lavel_id';
-        $leavel = $lavelMode->getLavel($where,$filed);
+        $where['min_age'] = array('elt',$age);
+        $where['max_age'] = array('egt',$age);
+        $field = 'lavel_id';
+        $lavel = $lavelMode->getLavel($where,$field);
         //生成答卷,开始答题
-         $examMode = D("Exam");
-         if($examMode->addSheet($leavel,$userId)){
+         $examMode = D("exam");
+         if($examMode->addSheet($lavel['lavel_id'],$userId)){
          	$this->giveQuestion();
          }else{
          	return false;
@@ -44,24 +44,24 @@ class ExamController extends BaseController {
     	$userId = $this->userId;
     	//试题分类
     	$classifySheetMode = D('ClassifySheet');
-    	$classifySheet = $classifySheetMode->generateClassifySheet($userId);
-    	$leavel = $classifySheet['leavel_id'];
+    	$classifySheet = $classifySheetMode->generateClassifySheet($userId);print_r($classifySheet);exit;
+    	$lavel = $classifySheet['lavel_id'];
     	$difficulty = $classifySheet['difficulty'];
     	$questionHave = $classify['question'];
     	//获取同类试题
     	$questionMode = D('Question');
     	
-    	$where['leavel_id'] = array('eq',$leavel);
+    	$where['leavel_id'] = array('eq',$lavel);
     	$where['difficult'] = array('eq',$difficulty);
-    	
+    	$question = $questionMode->getQuestion($where);
     	//判断是否答过类X型题目题
-    	if(!$question){
+    	if(!$questionHave){
 	    	foreach($questionHave as $res){
 	    		if($res['leavel_id'] == $leavel and $res['difficulty'] == $difficulty){
 	    			$questionIds =$res['question_id'].',';
 	    		}
 	    	}
-	    	$where['question_id'] = array('not in',substr($questionIds,0,-1));
+	    	$where['question_id'] = array('not in',"'".substr($questionIds,0,-1)."'");
 	    	$question = $questionMode->getQuestion($where);
 	    	$randQue = array_rand($question);
 	    	$info[] = array(
@@ -80,14 +80,14 @@ class ExamController extends BaseController {
     			'question_id'=>$randQue['question_id'],
     			'level_id'=>$randQue['level_id'],
     			'difficulty'=>$randQue['difficulty'],
-    			'difficulty'=>$randQue['difficulty'],
     			'score'=>0,
     			'inclination_id'=>''
     		);
     		
     	}
     	$queNow['is_answer'] = 1;
-    	$classifySheetMode->modify($classifySheet['classify_id'],$queNow);
+    	$classifySheetMode->modify($classifySheet['classify_sheet_id'],$queNow);
+    	print_r($randQue);
         $this->assign('question',$randQue);
         $this->redirect('exam/exam_question');
     	

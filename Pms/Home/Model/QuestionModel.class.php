@@ -7,7 +7,7 @@ class QuestionModel extends Model {
     
     public function getQuestion($where,$filed = '*') {
         $question = M("question");
-        return $question->filed($filed)->where($where)->find();
+        return $question->field($filed)->where($where)->find();
     }
 
 }

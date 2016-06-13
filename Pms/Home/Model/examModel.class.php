@@ -3,28 +3,28 @@ namespace Home\Model;
 use Think\Model;
 class ExamModel extends Model {
     protected $tablePrefix = '';
-    protected $patchValidate = true;
+    protected $autoCheckFields =false; 
     /**
      * 生成试卷
      */
-    public function addSheet($leavelId,$userId){
+    public function addSheet($lavelId,$userId){
     	$sheet = M("answer_sheet");
     	$sheet->startTrans();
     	$sheetInfo = array(
     		'user_id' => $userId,
-    		'leavel_id' => $leavelId,
+    		'lavel_id' => $lavelId,
     		'difficulty' => 3,
     		'relative_difficulty' => 3,
     		'start_time' => date('Y-m-d H:i:s',time())
     	);
-    	$sheet_id = $sheet->add($sheetInfo);
-    	if(!$id){
+    	$sheetId = $sheet->add($sheetInfo);
+    	if(!$sheetId){
     		$sheet->rollback();
     		return false;
     	}
     	//查询问题分类
     	$classify = M("classify");
-    	$classification = $classify->where('lavel=2 and flag=1')->find('classify_id');
+    	$classification = $classify->field('classify_id')->where('lavel=2 and flag=1')->select();
     	if(!$classification){
     		$sheet->rollback();
     		return false;
@@ -33,8 +33,9 @@ class ExamModel extends Model {
     	$classifySheet = M("classify_sheet");
     	foreach($classification as $res){
     		$info = array(
-    			'sheet_id' => $sheet_id,
+    			'answer_sheet_id' => $sheetId,
 	    		'classify_id' => $res['classify_id'],
+    			'lavel_id' => $lavelId,
 	    		'difficulty' => 3
     		);
     		if(!$classifySheet->add($sheetInfo)){
@@ -44,10 +45,15 @@ class ExamModel extends Model {
     	}
     	//修改用户状态
     	$user = M("user");
-    	if($user->where('user_id='.$userId)->setField('answer',1)){
-    		$sheet->rollback();
+    	$userInfo = array(
+    		'answer'=>1,
+    		'update_time'=>date('Y-m-d H:i:s',time())
+    	);
+    	if(!$user->where('user_id='.$userId)->save($userInfo)){
+    		echo $user->getLastSql();$sheet->rollback();
     		return false;
     	}
+    	
     	$sheet->commit();
     	return true;
     }

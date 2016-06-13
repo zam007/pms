@@ -54,7 +54,7 @@ class IndexController extends Controller {
                     $this->assign('value',$value);
                     $this->display('User/improve');exit;
                 }
-                if(!$userInfo['status']){
+                if($userInfo['status'] == 0){
                     $this->display("User/completion");exit;
                 }
                 if($userInfo['status'] == 9){

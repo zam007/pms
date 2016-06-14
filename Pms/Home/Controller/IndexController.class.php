@@ -3,23 +3,22 @@ namespace Home\Controller;
 use Think\Controller;
 
 class IndexController extends Controller {
-
-    public function index(){
-         $this->display("home");
-     }
-    public function log(){
-        //重定向到指定的URL地址
-        $this->display("login");
+    public function reg(){
+            $this->display("register");
     }
+    public function log(){
+            $this->display("login");
+    }
+
 	/**
 	 *登陆
 	 */
-	public function login($username = '',$password = '',$verify = ''){
+	public function login(){
         if (IS_POST) {
             $index = D("user");
             //判断用户名
             if(!I("username")){
-                echo 'empty';exit;
+                $this->error('用户名不能为空','index');
             }
             $userName = I("username");
             if(strstr(I("username"), '@')){
@@ -27,14 +26,14 @@ class IndexController extends Controller {
             }else if(strlen(I("username")) == 11){
                 $info['mobile'] = I("username");
             }else{
-                echo "请输入正确的手机或邮箱！";exit;
+                $this->error('请输入正确的手机或邮箱！','index');
             }
             //判断用户登录错误次数
             $error = $index->getUser($info);
             if($error['login_err'] >= 3){
                $code = I("verify");
                if(!check_verify($code)){
-                  echo "验证码错误";exit;
+                  $this->error('验证码错误','index');
                }
             }
             $user['user_id'] = $error['user_id'];
@@ -45,29 +44,23 @@ class IndexController extends Controller {
                 $update["login_err"] = 0;
                 $index->modify($userInfo["user_id"],$update);//清空登录错误次数
                 SESSION("user_id",$userInfo["user_id"]);
-                if(!$userInfo['mobile'] or !$userInfo['email']){
-                    if(!$userInfo['mobile']){
-                        $value = '手机号';
-                    }else{
-                        $value = '邮箱';
-                    }
-                    $this->assign('value',$value);
-                    $this->display('User/improve');exit;
+                if($userInfo['name']){
+                    $userNmae = $userInfo['name'];
                 }
+                SESSION("user_name",$userNmae);
                 if($userInfo['status'] == 0){
                     $this->display("User/completion");exit;
                 }
                 if($userInfo['status'] == 9){
-                    echo "用户被冻结";exit;
+                  $this->error('用户被冻结','index');
                 }
-                echo "登录成功";exit;
-       //           $this->display();
+                 $this->success('登陆成功', 'index');
             }else{
                 if($error){
                     $update["login_err"] = $error['login_err']+1;
                     $index->modify($error['user_id'],$update);
                 }
-                echo "用户名或密码错误";exit;
+                $this->error('用户名或密码错误','index');
             }
         }
 
@@ -86,10 +79,6 @@ class IndexController extends Controller {
     	    $Verify->imageH = 50;
     	    //$Verify->expire = 600;
     	    $Verify->entry();
-	}
-
-	public function reg(){
-		    $this->display("register");
 	}
 
 	/**
@@ -165,5 +154,12 @@ class IndexController extends Controller {
             $title = '标题';
             $content = '内容';
             SendMail($email,$title,$content);
+    }
+    /**
+     * 用户退出
+     */
+    public function logout(){
+            SESSION("user_id",0);
+            $this->success('成功退出','index');
     }
 }

@@ -33,18 +33,19 @@ class ExamController extends BaseController {
         //生成答卷,开始答题
          $examMode = D("exam");
          if($examMode->addSheet($lavel['lavel_id'],$userId)){
-         	$this->giveQuestion();
+         	 $this->redirect('answerQuestion');
          }else{
          	return false;
          }
     }
     
     //生成试题
-    public function giveQuestion(){
+    public function answerQuestion(){
     	$userId = $this->userId;
     	//试题分类
     	$classifySheetMode = D('ClassifySheet');
-    	$classifySheet = $classifySheetMode->generateClassifySheet($userId);print_r($classifySheet);exit;
+    	$classifySheet = $classifySheetMode->generateClassifySheet($userId);
+    	
     	$lavel = $classifySheet['lavel_id'];
     	$difficulty = $classifySheet['difficulty'];
     	$questionHave = $classify['question'];
@@ -63,11 +64,10 @@ class ExamController extends BaseController {
 	    	}
 	    	$where['question_id'] = array('not in',"'".substr($questionIds,0,-1)."'");
 	    	$question = $questionMode->getQuestion($where);
-	    	$randQue = array_rand($question);
+	    	$randQue = $question[array_rand($question)];
 	    	$info[] = array(
     			'question_id'=>$randQue['question_id'],
     			'level_id'=>$randQue['level_id'],
-    			'difficulty'=>$randQue['difficulty'],
     			'difficulty'=>$randQue['difficulty'],
     			'score'=>0,
     			'inclination_id'=>''
@@ -75,7 +75,7 @@ class ExamController extends BaseController {
 	    	$queNow['question'] = array_merge($questionHave,$info);
     	}else{
     		$question = $questionMode->getQuestion($where);
-    		$randQue = array_rand($question);
+    		$randQue = $question[array_rand($question)];
     		$queNow['question'][] = array(
     			'question_id'=>$randQue['question_id'],
     			'level_id'=>$randQue['level_id'],
@@ -87,9 +87,12 @@ class ExamController extends BaseController {
     	}
     	$queNow['is_answer'] = 1;
     	$classifySheetMode->modify($classifySheet['classify_sheet_id'],$queNow);
-    	print_r($randQue);
+    	$answerMode = D('answer');
+    	$answerWhere['question_id'] =  array('eq',$randQue['question_id']);
+    	$answer = $answerMode->getAnswer($answerWhere);
         $this->assign('question',$randQue);
-        $this->redirect('exam/exam_question');
+        $this->assign('answer',$answer);
+        $this->display('exam/exam_question');
     	
     }
     

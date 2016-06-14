@@ -38,7 +38,7 @@ class ExamModel extends Model {
     			'lavel_id' => $lavelId,
 	    		'difficulty' => 3
     		);
-    		if(!$classifySheet->add($sheetInfo)){
+    		if(!$classifySheet->add($info)){
     			$sheet->rollback();
     			return false;
     		}
@@ -50,7 +50,7 @@ class ExamModel extends Model {
     		'update_time'=>date('Y-m-d H:i:s',time())
     	);
     	if(!$user->where('user_id='.$userId)->save($userInfo)){
-    		echo $user->getLastSql();$sheet->rollback();
+    		$sheet->rollback();
     		return false;
     	}
     	

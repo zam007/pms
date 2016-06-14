@@ -8,8 +8,8 @@
 	<form id="reg1" class="pt20" method="post" action="{:U('Exam/answers')}">
 		<p><span>问题：</span>{$question.question}</p>
 		<div>
-			<foreach name="question.answer" item="item">
-		        <span><input type="radio" value="{$item.selected}">{$item.selected}、{$item.answer}</span>
+			<foreach name="answer" item="vo">
+		        <span><input name="answer_question" type="radio" value="{$vo.selected}">{$vo.selected}、{$vo.answer}</span>
 		    </foreach>
 			
 		</div>

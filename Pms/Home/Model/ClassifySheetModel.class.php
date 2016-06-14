@@ -14,15 +14,16 @@ class ClassifySheetModel extends Model {
     	}
     	//查询用户分类试卷
     	$classifySheet = M('classify_sheet');
-    	$answerNum = $classifySheet->where('answer_sheet_id='.$answer['answer_sheet_id'])->count('answers');
+    	$answerNum = $classifySheet->where('answer_sheet_id='.$answer['answer_sheet_id'])->count();
     	$count = $classifySheet->count();
-    	if($sheet['answers']*$count <= $answerNum){
+    	if($answer['answers']*$count >= $answerNum){
     		return false;
     	}
     	$where['answer_sheet_id'] = array('eq',$answer['answer_sheet_id']);
     	$where['answers'] = array('lt',$count);
     	$classify = $classifySheet->field('classify_sheet_id,answer_sheet_id,answers,question,difficulty')->where($where)->select();
-    	return array_rand($classify);//随机数组
+    	
+    	return $classify[array_rand($classify)];//随机数组
     }
 
 	public function getClassifySheet($info,$filed = '*') {
@@ -32,6 +33,6 @@ class ClassifySheetModel extends Model {
     
     public function modify( $classifySheetId,$update){
         $info = M("classify_sheet"); 
-        return $info->where('class_sheet_id='.$classifySheetId)->save($update);
+        return $info->where('classify_sheet_id='.$classifySheetId)->save($update);
     }
 }

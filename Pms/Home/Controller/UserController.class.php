@@ -27,21 +27,21 @@ class UserController extends BaseController {
             /**
              * 如果手机号存在，则存入Email，反之，存为mobile
              */
-            if ($info['email']) {
-                if (strlen(I("username")) == 11) {
-                    $user['mobile'] = I("username");
-                } else {
-                    echo "请输入正确的手机号码！";exit;
-                }
+            // if ($info['email']) {
+            //     if (strlen(I("username")) == 11) {
+            //         $user['mobile'] = I("username");
+            //     } else {
+            //         echo "请输入正确的手机号码！";exit;
+            //     }
 
-            } else if ($info['mobile']) {
-                if (strstr(I("username"), '@')) {
-                    $user['email'] = I("username");
-                } else {
-                    echo "请输入正确的邮箱！"; exit;
-                }
+            // } else if ($info['mobile']) {
+            //     if (strstr(I("username"), '@')) {
+            //         $user['email'] = I("username");
+            //     } else {
+            //         echo "请输入正确的邮箱！"; exit;
+            //     }
 
-            }
+            // }
             $userInfo = $index->modify($userId,$user);
             /**
              * 密码设置
@@ -56,6 +56,7 @@ class UserController extends BaseController {
             }
             $user["password"] = md5(I("password").C("PWD_KEY"));
             $index->modify($userId,$user);
+            $this->display("User/completion");exit;
         }
     }
 
@@ -63,15 +64,27 @@ class UserController extends BaseController {
      * 补全资料
      */
     public function completion(){
+
             $index = D("user");
             $userId = $this->userId;
-            $userInfo = $index->modify($userId,$user);
             $user["name"] = I("name");
+            $user["sex"] = I("sex");
+            $user["birth"] = I("birth");
             $user["work_id"] = I("work_id");
+            $user["company_id"] = I("company_id");
+            $user["invite_id"] = I("invite_id");
+            $user["from_add"] = I("from_add");
+            $user["weixin"] = I("weixin");
+            $user["qq"] = I("qq");
             $user["status"] = 1;
-            echo $user["work_id"];
-            echo $user["name"];
             $user["update_time"] = date('Y-m-d H:i:s',time());
-            $index->modify($userId,$user);
+            if (!$index->modify($userId,$user)) {
+                $this->error('完善资料失败，请重新填写','../User/completion');
+            }
+            $name = 'name';
+            $userInfo = $index->getUserField($userId,$name);
+            SESSION("user_name",$userInfo['name']);
+            $this->assign('name',$userInfo['name']);
+            $this->display("Index/index");
     }
 }

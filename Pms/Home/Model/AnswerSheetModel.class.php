@@ -7,13 +7,13 @@ class ClassifySheetModel extends Model {
 	
 
     public function getAnswerSheet($info,$filed = '*') {
-        $user = M("answer_sheet"); 
-        $userInfo = $user->filed($filed)->where($info)->find();
-        return $userInfo;
+        $answerSheet = M("answer_sheet"); 
+        $info['flag'] = 1;
+        return $answerSheet->filed($filed)->where($info)->find();
     }
     
     public function modify($answerSheetId,$update){
-        $info = M("classify_sheet"); 
-        return $info->where('answer_sheet_id='.$answerSheetId)->save($update);
+        $answerSheet = M("answer_sheet"); 
+        return $answerSheet->where('answer_sheet_id='.$answerSheetId)->save($update);
     }
 }

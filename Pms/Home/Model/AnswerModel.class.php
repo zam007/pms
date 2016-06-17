@@ -7,7 +7,13 @@ class AnswerModel extends Model {
     
     public function getAnswer($where,$filed = "*") {
         $answer = M("answer");
-        return $answer->field($filed)->where($where)->select();
+    	$where['flag'] = array('eq',1); 
+        return $answer->field($filed)->where($where)->select($filed);
     }
-
+    
+	public function count($where,$fleld = '*'){
+    	$answer = M('answer');
+    	$where['flag'] = array('eq',1); 
+    	return $classifySheet->where($where)->count($fleld);
+    }
 }

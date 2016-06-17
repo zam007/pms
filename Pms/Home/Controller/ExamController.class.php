@@ -20,7 +20,10 @@ class ExamController extends BaseController {
     	}
     	$userId = $this->userId;
     	$userModel = D("User");
-        $user = $userModel->getUserField($userId,'birth');
+        $user = $userModel->getUserField($userId,'birth,answer');
+        if($user['answer'] == 1){
+        	$this->redirect('answerQuestion');
+        }
         $brith = $user['birth'];
         //计算年龄
         $age = Date('Y',time())-substr($brith,0,4);
@@ -40,11 +43,52 @@ class ExamController extends BaseController {
     }
     
     //生成试题
+    /**
+     * 1、查询用户状态
+     * 2、查询用户试卷
+     * 3、生成试卷分类
+     * 4、根据试卷分类获取同类型问题
+     * 5、剔除已回答问题
+     * 6、返回问题
+     * Enter description here ...
+     */
     public function answerQuestion(){
     	$userId = $this->userId;
-    	//试题分类
-    	$classifySheetMode = D('ClassifySheet');
-    	$classifySheet = $classifySheetMode->generateClassifySheet($userId);
+        
+    	$answerSheetMode = D('answer_sheet');
+    	
+    	//查询用户试卷
+    	$field = 'answer_sheet_id,answers,lavel_id';
+    	$where = array(
+    		'status'=>1,
+    		'user_id'=>$userId
+    	);
+    	$answerSheet = $answerSheetMode->getAnswerSheet($where,$field);
+    	if(!$answerSheet){
+    		return false;
+    	}
+    	//查询用户分类试卷
+    	$classifySheetMode = M('classify_sheet');
+    	$where = array(
+    		'answer_sheet_id' => array('eq',$answerSheet['answer_sheet_id'])
+    	);
+    	$filed = 'answers';
+    	$answerNum = $classifySheetMode->count($where,$filed);
+    	$count = $classifySheetMode->count($where);
+    	if($answerSheet['answers'] * $count >= $answerNum){
+    		echo '答题已完成';
+    		return false;
+    	}
+//    	if($answerSheet['answers'] * $count - $answerNum == 1){
+//    		//最后一题
+//    	}
+    	
+    	$where = array(
+    		'answer_sheet_id'=>array('eq',$answerSheet['answer_sheet_id']),
+    		'answers'=>array('lt',$count)
+    	);
+    	$field = 'classify_sheet_id,answer_sheet_id,answers,question,difficulty,lavel_id';
+    	$classifySheet = $classifySheetMode->generateClassifySheet($where,$field);
     	
     	$lavel = $classifySheet['lavel_id'];
     	$difficulty = $classifySheet['difficulty'];
@@ -97,6 +141,12 @@ class ExamController extends BaseController {
     }
     
     //答题
+    /**
+     * 1、从session获取问题id
+     * 2、根据提交答案计算得分
+     * 3、保存数据
+     * Enter description here ...
+     */
     public function answers(){
     	$userId = $this->userId;
     	$question_id = I('session.question_id',0);
@@ -105,6 +155,12 @@ class ExamController extends BaseController {
     	if($question_id){
     		return false;
     	}
+        $userModel = D("User");
+        $user = $userModel->getUserField($userId,'birth,answer');
+        if($user['answer'] != 1){
+        	echo '没有答题';
+//        	$this->redirect('answerQuestion');
+        }
     	//获取问题
     	$questionMode = D('Question');
     	$where['question_id'] = $question_id;
@@ -139,9 +195,10 @@ class ExamController extends BaseController {
 			
     		$score1 = $answer['score']*$score/3;
 //    	}
-    	
+    	//回答的问题
     	$questionHave = $classifySheet['question'];
     	$lenth = count($questionHave);
+    	//当前真正回答的问题-默认为最后一题
     	$questionNow = $questionHave[$lenth-1];
     	if($questionNow['question_id'] == $question_id){
     		$questionHave[$lenth-1]['answer_id'] = $answer['answer_id'];
@@ -195,7 +252,10 @@ class ExamController extends BaseController {
     		//修改分类答卷
     		$sheet['answers'] = $classifySheet['answers'];
     		$sheet['score'] = $classifySheet['score']+$score1;
-    		if($classifySheetMode->modify($classifySheetId,$sheet)){
+    		$where = array(
+    			'classify_sheet_id'=>$classifySheetId
+    		);
+    		if($classifySheetMode->modify($where,$sheet)){
     			//修改答卷
     			$last = $answerSheet['last_time'];
     			$answerTime = $answerSheet['answer_time'];
@@ -207,10 +267,72 @@ class ExamController extends BaseController {
     			}
     			$res['last_time'] = date('Y-m-d H:i:s',time());
     			$res['answer_time'] = $answerTime+$time;
-    			$answerMode->modify($answerSheetId,$res);
+    			$where = array(
+    				'answer_sheet_id'=>$answerSheetId
+    			);
+    			$answerSheetMode->modify($where,$res);
     		}
     	}
+    	$where = array(
+    		'answer_sheet_id' => array('eq',$answerSheet['answer_sheet_id'])
+    	);
+    	$answerNum = $classifySheetMode->count($where,'answers');
+    	$count = $classifySheetMode->count($where);
+    	//用户是否答完所有题目，如答完则计算总分，并保存到答卷
+    	if($answerSheet['answers'] * $count == $answerNum){
+    		$score2 = $classifySheetMode->count($where,'score');
+    		$info = array(
+    			'status'=>2,
+    			'score'=>$score2
+    		);
+    		$answerMode->modify($answerSheetId,$info);
+    		$this->report();
+    	}
     	$this->giveQuestion();
+    }
+    
+    /**
+     * 生成答题报告
+     */
+    public function report(){
+    	$userId = $this->userId;
+    	$answerSheetId = I('answer_sheet_id');
+    	
+    	$where = array(
+    		'user_id'=>$userId,
+    		'answer_sheet_id'=>$answerSheetId
+    	);
+    	
+    	$answerMode = D('answer');
+    	//获取用户试卷
+    	$answerSheet = getAnswerSheet($where);
+    	if(!$answerSheet){
+    		//未找到答卷
+    		return false;
+    	}
+    	//分类答卷
+    	$classifySheetMode = D('classify_sheet_id');
+    	$where = array(
+    		'answer_sheet_id'=>$answerSheetId
+    	);
+    	$classifySheet = getClassifySheet($where);
+    	
+    	$question = array();
+    	foreach($classifySheet as $res){
+    		//获取答题
+    		$question = array_merge($question,$res['question']);
+    		//实际得分
+    		$score += $res['score'];
+    		//偏向性统计
+    		if(!$res['inclination_id']){
+    			$inclinationIds[] = $res['inclination_id'];
+    		}
+    	}
+    	$inclination = array_count_values($inclinationIds);
+    	foreach($question as $res){
+    		
+    	}
+    	
     }
     
 }

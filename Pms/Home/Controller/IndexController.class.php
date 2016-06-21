@@ -29,6 +29,7 @@ class IndexController extends Controller {
                 $this->error('请输入正确的手机或邮箱！','index');
             }
             //判断用户登录错误次数
+            $info["flag"] = 1;
             $error = $index->getUser($info);
             if($error['login_err'] >= 3){
                $code = I("verify");

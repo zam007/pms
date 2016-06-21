@@ -9,7 +9,8 @@ class ExamController extends BaseController {
 		parent::__construct();
 		$userId = $this->userId;
 		$user = D('User');
-		$answer = $user->getUserField($userId,'answer');
+		$userAnswer = $user->getUserField($userId,'answer');
+		$answer = $userAnswer['answer'];
 	}
 	/**
 	 * 开始测试
@@ -22,7 +23,7 @@ class ExamController extends BaseController {
     	$userModel = D("User");
         $user = $userModel->getUserField($userId,'birth,answer');
         if($user['answer'] == 1){
-        	$this->redirect('answerQuestion');
+        	$this->answerQuestion();
         }
         $brith = $user['birth'];
         //计算年龄
@@ -31,12 +32,11 @@ class ExamController extends BaseController {
         $lavelMode = D("Lavel");
         $where['min_age'] = array('elt',$age);
         $where['max_age'] = array('egt',$age);
-        $field = 'lavel_id';
-        $lavel = $lavelMode->getLavel($where,$field);
+        $lavel = $lavelMode->getLavel($where,'lavel_id,answer_num');
         //生成答卷,开始答题
          $examMode = D("exam");
-         if($examMode->addSheet($lavel['lavel_id'],$userId)){
-         	 $this->redirect('answerQuestion');
+         if($examMode->addSheet($lavel,$userId)){
+         	$this->answerQuestion();
          }else{
          	return false;
          }
@@ -55,7 +55,7 @@ class ExamController extends BaseController {
     public function answerQuestion(){
     	$userId = $this->userId;
         
-    	$answerSheetMode = D('answer_sheet');
+    	$answerSheetMode = D('answerSheet');
     	
     	//查询用户试卷
     	$field = 'answer_sheet_id,answers,lavel_id';
@@ -65,19 +65,19 @@ class ExamController extends BaseController {
     	);
     	$answerSheet = $answerSheetMode->getAnswerSheet($where,$field);
     	if(!$answerSheet){
-    		return false;
+    		$this->success('未测试','../index/index',3);
     	}
     	//查询用户分类试卷
-    	$classifySheetMode = M('classify_sheet');
+    	$classifySheetMode = D('classifySheet');
     	$where = array(
     		'answer_sheet_id' => array('eq',$answerSheet['answer_sheet_id'])
     	);
-    	$filed = 'answers';
-    	$answerNum = $classifySheetMode->count($where,$filed);
+    	$answerNum = $classifySheetMode->sum($where,'answers');
     	$count = $classifySheetMode->count($where);
-    	if($answerSheet['answers'] * $count >= $answerNum){
-    		echo '答题已完成';
-    		return false;
+    	if($answerSheet['answers'] * $count <= $answerNum){
+    		$userMode = D('user');
+    		$userMode->modify($userId,array('answer'=>0));
+    		$this->success('测试完成','../Exam/report',3);
     	}
 //    	if($answerSheet['answers'] * $count - $answerNum == 1){
 //    		//最后一题
@@ -100,7 +100,7 @@ class ExamController extends BaseController {
     	$where['difficult'] = array('eq',$difficulty);
     	$question = $questionMode->getQuestion($where);
     	//判断是否答过类X型题目题
-    	if(!$questionHave){
+    	if(!$questionHave and $questionHave != ''){
 	    	foreach($questionHave as $res){
 	    		if($res['leavel_id'] == $leavel and $res['difficulty'] == $difficulty){
 	    			$questionIds =$res['question_id'].',';
@@ -116,7 +116,8 @@ class ExamController extends BaseController {
     			'score'=>0,
     			'inclination_id'=>''
     		);
-	    	$queNow['question'] = array_merge($questionHave,$info);
+	    	$queNow['question'] = array_merge(json_encode($arr,$questionHave),$info);
+	    	$queNow['question'] = json_encode($queNow['question']);
     	}else{
     		$question = $questionMode->getQuestion($where);
     		$randQue = $question[array_rand($question)];
@@ -127,17 +128,18 @@ class ExamController extends BaseController {
     			'score'=>0,
     			'inclination_id'=>''
     		);
-    		
+    		$queNow['question'] = json_encode($queNow['question']);
     	}
     	$queNow['is_answer'] = 1;
+    	$queNow['answers'] = $classifySheet['answers']+1;
     	$classifySheetMode->modify($classifySheet['classify_sheet_id'],$queNow);
     	$answerMode = D('answer');
     	$answerWhere['question_id'] =  array('eq',$randQue['question_id']);
-    	$answer = $answerMode->getAnswer($answerWhere);
+    	$answer = $answerMode->getAnswer($answerWhere);print_r($answer);exit;
         $this->assign('question',$randQue);
         $this->assign('answer',$answer);
         $this->display('exam/exam_question');
-    	
+    	die();
     }
     
     //答题
@@ -287,8 +289,10 @@ class ExamController extends BaseController {
     		);
     		$answerMode->modify($answerSheetId,$info);
     		$this->report();
+    		die();
     	}
     	$this->giveQuestion();
+    	die();
     }
     
     /**

@@ -7,12 +7,13 @@ class ExamModel extends Model {
     /**
      * 生成试卷
      */
-    public function addSheet($lavelId,$userId){
+    public function addSheet($lavel,$userId){
     	$sheet = M("answer_sheet");
     	$sheet->startTrans();
     	$sheetInfo = array(
     		'user_id' => $userId,
-    		'lavel_id' => $lavelId,
+    		'lavel_id' => $lavel['lavel_id'],
+    		'answers' => $lavel['answer_num'],
     		'difficulty' => 3,
     		'relative_difficulty' => 3,
     		'start_time' => date('Y-m-d H:i:s',time())
@@ -35,7 +36,7 @@ class ExamModel extends Model {
     		$info = array(
     			'answer_sheet_id' => $sheetId,
 	    		'classify_id' => $res['classify_id'],
-    			'lavel_id' => $lavelId,
+    			'lavel_id' => $lavel['lavel_id'],
 	    		'difficulty' => 3
     		);
     		if(!$classifySheet->add($info)){

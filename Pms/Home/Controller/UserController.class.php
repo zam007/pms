@@ -12,21 +12,19 @@ class UserController extends BaseController {
     public function improve($username = '',$password = '',$repassword = '',$verify = ''){
         if (IS_POST) {
 
-            /* 检测验证码 */
+            // 检测验证码
             // if(!check_verify($verify)){
             //     $this->error('验证码输入错误！');
             // }
 
-            /* 检测验用户名是手机号码或者邮箱 */
+            //检测验用户名是手机号码或者邮箱
             $index = D("user");
-            /**
-             * 检测之前输入的是邮箱还是手机号码
-             */
+
+            //检测之前输入的是邮箱还是手机号码
             $userId = $this->userId;
             $info = $index->getUserField($userId,'mobile,email');
-            /**
-             * 如果手机号存在，则存入Email，反之，存为mobile
-             */
+
+            //如果手机号存在，则存入Email，反之，存为mobile
             // if ($info['email']) {
             //     if (strlen(I("username")) == 11) {
             //         $user['mobile'] = I("username");
@@ -43,9 +41,8 @@ class UserController extends BaseController {
 
             // }
             $userInfo = $index->modify($userId,$user);
-            /**
-             * 密码设置
-             */
+
+            //密码设置
             $rules = array(
                  array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致
                  array('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式

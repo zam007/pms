@@ -88,12 +88,12 @@ class IndexController extends Controller {
 	public function register($username = '',$verify = ''){
         if (IS_POST) {
 
-            /* 检测验证码 */
+            //检测验证码
             // if(!check_verify($verify)){
             //     $this->error('验证码输入错误！');
             // }
 
-            /* 检测验用户名是手机号码或者邮箱 */
+            //检测验用户名是手机号码或者邮箱
             $index = D("user");
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");

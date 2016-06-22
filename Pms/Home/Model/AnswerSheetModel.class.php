@@ -8,7 +8,7 @@ class AnswerSheetModel extends Model {
     public function getAnswerSheet($info,$filed = '*') {
         $answerSheet = M("answer_sheet"); 
         $info['flag'] = 1;
-        return $answerSheet->field($filed)->where($info)->find();
+        return $answerSheet->order('start_time desc')->field($filed)->where($info)->find();
     }
     
     public function modify($answerSheetId,$update){

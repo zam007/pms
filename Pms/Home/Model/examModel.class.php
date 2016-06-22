@@ -7,13 +7,13 @@ class ExamModel extends Model {
     /**
      * 生成试卷
      */
-    public function addSheet($lavel,$userId){
+    public function addSheet($level,$userId){
     	$sheet = M("answer_sheet");
     	$sheet->startTrans();
     	$sheetInfo = array(
     		'user_id' => $userId,
-    		'lavel_id' => $lavel['lavel_id'],
-    		'answers' => $lavel['answer_num'],
+    		'level_id' => $level['level_id'],
+    		'answers' => $level['answer_num'],
     		'difficulty' => 3,
     		'relative_difficulty' => 3,
     		'start_time' => date('Y-m-d H:i:s',time())
@@ -25,7 +25,7 @@ class ExamModel extends Model {
     	}
     	//查询问题分类
     	$classify = M("classify");
-    	$classification = $classify->field('classify_id')->where('lavel=2 and flag=1')->select();
+    	$classification = $classify->field('classify_id')->where('level=2 and flag=1')->select();
     	if(!$classification){
     		$sheet->rollback();
     		return false;
@@ -36,7 +36,7 @@ class ExamModel extends Model {
     		$info = array(
     			'answer_sheet_id' => $sheetId,
 	    		'classify_id' => $res['classify_id'],
-    			'lavel_id' => $lavel['lavel_id'],
+    			'level_id' => $level['level_id'],
 	    		'difficulty' => 3
     		);
     		if(!$classifySheet->add($info)){
@@ -54,7 +54,6 @@ class ExamModel extends Model {
     		$sheet->rollback();
     		return false;
     	}
-    	
     	$sheet->commit();
     	return true;
     }

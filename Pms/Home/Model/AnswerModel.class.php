@@ -8,7 +8,7 @@ class AnswerModel extends Model {
     public function getAnswer($where,$filed = "*") {
         $answer = M("answer");
     	$where['flag'] = array('eq',1); 
-        return $answer->field($filed)->where($where)->select($filed);
+        return $answer->field($filed)->where($where)->select();
     }
     
 	public function count($where,$fleld = '*'){

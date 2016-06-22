@@ -9,7 +9,7 @@
 		<p><span>问题：</span>{$question.question}</p>
 		<div>
 			<foreach name="answer" item="vo">
-		        <span><input name="answer_question" type="radio" value="{$vo.selected}">{$vo.selected}、{$vo.answer}</span>
+		        <span><input name ="selected" type="radio" value="{$vo.answer_id}">{$vo.selected}、{$vo.answer}</span>
 		    </foreach>
 			
 		</div>

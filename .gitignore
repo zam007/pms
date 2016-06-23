@@ -4,3 +4,4 @@ git tool.sh
 /.settings
 .buildpath
 .project
+/localhost

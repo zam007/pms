@@ -123,7 +123,7 @@ class ExamController extends BaseController {
     			'difficulty'=>$randQue['difficulty'],
     			'score'=>0,
     			'inclination_id'=>''
-    		);print_r($queNow);
+    		);print_r($questionHave);
 	    	$queNow['question'] = array_merge($questionHave,$info);
 	    	$queNow['question'] = json_encode($queNow['question']);
     	}else{
@@ -181,20 +181,20 @@ class ExamController extends BaseController {
     	//获取问题
     	$questionMode = D('Question');
     	$where['question_id'] = $question_id;
-    	$question = $questionMode->getQuestion($where,'question_id,level_id,difficulty');
+    	$question = $questionMode->getQuestionOne($where,'question_id,level_id,difficulty');
     	
     	//获取答案
     	$answerMode = D('Answer');
     	$where['answer_id'] = I('selected',0);
-    	$answer = $answerMode->getAnser($where,'answer_id,score,inclination_id');
+    	$answer = $answerMode->getAnswer($where,'answer_id,score,inclination_id');
     	
     	//获取试卷
-    	$answerSheetMode = M('answer_sheet');
+    	$answerSheetMode = D('AnswerSheet');
     	$answerInfo['answer_sheet_id'] = array('eq',$answerSheetId);
     	$answerSheet = $answerSheetMode->getAnswerSheet($answerInfo);
     	
     	//获取分类试卷
-    	$classifySheetMode = M('ClassifySheet');
+    	$classifySheetMode = D('ClassifySheet');
     	$info['classify_sheet_id'] = $classifySheetId;
     	$classifySheet = $classifySheetMode->getClassifySheet($info);
     	
@@ -207,7 +207,7 @@ class ExamController extends BaseController {
     	$leaveBase = $levelMode->getLevel($leaveInfo,'sort');
     	
     	//得分计算公式-未完成
-    	$score = (($leaveQuestion-1)*5+$question['difficulty']) - (($leaveBase-1)*5);
+    	$score = (($leaveQuestion['sort']-1)*5+$question['difficulty']) - (($leaveBase['sort']-1)*5);
 //    	if($score>0){
 			
     		$score1 = $answer['score']*$score/3;
@@ -221,7 +221,7 @@ class ExamController extends BaseController {
     		$questionHave[$lenth-1]['answer_id'] = $answer['answer_id'];
     		$questionHave[$lenth-1]['score'] = $score1;
     		$questionHave[$lenth-1]['inclination_id'] = $answer['inclination_id'];
-    		$sheet['question'] = $questionHave;
+    		$sheet['question'] = json_encode($questionHave);
     		//用户答题难度判断
     		if($answer['score']>3){
     			$sheet['correct'] ++;
@@ -269,10 +269,8 @@ class ExamController extends BaseController {
     		//修改分类答卷
     		$sheet['answers'] = $classifySheet['answers'];
     		$sheet['score'] = $classifySheet['score']+$score1;
-    		$where = array(
-    			'classify_sheet_id'=>$classifySheetId
-    		);
-    		if($classifySheetMode->modify($where,$sheet)){
+    		
+    		if($classifySheetMode->modify($classifySheetId,$sheet)){
     			//修改答卷
     			$last = $answerSheet['last_time'];
     			$answerTime = $answerSheet['answer_time'];
@@ -284,29 +282,31 @@ class ExamController extends BaseController {
     			}
     			$res['last_time'] = date('Y-m-d H:i:s',time());
     			$res['answer_time'] = $answerTime+$time;
-    			$where = array(
-    				'answer_sheet_id'=>$answerSheetId
-    			);
-    			$answerSheetMode->modify($where,$res);
+    			$answerSheetMode->modify($answerSheetId,$res);
     		}
     	}
     	$where = array(
     		'answer_sheet_id' => array('eq',$answerSheet['answer_sheet_id'])
     	);
-    	$answerNum = $classifySheetMode->count($where,'answers');
+    	$answerNum = $classifySheetMode->sum($where,'answers');
     	$count = $classifySheetMode->count($where);
     	//用户是否答完所有题目，如答完则计算总分，并保存到答卷
-    	if($answerSheet['answers'] * $count == $answerNum){
+    	print_r($answerSheet['answers']);echo "-<br>";
+    	print_r($count);echo "-<br>";
+    	print_r($answerNum['answers']);
+    	
+    	if($answerSheet['answers'] * $count == $answerNum['answers']){
     		$score2 = $classifySheetMode->count($where,'score');
     		$info = array(
     			'status'=>2,
     			'score'=>$score2
     		);
-    		$answerMode->modify($answerSheetId,$info);
+    		$answerSheetMode->modify($answerSheetId,$info);
+    		$userModel->modify($userId,array('answer'=>0));
     		$this->report();
     		die();
     	}
-    	$this->giveQuestion();
+    	$this->answerQuestion();
     	die();
     }
     
@@ -314,6 +314,7 @@ class ExamController extends BaseController {
      * 生成答题报告
      */
     public function report(){
+    	echo "=======";die();
     	$userId = $this->userId;
     	$answerSheetId = I('answer_sheet_id');
     	

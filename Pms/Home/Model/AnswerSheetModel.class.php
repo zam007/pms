@@ -4,7 +4,7 @@ use Think\Model;
 class AnswerSheetModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
-
+	
     public function getAnswerSheet($info,$filed = '*') {
         $answerSheet = M("answer_sheet"); 
         $info['flag'] = 1;

@@ -23,7 +23,7 @@ class ClassifySheetModel extends Model {
     public function modify( $classifySheetId,$update){
         $classifySheet = M("classify_sheet");
     	$where['flag'] = array('eq',1); 
-        $classifySheet->where('classify_sheet_id='.$classifySheetId)->save($update);
+        return $classifySheet->where('classify_sheet_id='.$classifySheetId)->save($update); 
     }
     
     public function sum($where,$field = '*'){

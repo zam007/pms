@@ -10,4 +10,8 @@ class QuestionModel extends Model {
         return $question->field($filed)->where($where)->select();
     }
 
+	public function getQuestionOne($where,$filed = '*') {
+        $question = M("question");
+        return $question->field($filed)->where($where)->find();
+    }
 }

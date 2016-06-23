@@ -6,8 +6,8 @@ class LevelModel extends Model {
 //    protected $patchValidate = true;
     
     public function getLevel($where,$filed = '*') {
-        $lavel = M("Level");
-        return $lavel->field($filed)->where($where)->find();
+        $level = M("Level");
+        return $level->field($filed)->where($where)->find();
     }
 
 }

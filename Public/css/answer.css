@@ -1,0 +1,50 @@
+.main{
+	width: 700px;
+	margin: 0 auto;
+	text-align: center;
+}
+.main .subject{
+	padding: 50px 0 0 0;
+	font-size: 24px;
+	color: #333;
+	text-align: left;
+}
+.main .options ul{
+	margin-top: 10px;
+}
+.main .options li{
+	height: 100px;
+	line-height: 100px;
+	width: 100%;
+	background-color: #29b7f0;
+	color: #fff;
+	font-size: 18px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+.main .options li:hover{
+	cursor: pointer;
+}
+.main .options .tip{
+	padding: 20px 0;
+	font-size: 14px;
+	color: #999;
+}
+.main .operating{
+	text-align: left;
+}
+.main .operating a{
+	color: #8dbc78;
+	font-size: 14px;
+	text-decoration: none;
+	padding-right: 20px;
+}
+.main .operating .progress-bar{
+	margin: 20px 0;
+	height: 1px;
+	background-color: #eee;
+	overflow: hidden;
+}
+.main .operating p span:not(:last-child){
+	padding-right: 30px;
+}

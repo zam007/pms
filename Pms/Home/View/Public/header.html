@@ -1,0 +1,23 @@
+
+<div class="header">
+	<div class="wrap-content">
+		<div class="wrap-header-content">
+			<img class="inline-block" src="" alt="logo">
+			<div class="inline-block">
+				<h1 class="fz-20 fw-500 grey-deep">西南财经大学五行财商研究中心</h1>
+				<h3 class="fz-14 fw-100 grey">财商测评系统（v1.0）</h3>
+			</div>
+			<div class="fr link">
+				<if condition="$Think.session.user_id eq 0 ">
+					<a href="{:U('Index/reg',array(),'',0,true)}" class="ml5 mr5 pl10 pr10 hover">注册</a>
+					<a href="{:U('Index/log',array(),'',0,true)}" class="ml5 mr5 pl10 pr10 hover">登陆</a>
+				<else/>
+					<a href="{:U('Exam/userExam')}" class="fz-14 pl10 pr10 grey-deep">测试我的财商</a>
+					<a>{$Think.session.user_name}</a>
+					<a href="{:U('Index/logout')}" class="ml5 mr5 pl10 pr10 hover">退出</a>
+				</if>
+			</div>
+		</div>
+	</div>
+</div>
+

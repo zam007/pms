@@ -17,5 +17,4 @@ class BaseController extends Controller {
          // }
          $this->userId = $userId;
      }
-
 }

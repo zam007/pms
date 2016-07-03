@@ -4,13 +4,12 @@ use Think\Model;
 class ClassifySheetModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
-    //生成答卷类型
     
-    public function generateClassifySheet($answerSheetId,$count,$field= '*'){
+    
+    public function generateClassifySheet($where,$field= '*'){
     	$classifySheet = M("classify_sheet"); 
     	$where['flag'] = array('eq',1); 
     	$classify = $classifySheet->field($field)->where($where)->select();
-    	
     	return $classify[array_rand($classify)];//随机数组
     }
 

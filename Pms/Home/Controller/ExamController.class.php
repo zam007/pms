@@ -4,26 +4,23 @@ use Think\Controller;
 use Util\Util;
 
 class ExamController extends BaseController {
-	protected $answer = 0;
-	public function __construct(){
-		parent::__construct();
-		$userId = $this->userId;
-		$user = D('User');
-		$userAnswer = $user->getUserField($userId,'answer');
-		$answer = $userAnswer['answer'];
-	}
+//	protected $answer = 0;
+//	public function __construct(){
+//		parent::__construct();
+//		$userId = $this->userId;
+//		
+//		
+//	}
 	/**
 	 * 开始测试
 	 */
     public function userExam(){
-    	if($this->answer == 1){
-    		$this->giveQuestion();
-    	}
     	$userId = $this->userId;
     	$userModel = D("User");
         $user = $userModel->getUserField($userId,'birth,answer');
         if($user['answer'] == 1){
         	$this->answerQuestion();
+        	die();
         }
         $brith = $user['birth'];
         //计算年龄
@@ -37,6 +34,7 @@ class ExamController extends BaseController {
          $examMode = D("exam");
          if($examMode->addSheet($level,$userId)){
          	$this->answerQuestion();
+         	die();
          }else{
          	return false;
          }
@@ -68,64 +66,53 @@ class ExamController extends BaseController {
     		$this->success('未测试','../index/index',3);
     		die();
     	}
-    	//查询用户分类试卷
+    	//查询用户分类试卷，满足条件 答题数量不等于规定答题数量
     	$classifySheetMode = D('classifySheet');
     	$where = array(
-    		'answer_sheet_id' => array('eq',$answerSheet['answer_sheet_id'])
+    		'answer_sheet_id' => array('eq',$answerSheet['answer_sheet_id']),
+    		'answers'=>array('lt',$answerSheet['answers'])
     	);
-    	$answerNum = $classifySheetMode->sum($where,'answers');
-    	$count = $classifySheetMode->count($where);
-//    	print_r($answerNum);echo "<br/>";
-//    	print_r($count);echo "<br/>";print_r($answerSheet['answers']);echo "<br/>";exit;
-    	if($answerSheet['answers'] * $count <= $answerNum){
+    	$field = 'classify_sheet_id,answer_sheet_id,answers,question,difficulty,level_id';
+    	$classifySheet = $classifySheetMode->generateClassifySheet($where,$field);
+    	
+    	if(!$classifySheet){
     		$userMode = D('user');
     		$userMode->modify($userId,array('answer'=>0));
     		$this->success('测试完成','../Exam/report',3);
     		die();
     	}
-//    	if($answerSheet['answers'] * $count - $answerNum == 1){
-//    		//最后一题
-//    	}
-    	
-    	$where = array(
-    		'answer_sheet_id'=>array('eq',$answerSheet['answer_sheet_id']),
-    		'answers'=>array('lt',$count)
-    	);
-    	$field = 'classify_sheet_id,answer_sheet_id,answers,question,difficulty,level_id';
-    	$classifySheet = $classifySheetMode->generateClassifySheet($where,$field);
     	
     	$level = $classifySheet['level_id'];
     	$difficulty = $classifySheet['difficulty'];
-    	$questionHave = json_decode($classify['question'],true);
+    	$questionHave = json_decode($classifySheet['question'],true);
     	//获取同类试题
     	$questionMode = D('Question');
-    	
     	$where['level_id'] = array('eq',$level);
     	$where['difficult'] = array('eq',$difficulty);
-//    	$question = $questionMode->getQuestion($where);
+    	
+    	
     	//判断是否答过类X型题目题
-    	if(!$questionHave and $questionHave != ''){
+    	if($questionHave){
 	    	foreach($questionHave as $res){
 	    		if($res['level_id'] == $level and $res['difficulty'] == $difficulty){
 	    			$questionIds = $res['question_id'].',';
 	    		}
 	    	}
 	    	$questionIds = substr($questionIds,0,-1);
-	    	if(!$questionIds){
-	    		$where['question_id'] = array('not in',"'".$questionIds."'");
+	    	if($questionIds){
+	    		$where['question_id'] = array('not in',$questionIds);
 	    	}
 	    	$question = $questionMode->getQuestion($where);
 	    	$randQue = $question[array_rand($question)];
-	    	$info[] = array(
+	    	$questionHave[] = array(
     			'question_id'=>$randQue['question_id'],
     			'answer_id'=>0,
     			'level_id'=>$randQue['level_id'],
     			'difficulty'=>$randQue['difficulty'],
     			'score'=>0,
     			'inclination_id'=>''
-    		);print_r($questionHave);
-	    	$queNow['question'] = array_merge($questionHave,$info);
-	    	$queNow['question'] = json_encode($queNow['question']);
+    		);
+	    	$queNow['question'] = json_encode($questionHave);
     	}else{
     		$question = $questionMode->getQuestion($where);
     		$randQue = $question[array_rand($question)];
@@ -138,6 +125,7 @@ class ExamController extends BaseController {
     			'inclination_id'=>''
     		);
     		$queNow['question'] = json_encode($queNow['question']);
+    		
     	}
     	$queNow['is_answer'] = 1;
     	$queNow['answers'] = $classifySheet['answers']+1;
@@ -145,14 +133,20 @@ class ExamController extends BaseController {
     	$answerMode = D('answer');
     	$answerWhere['question_id'] =  $randQue['question_id'];
     	$answer = $answerMode->getAnswer($answerWhere);
+    	$where = array(
+    		'answer_sheet_id'=>$answerSheet['answer_sheet_id'],
+    	);
+    	$randQue['num'] = $classifySheetMode->sum($where,'answers');
     	//将答题信息存入session
     	SESSION('answer_sheet_id',$answerSheet['answer_sheet_id']);
     	SESSION('classify_sheet_id',$classifySheet['classify_sheet_id']);
     	SESSION('question_id',$answerWhere['question_id']);
+    	$selected = array('A','B','C','D','E','F');
     	
+    	$this->assign('selected',$selected);
         $this->assign('question',$randQue);
         $this->assign('answer',$answer);
-        $this->display('exam/exam_question');
+        $this->display('exam/answer');
     	die();
     }
     
@@ -291,9 +285,6 @@ class ExamController extends BaseController {
     	$answerNum = $classifySheetMode->sum($where,'answers');
     	$count = $classifySheetMode->count($where);
     	//用户是否答完所有题目，如答完则计算总分，并保存到答卷
-    	print_r($answerSheet['answers']);echo "-<br>";
-    	print_r($count);echo "-<br>";
-    	print_r($answerNum['answers']);
     	
     	if($answerSheet['answers'] * $count == $answerNum['answers']){
     		$score2 = $classifySheetMode->count($where,'score');

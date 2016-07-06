@@ -4,7 +4,6 @@ use Think\Model;
 class UserModel extends Model {
     protected $tablePrefix = '';
     protected $patchValidate = true;
-    
     public function getUser($info,$filed = '*') {
         $user = M("User"); // 实例化User对象
         $userInfo = $user->field($filed)->where($info)->find();

@@ -81,20 +81,14 @@ class IndexController extends Controller {
     	    //$Verify->expire = 600;
     	    $Verify->entry();
 	}
-
+    
 	/**
 	 * 注册
 	 */
-	public function register($username = '',$verify = ''){
+	public function register(){
         if (IS_POST) {
 
-            //检测验证码
-            // if(!check_verify($verify)){
-            //     $this->error('验证码输入错误！');
-            // }
-
-            //检测验用户名是手机号码或者邮箱
-            $index = D("user");
+            //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
                 $value = '手机号';
@@ -104,46 +98,26 @@ class IndexController extends Controller {
             }else{
                 echo "请输入正确的手机或邮箱！";exit;
             }
-            $user["reg_time"] = date('Y-m-d H:i:s',time());
-            $userInfo = $index->addUser($user);
-            SESSION("user_id",$userInfo);
-            SESSION("last_session_id",session_id());
-            $this->assign('value',$value);
-            $this->display("user/improve");
+            //注册账号合法验证
+            $rules = array(
+                 array('mobile','','该手机号已经被注册！',0,'unique',1),
+                 array('email','','该邮箱已经被注册！',0,'unique',1),
+            );
+
+            $index = D("user");
+            if (!$index->validate($rules)->create($user)){echo 33;
+                //验证失败
+                $this->ajaxReturn($index->getError());
+            }else{echo 55;
+                //验证通过
+                $user["reg_time"] = date('Y-m-d H:i:s',time());
+                $userInfo = $index->addUser($user);
+                SESSION("user_id",$userInfo);
+                SESSION("last_session_id",session_id());
+                $this->assign('value',$value);
+                $this->display("user/improve");
+            }
         }
-    //      //动态自动验证表单信息
-    //     $rules = array(
-    //          array('verify','require','验证码必须！'), //默认情况下用正则进行验证
-    //          array('userName','','帐号名称已经存在！',0,'unique',1), // 在新增的时候验证name字段是否唯一
-    //          //array('value',array(1,2,3),'值的范围不正确！',2,'in'), // 当值不为空的时候判断是否在一个范围内
-    //          array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致
-    //          array('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式
-    //     );
-
-    //     $index = D("user");
-    //     if (!$index->validate($rules)->create()){
-    //              // 如果创建失败 表示验证没有通过 输出错误提示信息
-    //         exit($this->ajaxReturn($index->getError()));
-    //         }else{
-    //             // 验证通过 可以进行其他数据操作
-    //         $userName = I("userName");
-    //         if(strstr(I("userName"), '@')){
-    //             $user['email'] = I("userName");
-    //             $value = '手机号';
-    //         }else if(strlen(I("userName")) == 11){
-    //             $user['mobile'] = I("userName");
-    //             $value = '邮箱';
-    //         }else{
-    //             echo "请输入正确的手机或邮箱！";exit;
-    //         }
-    //         $user["password"] = md5(I("password").C("PWD_KEY"));
-    //         $user["regtime"] = date('Y-m-d H:i:s',time());
-    //         $userInfo = $index->addUser($user);
-    //         SESSION("user_id",$userInfo);
-    //         $this->assign('value',$value);
-    //         $this->display("user/improve");
-    // 	}
-
     }
 
     /**
@@ -156,6 +130,7 @@ class IndexController extends Controller {
             $content = '内容';
             SendMail($email,$title,$content);
     }
+
     /**
      * 用户退出
      */

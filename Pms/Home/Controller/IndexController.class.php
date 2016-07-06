@@ -15,26 +15,34 @@ class IndexController extends Controller {
 	 */
 	public function login(){
         if (IS_POST) {
-            $index = D("user");
-            //判断用户名
-            if(!I("username")){
-                $this->error('用户名不能为空','index');
-            }
-            $userName = I("username");
+
+            //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
-                $info['email'] = I("username");
-            }else if(strlen(I("username")) == 11){
-                $info['mobile'] = I("username");
-            }else{
-                $this->error('请输入正确的手机或邮箱！','index');
+                $user['email'] = I("username");
+                $value = '手机号';
+            }else {
+                $user['mobile'] = I("username");
+                $value = '邮箱';
             }
-            //判断用户登录错误次数
-            $info["flag"] = 1;
-            $error = $index->getUser($info);
-            if($error['login_err'] >= 3){
-               $code = I("verify");
-               if(!check_verify($code)){
-                  $this->error('验证码错误','index');
+
+            //用户登陆合法验证
+            $rules = array(
+                 array('mobile', '/^1[34578]\d{9}$/', '请输入正确的手机号', 0),
+                 array('email', 'email', '请输入正确的邮箱号'),
+            );
+
+            $index = D("user");
+            if (!$index->validate($rules)->create($user)){
+                //验证失败
+                $this->ajaxReturn($index->getError());
+            }else{
+                //判断用户登录错误次数
+                $info["flag"] = 1;
+                $error = $index->getUser($info);
+                if($error['login_err'] >= 3){
+                   $code = I("verify");
+                   if(!check_verify($code)){
+                      $this->error('验证码错误','index');
                }
             }
             $user['user_id'] = $error['user_id'];
@@ -62,10 +70,10 @@ class IndexController extends Controller {
                     $index->modify($error['user_id'],$update);
                 }
                 $this->error('用户名或密码错误','index');
+             }
             }
         }
-
-        }
+    }
 
         /**
          * 图片验证码
@@ -81,7 +89,7 @@ class IndexController extends Controller {
     	    //$Verify->expire = 600;
     	    $Verify->entry();
 	}
-    
+
 	/**
 	 * 注册
 	 */
@@ -92,23 +100,24 @@ class IndexController extends Controller {
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
                 $value = '手机号';
-            }else if(strlen(I("username")) == 11){
+            }else {
                 $user['mobile'] = I("username");
                 $value = '邮箱';
-            }else{
-                echo "请输入正确的手机或邮箱！";exit;
             }
+
             //注册账号合法验证
             $rules = array(
+                 array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+                 array('email', 'email', '邮箱格式不正确'),
                  array('mobile','','该手机号已经被注册！',0,'unique',1),
                  array('email','','该邮箱已经被注册！',0,'unique',1),
             );
 
             $index = D("user");
-            if (!$index->validate($rules)->create($user)){echo 33;
+            if (!$index->validate($rules)->create($user)){
                 //验证失败
                 $this->ajaxReturn($index->getError());
-            }else{echo 55;
+            }else{
                 //验证通过
                 $user["reg_time"] = date('Y-m-d H:i:s',time());
                 $userInfo = $index->addUser($user);

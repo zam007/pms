@@ -75,19 +75,20 @@ class IndexController extends Controller {
         }
     }
 
-        /**
-         * 图片验证码
-         */
+    /**
+     * 图片验证码
+     */
 	public function verify(){
-    	    $Verify = new \Think\Verify();
-    	    $Verify->fontSize = 18;
-    	    $Verify->length   = 4;
-    	    $Verify->useNoise = false;
-    	    $Verify->codeSet = '0123456789';
-    	    $Verify->imageW = 130;
-    	    $Verify->imageH = 50;
-    	    //$Verify->expire = 600;
-    	    $Verify->entry();
+		ob_clean();//清除缓存
+        $Verify = new \Think\Verify();
+        $Verify->fontSize = 18;
+        $Verify->length   = 4;
+        $Verify->useNoise = false;
+        $Verify->codeSet = '0123456789';
+        $Verify->imageW = 130;
+        $Verify->imageH = 50;
+        //$Verify->expire = 600;
+        $Verify->entry();
 	}
 
 	/**

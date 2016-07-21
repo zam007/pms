@@ -39,7 +39,6 @@ class UserController extends BaseController {
      * 补全资料
      */
     public function completion(){
-
             $userId = $this->userId;
             $user["name"] = I("name");
             $user["sex"] = I("sex");

@@ -1,0 +1,33 @@
+/*home*/
+body{
+	font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+.header{background-color: #fff;}
+.wrap-header-content{height: 100px;overflow: hidden;}
+.link{height: 100px;line-height: 100px;}
+.link a{text-decoration: none;color: #333;}
+.link .hover{border: 1px solid #fff;}
+.link .hover:hover{border: 1px solid #19b7f0;border-radius: 15px;color: #19b7f0;}
+
+.content{padding: 20px 0 60px 0;background-color: #eee;color: #fff;}
+.content-main{width: 1200px;margin: 0 auto;overflow: hidden;}
+.content-main-nav{width: 300px;padding-bottom: 5px;float: left;text-indent: 45px;background-color: #fff;color: #999;}
+.content-main-nav p,
+.content-main-nav li{height: 50px;line-height: 50px;}
+.content-main-nav li:hover{background-color: #39b8ef;}
+.content-main-nav a{display: block;color: #333;text-decoration: none;font-size: 16px;}
+.content-main-form{width: 880px;min-height: 700px;box-sizing: border-box;float: left;background-color: #fff;margin-left: 20px;}
+.content-main-form .content-main-form-title{padding: 40px;border-bottom: 1px solid #eaefee;}
+.content-main-form .content-main-form-title p{color: #333;}
+.content-main-form .content-main-form-title span{color: #02b06b;}
+.content-main-form .content-main-form-info{padding: 40px 0;}
+.content-main-form .content-main-form-info div{color: #333;text-indent: 40px;padding-bottom: 40px;}
+.content-main-form .content-main-form-info div input,
+.content-main-form .content-main-form-info div select{border: 1px solid #eaefee;padding: 5px;font-size: 14px;color: inherit;vertical-align: middle;outline: none;}
+
+.grey{color: #989898;}
+.submit{display: inline-block;padding: 10px 150px;text-indent: 0;text-align: center;color: #fff;background-color: #29b7f0;}
+.submit:hover{cursor: pointer;}
+.blue{background-color: #29b7f0;}
+.text-blue{color: #29b7f0;}
+.pl67{padding-left: 67px;}

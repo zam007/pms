@@ -85,48 +85,50 @@ class ExamController extends BaseController {
     	$level = $classifySheet['level_id'];
     	$difficulty = $classifySheet['difficulty'];
     	$questionHave = json_decode($classifySheet['question'],true);
+    	$sheetMode = D('sheet');
+    	$questionHave = $sheetMode->getSheet();
     	//获取同类试题
     	$questionMode = D('Question');
     	$where['level_id'] = array('eq',$level);
     	$where['difficult'] = array('eq',$difficulty);
     	
     	
-    	//判断是否答过类X型题目题
-    	if($questionHave){
-	    	foreach($questionHave as $res){
-	    		if($res['level_id'] == $level and $res['difficulty'] == $difficulty){
-	    			$questionIds = $res['question_id'].',';
-	    		}
-	    	}
-	    	$questionIds = substr($questionIds,0,-1);
-	    	if($questionIds){
-	    		$where['question_id'] = array('not in',$questionIds);
-	    	}
-	    	$question = $questionMode->getQuestion($where);
-	    	$randQue = $question[array_rand($question)];
-	    	$questionHave[] = array(
-    			'question_id'=>$randQue['question_id'],
-    			'answer_id'=>0,
-    			'level_id'=>$randQue['level_id'],
-    			'difficulty'=>$randQue['difficulty'],
-    			'score'=>0,
-    			'inclination_id'=>''
-    		);
-	    	$queNow['question'] = json_encode($questionHave);
-    	}else{
-    		$question = $questionMode->getQuestion($where);
-    		$randQue = $question[array_rand($question)];
-    		$queNow['question'][] = array(
-    			'question_id'=>$randQue['question_id'],
-    			'answer_id'=>0,
-    			'level_id'=>$randQue['level_id'],
-    			'difficulty'=>$randQue['difficulty'],
-    			'score'=>0,
-    			'inclination_id'=>''
-    		);
-    		$queNow['question'] = json_encode($queNow['question']);
-    		
-    	}
+//    	//判断是否答过类X型题目题
+//    	if($questionHave){
+//	    	foreach($questionHave as $res){
+//	    		if($res['level_id'] == $level and $res['difficulty'] == $difficulty){
+//	    			$questionIds = $res['question_id'].',';
+//	    		}
+//	    	}
+//	    	$questionIds = substr($questionIds,0,-1);
+//	    	if($questionIds){
+//	    		$where['question_id'] = array('not in',$questionIds);
+//	    	}
+//	    	$question = $questionMode->getQuestion($where);
+//	    	$randQue = $question[array_rand($question)];
+//	    	$questionHave[] = array(
+//    			'question_id'=>$randQue['question_id'],
+//    			'answer_id'=>0,
+//    			'level_id'=>$randQue['level_id'],
+//    			'difficulty'=>$randQue['difficulty'],
+//    			'score'=>0,
+//    			'inclination_id'=>''
+//    		);
+//	    	$queNow['question'] = json_encode($questionHave);
+//    	}else{
+//    		$question = $questionMode->getQuestion($where);
+//    		$randQue = $question[array_rand($question)];
+//    		$queNow['question'][] = array(
+//    			'question_id'=>$randQue['question_id'],
+//    			'answer_id'=>0,
+//    			'level_id'=>$randQue['level_id'],
+//    			'difficulty'=>$randQue['difficulty'],
+//    			'score'=>0,
+//    			'inclination_id'=>''
+//    		);
+//    		$queNow['question'] = json_encode($queNow['question']);
+//    		
+//    	}
     	$queNow['is_answer'] = 1;
     	$queNow['answers'] = $classifySheet['answers']+1;
     	$classifySheetMode->modify($classifySheet['classify_sheet_id'],$queNow);

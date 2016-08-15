@@ -18,6 +18,12 @@ class ClassifySheetModel extends Model {
     	$where['flag'] = array('eq',1); 
         return $classifySheet->field($field)->where($info)->find();
     }
+
+	public function getClassifySheets($info,$field = '*') {
+        $classifySheet = M("classify_sheet"); 
+    	$where['flag'] = array('eq',1); 
+        return $classifySheet->field($field)->where($info)->find();
+    }
     
     public function modify( $classifySheetId,$update){
         $classifySheet = M("classify_sheet");

@@ -114,18 +114,41 @@ class IndexController extends Controller {
                  array('email','','该邮箱已经被注册！',0,'unique',1),
             );
 
-            $index = D("user");
-            if (!$index->validate($rules)->create($user)){
-                //验证失败
-                $this->ajaxReturn($index->getError());
-            }else{
-                //验证通过
-                $user["reg_time"] = date('Y-m-d H:i:s',time());
-                $userInfo = $index->addUser($user);
-                SESSION("user_id",$userInfo);
-                SESSION("last_session_id",session_id());
-                $this->assign('value',$value);
-                $this->display("user/improve");
+            //验证团体注册或者个人注册
+            if (I("type") == 2) {
+                $index = D("user");
+                $team = D("team");
+                if (!$index->validate($rules)->create($user)){
+                    //验证失败
+                    $this->ajaxReturn($index->getError());
+                }else{
+                    //验证通过
+                    $teamInfo["code"] = rand(100000,999999);
+                    $teamId = $team->addTeam($teamInfo);
+                    $user["reg_time"] = date('Y-m-d H:i:s',time());
+                    $user["team_id"] = $teamId;
+                    $userId = $index->addUser($user);
+                    SESSION("user_id",$userId);
+                    SESSION("team_id",$teamId);
+                    SESSION("last_session_id",session_id());
+                    $this->assign('value',$value);
+                    $this->display("user/improve");
+                }
+            }
+            else {
+                $index = D("user");
+                if (!$index->validate($rules)->create($user)){
+                    //验证失败
+                    $this->ajaxReturn($index->getError());
+                }else{
+                    //验证通过
+                    $user["reg_time"] = date('Y-m-d H:i:s',time());
+                    $userInfo = $index->addUser($user);
+                    SESSION("user_id",$userInfo);
+                    SESSION("last_session_id",session_id());
+                    $this->assign('value',$value);
+                    $this->display("user/improve");
+                }
             }
         }
     }

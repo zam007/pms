@@ -63,7 +63,7 @@
                                 <option>9</option>
                                 <option>10</option>
                                 <option>11</option>
-                                <option>12</option> 
+                                <option>12</option>
                             </select>
                             <span class="pl5 pr5">月</span>
                             <select class="pl5 pr5">
@@ -97,7 +97,7 @@
                                 <option>9</option>
                                 <option>10</option>
                                 <option>11</option>
-                                <option>12</option> 
+                                <option>12</option>
                             </select>
                             <span class="pl10 grey">团体测试，必填；个人测试，选填；</span>
                         </div>
@@ -132,6 +132,28 @@
                             <input type="text" name="qq">
                             <span class="pl10 grey">咨询时，获得优先注册和服务</span>
                         </div>
+                        <if condition="$Think.session.team_id neq 0 ">
+                        <div>
+                            <span>团体名称：</span>
+                            <input type="text" name="team_name">
+                            <span class="pl10 grey">公司名，组织名</span>
+                        </div>
+                        <div>
+                            <span>公司性质：</span>
+                            <input type="text" name="nature">
+                            <span class="pl10 grey">公司的性质</span>
+                        </div>
+                        <div>
+                            <span>行业属性：</span>
+                            <input type="text" name="attribute">
+                            <span class="pl10 grey">公司的性质</span>
+                        </div>
+                        <div>
+                            <span>团体邀请码：</span>
+                            <input type="text" name="code">
+                            <span class="pl10 grey">可以分享给团队，加入</span>
+                        </div>
+                        </if>
                         <div>
                             <button onclick="submit()" class="btn-login">完成</button>
                         </div>

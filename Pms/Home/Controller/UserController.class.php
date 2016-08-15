@@ -7,7 +7,7 @@ class UserController extends BaseController {
         $this->display("improve");
     }
     /**
-     * 完善资料
+     * 个人用户完善资料
      */
     public function improve(){
         if (IS_POST) {
@@ -34,7 +34,6 @@ class UserController extends BaseController {
             $this->display("User/completion");exit;
         }
     }
-
     /**
      * 补全资料
      */

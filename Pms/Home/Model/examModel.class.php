@@ -3,7 +3,7 @@ namespace Home\Model;
 use Think\Model;
 class ExamModel extends Model {
     protected $tablePrefix = '';
-    protected $autoCheckFields =false; 
+    protected $autoCheckFields =false;
     /**
      * 生成试卷
      */

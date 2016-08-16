@@ -85,7 +85,6 @@ class ExamController extends BaseController {
     	$level_id = $classifySheet['level_id'];
     	$difficulty = $classifySheet['difficulty'];
     	//已回答题目中该难度的题目
-    	$questionHave = json_decode($classifySheet['question'],true);
     	$sheetMode = D('sheet');
     	$where = array(
     		'classify_sheet_id' => $classifySheet['classify_sheet_id']
@@ -335,6 +334,13 @@ class ExamController extends BaseController {
     		echo "未找到答卷";
     		return false;
     	}
+    	//获取大类
+    	$classifyMode = D('classify');
+    	$where = array(
+    		'level' => 1,
+    	);
+    	$field = "classify_id,classify_name";
+    	$classify = $classifyMode->getClassify($where, $field);
     	//分类答卷
     	$classifySheetMode = D('classify_sheet');
     	$where = array(
@@ -359,6 +365,17 @@ class ExamController extends BaseController {
     	}
     	
     	
+    	
+    	$data = array(
+    		'totle_score' => $totleScore,
+    		'totle' => $totle,
+    		'max_score' => $max,
+    		'avg_score' => $avgScore,
+    		'classify' => array(
+    			
+    		)
+    	
+    	);
     }
     
     

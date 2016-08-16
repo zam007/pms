@@ -113,7 +113,7 @@ class IndexController extends Controller {
                  array('mobile','','该手机号已经被注册！',0,'unique',1),
                  array('email','','该邮箱已经被注册！',0,'unique',1),
             );
-
+            //te
             //验证团体注册或者个人注册
             if (I("type") == 2) {
                 $index = D("user");

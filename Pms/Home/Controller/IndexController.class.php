@@ -113,21 +113,27 @@ class IndexController extends Controller {
                  array('mobile','','该手机号已经被注册！',0,'unique',1),
                  array('email','','该邮箱已经被注册！',0,'unique',1),
             );
-            //te
             //验证团体注册或者个人注册
             if (I("type") == 2) {
-                $index = D("user");
-                $team = D("team");
-                if (!$index->validate($rules)->create($user)){
+                $index_user = D("user");
+                $index_team = D("team");
+                $index_team_user = D("teamUser");
+                if (!$index_user->validate($rules)->create($user)){
                     //验证失败
                     $this->ajaxReturn($index->getError());
                 }else{
                     //验证通过
-                    $teamInfo["code"] = rand(100000,999999);
-                    $teamId = $team->addTeam($teamInfo);
+                    $team["code"] = rand(100000,999999);
+                    $teamId = $index_team->addTeam($team);
+                    //
                     $user["reg_time"] = date('Y-m-d H:i:s',time());
                     $user["team_id"] = $teamId;
-                    $userId = $index->addUser($user);
+                    $userId = $index_user->addUser($user);
+                    //
+                    $team_user["team_id"] = $teamId;
+                    $team_user["user_id"] = $userId;
+                    $team_user["created"] = $user["reg_time"];
+                    $team_userId = $index_team_user->addteam($team_user);
                     SESSION("user_id",$userId);
                     SESSION("team_id",$teamId);
                     SESSION("last_session_id",session_id());

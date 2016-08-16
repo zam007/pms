@@ -1,0 +1,31 @@
+
+.header{background-color: #fcfcfc;border-bottom: 1px solid #eee;}
+.wrap-header-content{height: 100px;overflow: hidden;}
+.link{height: 100px;line-height: 100px;}
+.link a{text-decoration: none;color: #333;}
+.link .hover{border: 1px solid #fff;}
+.link .hover:hover{border: 1px solid #19b7f0;border-radius: 15px;color: #19b7f0;}
+
+.content{padding: 20px 0 60px 0;color: #fff;}
+.content-main{width: 1200px;margin: 0 auto;overflow: hidden;}
+
+.content-main ul li{color: #333;padding-top: 30px;}
+
+.deep-grey{color: #272729;}
+.pl67{padding-left: 67px;}
+.input-item{margin-left: 55px;width: 450px;border-bottom: 1px solid #eee;font-size: 14px;text-indent: 5px;}
+.input-desc{margin-left: 30px;width: 350px;border-bottom: 1px solid #eee;font-size: 14px;text-indent: 5px;}
+.input-score{margin-left: 30px;width: 150px;outline: none;border: none;border-bottom: 1px solid #eee;font-size: 14px;text-indent: 5px;color: #333;}
+.set-age{padding-top: 40px;}
+.set-age>input{margin-left: 30px;width: 150px;border-bottom: 1px solid #eee;font-size: 14px;text-indent: 5px;}
+.classification{overflow: hidden;padding-top: 40px;}
+.classification ul{display: inline-block;vertical-align: top;padding: 15px 15px 0 15px;;border: 1px solid #eee;}
+.classification ul li{padding-top: 0;overflow: hidden;padding-bottom: 20px;}
+.classification ul li .title{font-size: 18px;color: #333;float: left;width: 100px;height: 40px;line-height: 40px;text-align: center;}
+.classification ul li .item{font-size: 15px;float: left;width: 150px;height: 40px;line-height: 40px;text-align: center;border: 1px solid #eee;margin: 0 20px;border-radius: 3px;}
+.classification ul li .item:hover{cursor: pointer;background-color: #00b0dc;color: #fff;}
+.difficulty,
+.origin{padding-top: 40px;}
+.difficulty>input,
+.origin>input{margin-left: 30px;width: 150px;border-bottom: 1px solid #eee;font-size: 14px;text-indent: 5px;}
+input[type="button"]{margin-top: 40px;background-color: #00b0dc;width: 360px;height: 40px;line-height: 40px;text-align: center;color: #fff;margin-left: 130px;cursor: pointer;}

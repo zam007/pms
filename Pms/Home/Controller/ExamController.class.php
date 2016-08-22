@@ -8,8 +8,8 @@ class ExamController extends BaseController {
 //	public function __construct(){
 //		parent::__construct();
 //		$userId = $this->userId;
-//		
-//		
+//
+//
 //	}
 	/**
 	 * 开始测试

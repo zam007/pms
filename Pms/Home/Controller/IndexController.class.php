@@ -175,6 +175,7 @@ class IndexController extends Controller {
      */
     public function logout(){
             SESSION("user_id",0);
+            SESSION("team_id",0);
             $this->success('成功退出','index');
     }
 }

@@ -320,7 +320,7 @@ class ExamController extends BaseController {
      */
     private function report($answerSheetId){
     	$userId = $this->userId;
-    	
+    	echo 22;exit;
     	$where = array(
     		'user_id'=>$userId,
     		'answer_sheet_id'=>$answerSheetId

@@ -114,7 +114,7 @@ class IndexController extends Controller {
                  array('email','','该邮箱已经被注册！',0,'unique',1),
             );
             //验证团体注册或者个人注册
-            if (I("type") == 2) {
+            if (I("register_property") == 2) {
                 $index_user = D("user");
                 $index_team = D("team");
                 $index_team_user = D("teamUser");

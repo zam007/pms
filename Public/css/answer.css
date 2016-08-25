@@ -32,12 +32,17 @@
 }
 .main .operating{
 	text-align: left;
+  color: #393939;
+  font-size: 15px;
 }
 .main .operating a{
 	color: #8dbc78;
 	font-size: 14px;
 	text-decoration: none;
-	padding-right: 20px;
+}
+.main .operating .tip{
+  font-size: 14px;
+  color: #9d9d9d;
 }
 .main .operating .progress-bar{
 	margin: 20px 0;
@@ -47,4 +52,8 @@
 }
 .main .operating p span:not(:last-child){
 	padding-right: 30px;
+}
+.check-options{
+	padding: 20px 0;
+	cursor: pointer;
 }

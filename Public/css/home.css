@@ -1,7 +1,4 @@
-/*home*/
-body{
-	font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-}
+
 .header{background-color: #fff;}
 .wrap-header-content{height: 100px;overflow: hidden;}
 .link{height: 100px;line-height: 100px;}
@@ -14,3 +11,36 @@ body{
 .home-list li{display: table;width: 616px;height: 105px;margin-bottom: 20px;background-color: rgba(255,255,255,.1);}
 .home-list li .home-list-img{display: table-cell;width: 42px;padding: 0 30px;vertical-align: middle;}
 .home-list li .home-list-option{display: table-cell;vertical-align: middle;background: url('../img/');}
+
+.head-nav:hover{color: #009cc3;}
+.head-log,
+.head-title{margin-top: 24px;}
+
+.home-list li:hover{cursor: pointer;background-color: #009cc3;}
+.login-modal .model-content{
+	width: 450px;height: 537px;
+	margin: auto;
+	position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+.register-modal .model-content{
+	width: 424px;height: 422px;
+	margin: auto;
+	position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+.login-title{
+	background-color: #00b0dc;
+	color: #fff;
+}
+.login-form-box  .error input{
+	border: 1px solid #f68684;
+}
+.login-content  .error .error-tip{
+	height: 20px;line-height: 20px;
+	text-indent: 25px;
+	color: #f68684;
+	margin: 5px 0 0 10px;
+	background: url('../img/error_tip.png') 0 50% no-repeat;
+	background-size: initial;
+}

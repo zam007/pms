@@ -9,7 +9,6 @@ class IndexController extends Controller {
     public function log(){
             $this->display("login");
     }
-
 	/**
 	 *登陆
 	 */
@@ -74,7 +73,6 @@ class IndexController extends Controller {
             }
         }
     }
-
     /**
      * 图片验证码
      */
@@ -90,13 +88,11 @@ class IndexController extends Controller {
         //$Verify->expire = 600;
         $Verify->entry();
 	}
-
 	/**
 	 * 注册
 	 */
 	public function register(){
         if (IS_POST) {
-
             //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
@@ -105,7 +101,6 @@ class IndexController extends Controller {
                 $user['mobile'] = I("username");
                 $value = '邮箱';
             }
-
             //注册账号合法验证
             $rules = array(
                  array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
@@ -138,7 +133,7 @@ class IndexController extends Controller {
                     SESSION("team_id",$teamId);
                     SESSION("last_session_id",session_id());
                     $this->assign('value',$value);
-                    $this->display("user/improve");
+                    $this->display("user/register_1");
                 }
             }
             else {
@@ -153,12 +148,11 @@ class IndexController extends Controller {
                     SESSION("user_id",$userInfo);
                     SESSION("last_session_id",session_id());
                     $this->assign('value',$value);
-                    $this->display("user/improve");
+                    $this->display("user/register_1");
                 }
             }
         }
     }
-
     /**
      * 发送邮件
      */
@@ -169,7 +163,6 @@ class IndexController extends Controller {
             $content = '内容';
             SendMail($email,$title,$content);
     }
-
     /**
      * 用户退出
      */
@@ -177,5 +170,17 @@ class IndexController extends Controller {
             SESSION("user_id",0);
             SESSION("team_id",0);
             $this->success('成功退出','index');
+    }
+    /**
+     * 找回密码
+     */
+     public function findpasswdstepone(){
+        $this->display("fundpwd_1");
+    }
+
+     public function findpasswdsteptwo(){
+        if(IS_POST){
+            $this->display("fundpwd_2");
+        }
     }
 }

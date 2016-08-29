@@ -31,7 +31,7 @@ class UserController extends BaseController {
             }
             $user["password"] = md5(I("password").C("PWD_KEY"));
             $index->modify($userId,$user);
-            $this->display("User/completion");exit;
+            $this->display("User/register_2");exit;
         }
     }
     /**

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/login.css">
+</head>
+<body>
+	<div class="wrap">
+		<div class="bg-blue"></div>
+		<div class="login-box">
+			<div class="login-header">
+				<img class="fl" src="__PUBLIC__/img/log_2.png" alt="logo">
+				<div class="fl box-title">
+					<h1 class="fz-20 fw-500 fff">西南财经大学五行财商研究中心</h1>
+					<h3 class="fz-14 fw-100 fff">财商测评系统（v1.0）</h3>
+				</div>
+			</div>
+			<div class="login-form">
+				<div class="login-title"><span>找回密码</span></div>
+				<div class="login-content">
+					<form name="fdpasswd1" method="post" action="{:U('Index/findpasswdsteptwo')}">
+						<div class="form-box">
+							<input type="text" name="" class="pwd text account" placeholder="请输入手机号/邮箱" style="width:360px;">
+						</div>
+						<div class="form-box">
+							<input type="text" name="" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#">看不清</a>
+						</div>
+						<div class="form-box">
+							<input type="text" name="" class="pwd text" placeholder="请输入短信验证码" style="width:250px;"><a href="#">发送验证码</a>
+						</div>
+					<button onclick="fdpasswd_submit()" class="btn-login">下一步</button>
+					</form>
+					<script>
+						function fdpasswd_submit(){
+							$('fdpasswd1').submit();
+						}
+					</script>
+					<p class="step">
+						<img src="__PUBLIC__/img/step_1.png" alt="" />
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

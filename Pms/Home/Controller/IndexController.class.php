@@ -9,7 +9,6 @@ class IndexController extends Controller {
     public function log(){
             $this->display("login");
     }
-
 	/**
 	 *登陆
 	 */
@@ -74,7 +73,6 @@ class IndexController extends Controller {
             }
         }
     }
-
     /**
      * 图片验证码
      */
@@ -90,22 +88,21 @@ class IndexController extends Controller {
         //$Verify->expire = 600;
         $Verify->entry();
 	}
-
 	/**
 	 * 注册
 	 */
-	public function register(){
+	public function register_1(){
         if (IS_POST) {
-
             //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
                 $value = '手机号';
+                $account = I("username");
             }else {
                 $user['mobile'] = I("username");
                 $value = '邮箱';
+                $account = I("username");
             }
-
             //注册账号合法验证
             $rules = array(
                  array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
@@ -114,7 +111,7 @@ class IndexController extends Controller {
                  array('email','','该邮箱已经被注册！',0,'unique',1),
             );
             //验证团体注册或者个人注册
-            if (I("type") == 2) {
+            if (I("register_property") == 2) {
                 $index_user = D("user");
                 $index_team = D("team");
                 $index_team_user = D("teamUser");
@@ -137,11 +134,12 @@ class IndexController extends Controller {
                     SESSION("user_id",$userId);
                     SESSION("team_id",$teamId);
                     SESSION("last_session_id",session_id());
+                    SESSION("user_account",$account);
+                    SESSION("user_type",1);
                     $this->assign('value',$value);
-                    $this->display("user/improve");
+                    $this->display("user/register_1");
                 }
-            }
-            else {
+            }else {
                 $index = D("user");
                 if (!$index->validate($rules)->create($user)){
                     //验证失败
@@ -149,16 +147,17 @@ class IndexController extends Controller {
                 }else{
                     //验证通过
                     $user["reg_time"] = date('Y-m-d H:i:s',time());
-                    $userInfo = $index->addUser($user);
-                    SESSION("user_id",$userInfo);
+                    $userId = $index->addUser($user);
+                    SESSION("user_id",$userId);
                     SESSION("last_session_id",session_id());
+                    SESSION("user_account",$account);
+                    SESSION("user_type",0);
                     $this->assign('value',$value);
-                    $this->display("user/improve");
+                    $this->display("user/register_1");
                 }
             }
         }
     }
-
     /**
      * 发送邮件
      */
@@ -169,12 +168,25 @@ class IndexController extends Controller {
             $content = '内容';
             SendMail($email,$title,$content);
     }
-
     /**
      * 用户退出
      */
     public function logout(){
             SESSION("user_id",0);
+            SESSION("team_id",0);
+            SESSION("user_accout",0);
             $this->success('成功退出','index');
+    }
+    /**
+     * 找回密码
+     */
+     public function findpasswdstepone(){
+        $this->display("fundpwd_1");
+    }
+
+     public function findpasswdsteptwo(){
+        if(IS_POST){
+            $this->display("fundpwd_2");
+        }
     }
 }

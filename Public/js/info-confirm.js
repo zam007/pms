@@ -1,4 +1,4 @@
-var infoConfirm = {
+var InfoConfirm = {
 	init: function() {
 		this.bind();
 	},
@@ -21,4 +21,4 @@ var infoConfirm = {
 	}
 };
 
-infoConfirm.init();
+InfoConfirm.init();

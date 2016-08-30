@@ -4,7 +4,7 @@ use Think\Model;
 class AnswerSheetModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
-	
+
     public function getAnswerSheet($info,$filed = '*') {
         $answerSheet = M("answer_sheet"); 
         $info['flag'] = 1;
@@ -14,5 +14,20 @@ class AnswerSheetModel extends Model {
     public function modify($answerSheetId,$update){
         $answerSheet = M("answer_sheet"); 
         return $answerSheet->where('answer_sheet_id='.$answerSheetId)->save($update);
+    }
+    
+    public function avgScore($levelId){
+        $answerSheet = M("answer_sheet"); 
+        return $answerSheet->where('level_id='.$levelId)->avg('score');
+    }
+    
+    public function maxScore($levelId){
+        $answerSheet = M("answer_sheet"); 
+        return $answerSheet->where('level_id='.$levelId)->max('score');
+    }
+    
+    public function countScore($where){
+        $answerSheet = M("answer_sheet");
+        return $answerSheet->where($where)->count();
     }
 }

@@ -317,10 +317,14 @@ class ExamController extends BaseController {
     }
     /**
      * 生成答题报告
+     *  1、根据答卷id获取答卷
+     *  2、获取年龄组实际得分、应得分、平均得分和最高得分
+     *  3、根据答卷id获取分类试卷
+     *  4、获取年龄组大类试卷实际得分、应得分、平均分、最高得分、得分比
+     *  4、获取年龄组小类试卷实际得分、应得分、平均分、得分比
      */
     private function report($answerSheetId){
     	$userId = $this->userId;
-    	echo 22;exit;
     	$where = array(
     		'user_id'=>$userId,
     		'answer_sheet_id'=>$answerSheetId
@@ -334,13 +338,42 @@ class ExamController extends BaseController {
     		echo "未找到答卷";
     		return false;
     	}
-    	//获取大类
+        //难度分组
+        $levelModel = D('level');
+        $where = array(
+            'level_id' => $answerSheet['level_id'],
+        );
+        $filed = "answer_num";
+        $level = $levelModel->getLevel($where, $filed);
+        $data['answer_num'] = $level['answer_num'];
+        //实际得分
+        $data['total_score'] = $answerSheet['score'];
+        //平均分
+        $data['avg_score'] = $answerMode->avgScore($answerSheet['level_id']);
+        //最高分
+        $data['max_score'] = $answerMode->maxScore($answerSheet['level_id']);
+        
+        $where = array(
+            'level_id' => $answerSheet['level_id'],
+            'level_id' => array('LT', $score),
+        );
+        $gtScore = $answerMode->countScore($where);
+        $where = array(
+            'level_id' => $answerSheet['level_id'],
+        );
+        $sumScore = $answerMode->countScore($where);
+        $data['beat'] = rand($gtScore / $sumScore * 100, 2)."%";
     	$classifyMode = D('classify');
+        //获取大类
     	$where = array(
     		'level' => 1,
     	);
+        
     	$field = "classify_id,classify_name";
     	$classify = $classifyMode->getClassify($where, $field);
+        foreach($classify as $res){
+            $classifys[$res['classify_id']] = $res;
+        }
     	//分类答卷
     	$classifySheetMode = D('classify_sheet');
     	$where = array(
@@ -348,10 +381,15 @@ class ExamController extends BaseController {
     	);
     	$classifySheet = getClassifySheets($where);
     	foreach($classifySheet as $res){
-    		//实际得分
-    		$score += $res['score'];
+                if($classifys[$res['father_id']] == $res['father_id']){
+                    $classifys[$res['father_id']]['classify_sheet'][] = $res;
+                }
     	}
-    	$data['score'] = $score;
+        //基础得分
+    	$data['basic_score'] = count($classifySheet) * $data['answer_num'] * 3;
+        //得分率
+        $data['probability_score'] = round($data['total_score'] / $data['basic_score'], 2)."%";
+       
     	
     	$sheetMode = D('sheet');
     	$field = "question_id,answer_id,inclination_id,score";

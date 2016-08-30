@@ -91,15 +91,17 @@ class IndexController extends Controller {
 	/**
 	 * 注册
 	 */
-	public function register(){
+	public function register_1(){
         if (IS_POST) {
             //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
                 $value = '手机号';
+                $account = I("username");
             }else {
                 $user['mobile'] = I("username");
                 $value = '邮箱';
+                $account = I("username");
             }
             //注册账号合法验证
             $rules = array(
@@ -132,11 +134,12 @@ class IndexController extends Controller {
                     SESSION("user_id",$userId);
                     SESSION("team_id",$teamId);
                     SESSION("last_session_id",session_id());
+                    SESSION("user_account",$account);
+                    SESSION("user_type",1);
                     $this->assign('value',$value);
                     $this->display("user/register_1");
                 }
-            }
-            else {
+            }else {
                 $index = D("user");
                 if (!$index->validate($rules)->create($user)){
                     //验证失败
@@ -144,9 +147,11 @@ class IndexController extends Controller {
                 }else{
                     //验证通过
                     $user["reg_time"] = date('Y-m-d H:i:s',time());
-                    $userInfo = $index->addUser($user);
-                    SESSION("user_id",$userInfo);
+                    $userId = $index->addUser($user);
+                    SESSION("user_id",$userId);
                     SESSION("last_session_id",session_id());
+                    SESSION("user_account",$account);
+                    SESSION("user_type",0);
                     $this->assign('value',$value);
                     $this->display("user/register_1");
                 }
@@ -169,6 +174,7 @@ class IndexController extends Controller {
     public function logout(){
             SESSION("user_id",0);
             SESSION("team_id",0);
+            SESSION("user_accout",0);
             $this->success('成功退出','index');
     }
     /**

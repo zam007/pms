@@ -21,8 +21,13 @@
 						<a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">网络测试</a>
 			            <a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">人工面测</a>
 			            <a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">行为测试</a>
+			            <if condition="$Think.session.user_id eq 0 ">
 						<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_login">登录</a>
 						<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_register">注册</a>
+						<else/>
+						<a>{$Think.session.user_name}</a>
+						<a href="{:U('Index/logout')}" class="ml5 mr5 pl10 pr10 hover">退出</a>
+						</if>
 					</div>
 				</div>
 			</div>
@@ -125,7 +130,7 @@
 			<div class="login-form">
 				<div class="login-title"><span>欢迎注册</span></div>
 				<div class="login-content">
-					<form name="register" method="post" action="{:U('Index/register')}">
+					<form name="register" method="post" action="{:U('Index/register_1')}">
 						<div class="form-box">
 							<input type="text" name="username" class="account text" placeholder="请输入手机号/邮箱" style="width:360px;">
 						</div>

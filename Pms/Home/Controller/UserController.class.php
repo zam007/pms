@@ -4,22 +4,19 @@ use Think\Controller;
 
 class UserController extends BaseController {
     public function improveHtml(){
-        $this->display("improve");
+        $this->display("register_1");
     }
     /**
      * 个人用户完善资料
      */
-    public function improve(){
+    public function register_2(){
         if (IS_POST) {
-
             //检测验用户名是手机号码或者邮箱
             $index = D("user");
-
             //检测之前输入的是邮箱还是手机号码
             $userId = $this->userId;
             $info = $index->getUserField($userId,'mobile,email');
             $userInfo = $index->modify($userId,$user);
-
             //密码合法验证
             $rules = array(
                 array('repassword','password','确认密码不正确',0,'confirm'),
@@ -31,7 +28,11 @@ class UserController extends BaseController {
             }
             $user["password"] = md5(I("password").C("PWD_KEY"));
             $index->modify($userId,$user);
-            $this->display("User/register_2");exit;
+            if(I('session.user_type') == 0){
+                $this->display("User/register_2");
+            }else{
+                $this->display("User/register_group");
+            }
         }
     }
     /**

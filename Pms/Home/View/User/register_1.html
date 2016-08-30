@@ -19,9 +19,14 @@
 				</div>
 			</div>
 			<div class="login-form">
-				<div class="register-title"><span>欢迎您，135****5625</span><p class="tip-green">注册成功，为了您的账户安全，请设置密码</p></div>
+				<div class="register-title">
+				<if condition="$Think.session.user_id neq 0 ">
+				<span>欢迎您，{$Think.session.user_account}</span>
+				</if>
+				<p class="tip-green">注册成功，为了您的账户安全，请设置密码</p>
+				</div>
 				<div class="login-content">
-					<form id="register_1" class="pt20" method="post" action="{:U('User/improve')}">
+					<form id="register_1" class="pt20" method="post" action="{:U('User/register_2')}">
 						<div class="form-box">
 							<input type="password" name="password" class="pwd text" placeholder="请输入新密码" style="width:360px;">
 							<p class="pt5">提示：8位，同时包含大小写字母和数字</p>

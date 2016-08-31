@@ -25,7 +25,7 @@
 						<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_login">登录</a>
 						<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_register">注册</a>
 						<else/>
-						<a>{$Think.session.user_name}</a>
+						<a href="{:U('User/personal_info')}">{$Think.session.user_name}</a>
 						<a href="{:U('Index/logout')}" class="ml5 mr5 pl10 pr10 hover">退出</a>
 						</if>
 					</div>
@@ -93,17 +93,27 @@
 				<div class="login-content">
 					<form action="{:U('Index/login')}" method="post" name="login" class="login-form-box">
 						<div class="form-box error">
-							<input type="text" name="" class="account text" placeholder="请输入手机号/邮箱">
+							<input type="text" name="username" class="account text" placeholder="请输入手机号/邮箱">
 							<p class="error-tip">请输入正确的11位手机号</p>
 						</div>
 						<div class="form-box">
-							<input type="password" name="" class="pwd text" placeholder="请输入密码">
+							<input type="password" name="password" class="pwd text" placeholder="请输入密码">
 						</div>
 						<div class="form-box">
 							<label><input type="checkbox" name="" class="vam"><span class="pl5 cur-pointer">五天内自动登录</span></label>
 						</div>
 						<div class="form-box">
-							<input type="text" name="" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#">看不清</a>
+							<input type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/> <a href="#" onclick="reloadcode('logincodeimg')">看不清</a>
+                            <script>
+                            /**
+                            *刷新验证码
+                            */
+                            function reloadcode(id)
+                            {
+                             var yucodeurl = document.getElementById(id).src;
+                             document.getElementById(id).src = yucodeurl +'?'+ Math.random();
+                            }
+                            </script>
 						</div>
 					<button class="btn-login" onclick="login_submit()">登录</button>
 					</form>

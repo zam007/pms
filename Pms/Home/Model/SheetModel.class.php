@@ -38,6 +38,11 @@ class SheetModel extends Model {
     	$sheet = M("sheet"); 
         return $sheet->field($field)->where('$answer_sheet_id='.$answerSheetId)->select();
     }
+    
+    public function getInclination($answerSheetId,$field = '*'){
+        $sheet = M("sheet"); 
+        return $sheet->field($field)->join('deviation on deviation.deviation_id = sheet.deviation_id')->where('$answer_sheet_id='.$answerSheetId)->select();
+    }
 }
 
 

@@ -42,4 +42,9 @@ class ClassifySheetModel extends Model {
     	$where['flag'] = array('eq',1); 
     	return $classifySheet->where($where)->count();
     }
+    
+    public function avgScore($where){
+        $classifySheet = M('classify_sheet');
+        return $answerSheet->join('answer_sheet on answer_sheet.answer_sheet_id = classify_sheet.answer_sheet_id')->where($where)->avg('score');
+    }
 }

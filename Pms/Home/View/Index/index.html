@@ -10,27 +10,7 @@
 </head>
 <body>
 	<div class="wrap">
-			<div class="wrap-content">
-				<div class="wrap-header-content">
-					<img class="fl head-log" src="__PUBLIC__/img/log_2.png" alt="logo">
-					<div class="fl head-title">
-						<h1 class="fz-20 fw-500 grey-deep">西南财经大学五行财商研究中心</h1>
-						<h3 class="fz-14 fw-100 grey">财商测评系统（v1.0）</h3>
-					</div>
-					<div class="fr link">
-						<a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">网络测试</a>
-			            <a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">人工面测</a>
-			            <a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">行为测试</a>
-			            <if condition="$Think.session.user_id eq 0 ">
-						<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_login">登录</a>
-						<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_register">注册</a>
-						<else/>
-						<a href="{:U('User/personal_info')}">{$Think.session.user_name}</a>
-						<a href="{:U('Index/logout')}" class="ml5 mr5 pl10 pr10 hover">退出</a>
-						</if>
-					</div>
-				</div>
-			</div>
+		<include file="Public:header" />
 		<div class="content">
 			<div class="wrap-content distb">
 				<div class="distc vat">
@@ -66,23 +46,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer">
-			<div class="wrap-content">
-				<div class="wrap-content">
-				<div class="wrap-header-content">
-					<img class="inline-block vam" src="__PUBLIC__/img/erweima.png" alt="logo">
-					<div class="inline-block vam">
-						<P class="fz-14 fw-500 grey-deep">成都财情科技有限公司 版权所有</P>
-						<P class="fz-14 fw-100 grey">电话02887095141</P>
-						<P class="fz-14 fw-100 grey">微信号：成都财情（FQEQTECH）</P>
-					</div>
-					<div class="fr link vam">
-						<a href="#" class="fz-14 pl10 pr10 c999">蜀ICP备1201424号|工商注册号510109000090786</a>
-					</div>
-				</div>
-			</div>
-			</div>
-		</div>
+		<include file="Public:footer" />
 	</div>
 <!-- Login Modal -->
 <div class="modal login-modal">

@@ -172,7 +172,7 @@ class ExamController extends BaseController {
     	//获取答案
     	$answerMode = D('Answer');
     	$where['answer_id'] = $answerId;
-    	$answer = $answerMode->getAnswer($where,'answer_id,score,inclination_id');
+    	$answer = $answerMode->getAnswer($where,'answer_id,score,deviation_id');
     	
     	//获取试卷
     	$answerSheetMode = D('AnswerSheet');
@@ -211,7 +211,7 @@ class ExamController extends BaseController {
     	$update = array(
     		'answer_id' => $answerId,
     		'score' => $score1,
-    		'inclination_id' => $answerId,
+    		'deviation_id' => $answerId,
     		'updatetime' => date('Y-m-d H:i:s',time()),
     		'is_answer' => 1,
     	);
@@ -317,10 +317,14 @@ class ExamController extends BaseController {
     }
     /**
      * 生成答题报告
+     *  1、根据答卷id获取答卷
+     *  2、获取年龄组实际得分、应得分、平均得分和最高得分
+     *  3、根据答卷id获取分类试卷
+     *  4、获取年龄组大类试卷实际得分、应得分、平均分、最高得分、得分比
+     *  4、获取年龄组小类试卷实际得分、应得分、平均分、得分比
      */
     private function report($answerSheetId){
     	$userId = $this->userId;
-    	echo 22;exit;
     	$where = array(
     		'user_id'=>$userId,
     		'answer_sheet_id'=>$answerSheetId
@@ -334,13 +338,44 @@ class ExamController extends BaseController {
     		echo "未找到答卷";
     		return false;
     	}
-    	//获取大类
+        //难度分组
+        $levelModel = D('level');
+        $where = array(
+            'level_id' => $answerSheet['level_id'],
+        );
+        $filed = "answer_num";
+        $level = $levelModel->getLevel($where, $filed);
+        $data['answer_num'] = $level['answer_num'];
+        //实际得分
+        $data['total_score'] = $answerSheet['score'];
+        //平均分
+        $data['avg_score'] = $answerMode->avgScore($answerSheet['level_id']);
+        //相对得分
+        $data['relative_score'] = $data['total_score'] - $data['avg_score'];
+        //最高分
+        $data['max_score'] = $answerMode->maxScore($answerSheet['level_id']);
+        
+        $where = array(
+            'level_id' => $answerSheet['level_id'],
+            'level_id' => array('LT', $score),
+        );
+        $gtScore = $answerMode->countScore($where);
+        $where = array(
+            'level_id' => $answerSheet['level_id'],
+        );
+        $sumScore = $answerMode->countScore($where);
+        $data['beat'] = rand($gtScore / $sumScore * 100, 2)."%";
     	$classifyMode = D('classify');
+        //获取大类
     	$where = array(
     		'level' => 1,
     	);
+        
     	$field = "classify_id,classify_name";
     	$classify = $classifyMode->getClassify($where, $field);
+        foreach($classify as $res){
+            $classifys[$res['classify_id']] = $res;
+        }
     	//分类答卷
     	$classifySheetMode = D('classify_sheet');
     	$where = array(
@@ -348,34 +383,53 @@ class ExamController extends BaseController {
     	);
     	$classifySheet = getClassifySheets($where);
     	foreach($classifySheet as $res){
-    		//实际得分
-    		$score += $res['score'];
+                if($classifys[$res['father_id']] == $res['father_id']){
+                    //总答题数
+                    $res['answer_num'] = $data['answer_num'];
+                    $classifys[$res['father_id']]['classify_top']['count_answer'] += $data['answer_num'];
+                    //基础分
+                    $res['basic_score'] = $data['answer_num'] * 5;
+                    $classifys[$res['father_id']]['classify_top']['basic_score'] += $res['basic_score'];
+                    //实际得分
+                    $res['total_score'] = $res['score'];
+                    $classifys[$res['father_id']]['classify_top']['total_score'] += $res['score'];
+                    //得分率
+                    $res['probability_score'] = round($res['score'] / $data['answer_num'] * 5, 2);
+                    $classifys[$res['father_id']]['classify_top']['probability_score'] = round($classifys[$res['father_id']]['classify_sheet']['basic_score'] / $classifys[$res['father_id']]['classify_sheet']['total_score'], 2)."%";
+                    //年龄组平均得分
+                    $where = array(
+                        'classify_id' => $res['classify_id'],
+                        'answer_sheet.level_id' => $answerSheet['level_id']
+                    );
+                    $res['avg_score'] = $classifySheetMode->avgScore($where);
+                    $classifys[$res['father_id']]['classify_top']['avg_score'] += $res['avg_score'];
+                    //相对得分
+                    $res['relative_score'] = $res['total_score'] - $res['avg_score'];
+                    $classifys[$res['father_id']]['classify_top']['relative_score'] += $res['relative_score'];
+                    $classifys[$res['father_id']]['classify_top']['classify'][] = $res;
+                }
     	}
-    	$data['score'] = $score;
+        //基础得分
+    	$data['basic_score'] = count($classifySheet) * $data['answer_num'] * 5;
+        //得分率
+        $data['probability_score'] = round($data['total_score'] / $data['basic_score'], 2)."%";
+       
     	
     	$sheetMode = D('sheet');
-    	$field = "question_id,answer_id,inclination_id,score";
+    	$field = "deviation,deviation_id";
     	$sheet = $sheetMode->getSheetAll($answerSheetId);
+        $inclination = array();
     	foreach($sheet as $res){
-    		$questionIds[] = $res['question_id'];
-    		if((int)$res['answer_id'] != 0){
-    			$answerIds[] = $res['answer_id'];
-    			$inclinationIds[] = $res['inclination_id'];
-    		}
+            if($inclination[$res['deviation_id']]['deviation_id'] != $res['deviation_id']){
+                $inclination[$res['deviation_id']]['count'] ++;
+                $inclination[$res['deviation_id']]['deviation'] = $res['deviation'];
+            }
     	}
     	
-    	
-    	
-    	$data = array(
-    		'totle_score' => $totleScore,
-    		'totle' => $totle,
-    		'max_score' => $max,
-    		'avg_score' => $avgScore,
-    		'classify' => array(
-    			
-    		)
-    	
-    	);
+        //总体分析
+        $data['analysis'] = "总体分析";
+        //结果说明
+        $data['result'] = "结果说明";
     }
     
     

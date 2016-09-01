@@ -106,7 +106,10 @@
 				<div class="login-content">
 					<form name="register" method="post" action="{:U('Index/register_1')}">
 						<div class="form-box">
-							<input type="text" name="username" class="account text" placeholder="请输入手机号/邮箱" style="width:360px;">
+							<input id="reg-username" type="text" name="username" class="account text" placeholder="请输入手机号/邮箱" style="width:360px;">
+							<div id="reg-tip1">
+							<span id="reg-name-mess"></span>
+							</div>
 						</div>
 						<div class="form-box">
 							<input type="text" name="" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#">发送验证码</a>
@@ -121,13 +124,30 @@
 						function register_submit(){
 							$('register').submit();
 						}
-						
 					</script>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+$('#reg-username').blur(
+      function() {
+        var username = $(this).val();
+        $.post("index.php/Home/Index/checkName", {
+          'username' : username//前一个username需要跟UserModel对应，即跟数据库字段对应
+        }, function(data) {
+          if (data == 0) {
+            error['username'] = 0;
+            $('#reg-tip1').attr('class','tooltip-info visible-inline success');
+          } else {
+            error['username'] = 1;
+            $('#reg-tip1').attr('class','tooltip-info visible-inline error');
+            $('#reg-name-mess').html(data);
+          }
+        })
+      });
+</script>
 </body>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/home.js"></script>

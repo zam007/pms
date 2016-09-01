@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>五行财商研究中心</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/info.css">
+    <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js">
+    </script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="header">
+			<div class="wrap-content">
+				<div class="wrap-header-content">
+					<img class="fl head-log" src="__PUBLIC__/img/log_2.png" alt="logo">
+					<div class="fl head-title">
+						<h1 class="fz-20 fw-500 grey-deep">西南财经大学五行财商研究中心</h1>
+						<h3 class="fz-14 fw-100 grey">财商测评系统（v1.0）</h3>
+					</div>
+					<div class="fr link">
+						<a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">网络测试</a>
+            <a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">人工面测</a>
+            <a href="#" class="fz-14 pl10 pr10 grey-deep head-nav">行为测试</a>
+						<a href="#" class="ml5 mr5 pl10 pr10 log-info">
+							<span><a href="{:U('User/personal_info')}">{$Think.session.user_name}</a></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="content-main">
+				<div class="content-main-nav">
+					<div class="ml5 mr5">
+						<p>账号设置</p>
+						<ul>
+							<li class="current"><a href="{:U('User/personal_info')}">个人信息</a></li>
+							<li><a href="{:U('User/account_bind')}">账号绑定</a></li>
+							<li><a href="{:U('User/change_pwd')}">修改密码</a></li>
+							<li><a href="{:U('User/test_record')}">测试记录</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="content-main-form">
+					<div class="content-main-form-title">
+						<p class="fz20">个人信息</p>
+						<span>为了更好为您服务，请如实填写。个人信息仅作测试使用，我们承诺保证您的信息安全。</span>
+					</div>
+					<div class="content-main-form-info">
+						<div>
+							<span class="item">姓名：</span>
+							<input type="text" name="" placeholder="请输入你的真实姓名" style="width:350px;">
+							<p class="tip-green">仅生成报告试用，请放心填写</p>
+						</div>
+						<div>
+							<span class="item">性别：</span>
+							<label><input type="radio" name="sex" class="pr10"><span class="pl5">男</span></label>
+							<label class="pl30"><input type="radio" name="sex" class="pr10"><span class="pl5">女</span></label>
+						</div>
+						<div>
+							<span class="item">生日：</span>
+							<select class="pl5 pr5">
+								<option>---</option>
+								<option>1990</option>
+								<option>1991</option>
+								<option>1992</option>
+							</select>
+							<span class="pl5 pr5">年</span>
+							<select class="pl5 pr5">
+								<option>---</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+							</select>
+							<span class="pl5 pr5">月</span>
+							<select class="pl5 pr5">
+								<option>---</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+							</select>
+							<span class="pl5 pr5">日</span>
+							<p class="grey tip-grey">为了准确测试，请如实填写</p>
+						</div>
+						<div>
+							<span class="item">职业：</span>
+							<select class="pl5 pr5" style="width:425px;">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+							</select>
+							<p class="grey tip-grey">&nbsp;</p>
+						</div>
+						<div>
+							<span class="item">团体：</span>
+							<input type="text" name=""  style="width:200px;border-bottom:1px solid #eaefee;"><input type="text" name="name" placeholder="请输入邀请码" class="invitation-code">
+							<p class="tip-spec">为了准确测试，请如实填写 <span class="tip-inline">请向管理员询问</span></p>
+						</div>
+						<div>
+							<span class="item">来源地：</span>
+							<select class="pl5 pr5" style="width:425px;">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+							</select>
+							<p class="grey tip-grey">县级以上城市、农村</p>
+						</div>
+						<div>
+							<span class="item">微信号：</span>
+							<input type="text" name="" placeholder="请输入微信号" style="width:425px;">
+							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
+						</div>
+						<div>
+							<span class="item">QQ：</span>
+							<input type="text" name="" placeholder="请输入QQ号" style="width:425px;">
+							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
+						</div>
+                        <if condition="$Think.session.team_id neq 0 ">
+                        <div>
+                            <span class="item">团体名称：</span>
+							<input type="text" name="team_name" placeholder="xxx" style="width:425px;">
+							<p class="grey tip-grey">公司名，组织名</p>
+                        </div>
+                        <div>
+                            <span class="item">公司性质：</span>
+							<input type="text" name="nature" placeholder="xxx" style="width:425px;">
+							<p class="grey tip-grey">公司的性质</p>
+                        </div>
+                        <div>
+                            <span class="item">行业属性：</span>
+							<input type="text" name="attribute" placeholder="xxx" style="width:425px;">
+							<p class="grey tip-grey">行业的属性</p>
+                        </div>
+                        <div>
+                            <span class="item">团体邀请码：</span>
+							<input type="text" name="code" placeholder="xxx" style="width:425px;">
+							<p class="grey tip-grey">可以分享给团队，加入</p>
+                        </div>
+                        </if>
+						<div>
+							<p class="submit">完成</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="wrap-content">
+				<div class="wrap-content">
+				<div class="wrap-header-content">
+					<img class="inline-block vam" src="__PUBLIC__/img/erweima.png" alt="logo">
+					<div class="inline-block vam">
+						<P class="fz-14 fw-500 grey-deep">成都财情科技有限公司 版权所有</P>
+						<P class="fz-14 fw-100 grey">电话02887095141</P>
+						<P class="fz-14 fw-100 grey">微信号：成都财情（FQEQTECH）</P>
+					</div>
+					<div class="fr link vam">
+						<a href="#" class="fz-14 pl10 pr10 c999">蜀ICP备1201424号|工商注册号510109000090786</a>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

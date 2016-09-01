@@ -7,6 +7,21 @@ class UserController extends BaseController {
         $this->display("register_1");
     }
     /**
+     * 跳转
+     */
+    public function personal_info(){
+        $this->display("personal_info");
+    }
+    public function account_bind(){
+        $this->display("account_bind");
+    }
+    public function change_pwd(){
+        $this->display("change_pwd");
+    }
+    public function test_record(){
+        $this->display("test_record");
+    }
+    /**
      * 个人用户完善资料
      */
     public function register_2(){
@@ -39,6 +54,7 @@ class UserController extends BaseController {
      * 补全资料
      */
     public function completion(){
+        // print_r($_POST);exit;
             $userId = $this->userId;
             $user["name"] = I("name");
             $user["sex"] = I("sex");

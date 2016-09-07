@@ -19,8 +19,8 @@ class ExamController extends BaseController {
     	$userModel = D("User");
         $user = $userModel->getUserField($userId,'birth,answer');
         if($user['answer'] == 1){
-        	$this->answerQuestion();
-        	die();
+            $this->answerQuestion();
+            die();
         }
         $brith = $user['birth'];
         //计算年龄
@@ -33,10 +33,10 @@ class ExamController extends BaseController {
         //生成答卷,开始答题
          $examMode = D("exam");
          if($examMode->addSheet($level,$userId)){
-         	$this->answerQuestion();
-         	die();
+            $this->answerQuestion();
+            die();
          }else{
-         	return false;
+            return false;
          }
     }
     
@@ -132,7 +132,11 @@ class ExamController extends BaseController {
     	SESSION('classify_sheet_id',$classifySheet['classify_sheet_id']);
     	SESSION('question_id',$answerWhere['question_id']);
     	$selected = array('A','B','C','D','E','F');
-    	
+    	//已回答题目数
+        $where = array(
+            'answer_sheet_id' => $answerSheet['answer_sheet_id']
+        );
+        $num = $sheetMode->count($where);
     	$this->assign('selected',$selected);
         $this->assign('question',$randQue);
         $this->assign('answer',$answer);
@@ -306,6 +310,7 @@ class ExamController extends BaseController {
      * 查询答题报告
      */
     public function reportHtm(){
+        echo "测试报告";exit;
     	$answerSheetId = (int)I('answer_sheet_id');
     	if($answerSheetId > 0){
     		$this->report($answerSheetId);
@@ -324,6 +329,7 @@ class ExamController extends BaseController {
      *  4、获取年龄组小类试卷实际得分、应得分、平均分、得分比
      */
     private function report($answerSheetId){
+        
     	$userId = $this->userId;
     	$where = array(
     		'user_id'=>$userId,

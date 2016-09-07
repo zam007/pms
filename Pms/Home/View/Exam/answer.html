@@ -1,45 +1,50 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/video-js.min.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/answer.css">
-	<script type="text/javascript" language="javascript" src="__PUBLIC__/js/video.min.js"></script>
-</head>
-<body>
-	<div class="wrap">
-		<div class="main">
-			<form id="reg1" class="pt20" method="post" name="reqForm" action="{:U('Exam/answers')}">
-				<if condition="($type eq 1)">
-					<p class="subject">{$num}.{$question.question}</p>
-				<elseif condition="($type eq 3)">
-					<p class="tip">观看视频后作答</p>
-					<video id="my-video" class="video-js" controls preload="auto" width="700" height="390" poster="../img/bg-home.jpg" data-setup="{}">
-					    <source src="../dance.mp4" type='video/mp4'>
-					 </video>
-				<elseif condition="($type eq 2)">
-					<p class="tip">听语音后作答</p>
-					<audio src="../music.mp3" preload="auto" controls></audio>
-				<else/>
-					<p class="subject">{$question.num}.{$question.question}</p>
-				</if>
-				<div class="options">
-					<ul>
-						<foreach name="answer" item="vo" key="k">
-					        <li><input type="radio" name="name" value="" class="mr10">{$selected.$k}.{$vo.answer}</li>
-					    </foreach>
-					</ul>
-				</div>
-				<div class="operating">
-					<p><a href="#">暂停</a><a href="#">上一题</a><a href="javascript:document.reqForm.submit();">下一题</a></p>
-					<p class="progress-bar"><span></span></p>
-					<p><span>张三正在测试中</span><span>{$num}/100</span><span>已测试00：12：26</span><span class="fr">本小题结余时间：00：00：12</span></p>
-				</div>
-			</form>
-		</div>
-	</div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>网络测试</title>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/video-js.min.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/answer.css">	
+        <script src="__PUBLIC__/js/jquery-3.1.0.min.js" charset="utf-8"></script>
+        <script src="__PUBLIC__/js/video.min.js"></script>
+        <script src="__PUBLIC__/js/answer.js"></script>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="main">
+                <div class="options">{$quesiton.type}
+                    <if condition="$question.type eq 1">
+                        <p class="subject">{$num}.{$question.question}</p>
+                    <elseif condition="$question.type eq 3">
+                        <p class="tip">{$num}.{$question.question}</p>
+                        <video id="my-video" class="video-js" controls preload="auto" width="700" height="390" poster="../img/bg-home.jpg" data-setup="{}">
+                            <source src="../dance.mp4" type='video/mp4'>
+                        </video>
+                    <elseif condition="$question.type eq 2">
+                        <p class="tip">听语音后作答</p>
+                        <audio src="../music.mp3" preload="auto" controls></audio>
+                    <else/>
+                        <p class="subject">{$num}.{$question.question}</p>
+                    </if>
+
+                    <form class="form" method="post" action="{:U('Exam/answers')}" method="post">
+                        <ul class="options-list">
+                            <foreach name="answer" item="vo" key="key">
+                                <li><input type="radio" name="selected" value="{vo.answer_id}" class="mr10">{$selected.$key}.{$vo.answer}</li>
+                            </foreach>
+                        </ul>
+                    </form>
+                </div>
+                <div class="operating">
+                        <p><a href="#">暂停</a><span class="tip">（完成此题后暂停）</span></p>
+                        <p class="progress-bar"><span></span></p>
+                        <p><span>张三正在测试中</span><span>{$num}/{$max}</span><span>已测试00：12：26</span><span class="fr">本小题结余时间：<span id="timer"></span></span></p>
+
+                        <!--<a href="#">上一题</a><a href="javascript:document.reqForm.submit();">下一题</a>-->
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

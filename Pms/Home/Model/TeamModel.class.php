@@ -4,13 +4,13 @@ use Think\Model;
 class TeamModel extends Model {
     protected $tablePrefix = '';
     protected $patchValidate = true;
-    public function getteam($info,$filed = '*') {
+    public function getTeam($info,$filed = '*') {
         $team = M("Team"); // 实例化team对象
         $teamInfo = $team->field($filed)->where($info)->find();
         return $teamInfo;
     }
 
-    public function getteamField($teamId,$filed = '*'){
+    public function getTeamField($teamId,$filed = '*'){
         $team = M("Team"); // 实例化team对象
         $teamInfo = $team->field($filed)->where('team_id='.$teamId)->find();
         return $teamInfo;
@@ -31,5 +31,10 @@ class TeamModel extends Model {
     public function addteam($data){
         $team = M("Team");//实例化team对象
         return $team->add($data);
+    }
+    
+    public function count($teamId){
+        $team = M("team_user");//实例化team对象
+        return $team->where('team_id='.$teamId)->count();
     }
 }

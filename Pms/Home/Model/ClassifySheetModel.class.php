@@ -15,19 +15,18 @@ class ClassifySheetModel extends Model {
 
 	public function getClassifySheet($info,$field = '*') {
         $classifySheet = M("classify_sheet"); 
-    	$where['flag'] = array('eq',1); 
+    	$info['flag'] = array('eq',1); 
         return $classifySheet->field($field)->where($info)->find();
     }
 
 	public function getClassifySheets($info,$field = '*') {
         $classifySheet = M("classify_sheet"); 
-    	$where['flag'] = array('eq',1); 
-        return $classifySheet->field($field)->where($info)->find();
+    	$info['flag'] = array('eq',1); 
+        return $classifySheet->field($field)->where($info)->select();
     }
     
     public function modify( $classifySheetId,$update){
         $classifySheet = M("classify_sheet");
-    	$where['flag'] = array('eq',1); 
         return $classifySheet->where('classify_sheet_id='.$classifySheetId)->save($update); 
     }
     
@@ -37,7 +36,7 @@ class ClassifySheetModel extends Model {
     	return $classifySheet->where($where)->sum($field);
     }
     
-    public function count($where,$field = '*'){
+    public function count($where){
     	$classifySheet = M('classify_sheet');
     	$where['flag'] = array('eq',1); 
     	return $classifySheet->where($where)->count();
@@ -45,6 +44,6 @@ class ClassifySheetModel extends Model {
     
     public function avgScore($where){
         $classifySheet = M('classify_sheet');
-        return $answerSheet->join('answer_sheet on answer_sheet.answer_sheet_id = classify_sheet.answer_sheet_id')->where($where)->avg('score');
+        return $classifySheet->join('answer_sheet on answer_sheet.answer_sheet_id = classify_sheet.answer_sheet_id')->where($where)->avg('classify_sheet.score');
     }
 }

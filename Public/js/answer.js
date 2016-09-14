@@ -18,7 +18,7 @@ var Answer = {
   },
   timer: function () {
     var self = this;
-    var time = 300; //设置倒计时的时间，单位为秒
+    var time = 1000; //设置倒计时的时间，单位为秒
     setInterval(function () {
       time = time - 1;
       if (time>0) {
@@ -41,7 +41,7 @@ var Answer = {
     $('.options-list').on('click','li',function () {
       var radio = $(this).find('input');
       radio.prop('checked',true);
-      $("form").submit();
+      $('form').submit();
     });
   },
   nextQuestion: function () {

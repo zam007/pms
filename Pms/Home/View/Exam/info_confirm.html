@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>五行财商研究中心</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/info-confirm.css">
+</head>
+<body>
+	<div class="wrap">
+		<include file="Public:header" />
+		<div class="content">
+			<div class="content-main">
+				<div class="content-main-form">
+					<div class="content-main-form-title">
+						<p class="fz20">个人信息</p>
+						<span>为了更准确测试您的财商，请保证信息真实准确。<em>如有疑问，可查看</em><a bind="show_modal" href="#">“华夏财商测评系统网络测评说明”</a></span>
+					</div>
+					<div class="content-main-form-info">
+						<div class="confirm">
+							<div class="confirm-individual">
+								<p class="title">确认个人信息</p>
+								<div>
+									<span>您的生日：</span><span>{$user.birth}</span>
+								</div>
+								<div>
+									<span>您的职业：</span><span>{$user.work}</span>
+								</div>
+								<div>
+									<span>您的来源地：</span><span>{$user.from_add}</span>
+								</div>
+								<p class="edited">信息有误？马上<a href="#">修改</a></p>
+							</div>
+							<div class="confirm-groups">
+								<p class="title">确认团体信息</p>
+								<div>
+									<span>团体名称：</span><span>{$team.team_name}</span>
+								</div>
+								<div>
+									<span>团体性质：</span><span>{$team.nature}</span>
+								</div>
+								<div>
+									<span>行业属性：</span><span>{$team.attribute}</span>
+								</div>
+								<div>
+									<span>团体人数：</span><span>{$team.sum}</span>
+								</div>
+								<p class="edited">信息有误？马上<a href="#">修改</a></p>
+							</div>
+						</div>
+						<div class="test-way">
+							<span>测试方式：</span>
+							<label><input type="radio" checked name="test" value="0" class="pr10"><span class="pl5">个人测试</span></label>
+							<label class="pl10"><input type="radio" name="test" value="1" class="pr10"><span class="pl5">团体测试（成都市高新区市政府）</span></label>
+						</div>
+						<div>
+							<span class="grey">确认无误后，生成试题</span>
+						</div>
+						<div>
+                                                    <form class="form" method="post" action="{:U('Exam/userExam')}" method="post">
+                                                        <p class="submit">生成试题</p>
+                                                    </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+            <include file="Public:footer" />
+	</div>
+	<div class="modal">
+		<div class="mask">
+			<div class="model-content">
+				<p class="title">华夏财商测评系统网络测评说明</p>
+				<ul>
+					<li>1、华夏财商网络测评系统，是根据不同年龄段和被测试人员其他相关信息，随机生成具有正对性的标准化试题为基础，通过网络实时回答相关问题进行的测试。</li>
+					<li>2、作为初步的财商测评，本系统仍然能提供较为专业的理论测评，重点是在相关理念、理论、行为方式、习惯、性格、情商等方面给出系统的测试报告。</li>
+					<li>3、网络测试的优点是：随时、随地
+					随您所需、而且费用低廉。</li>
+					<li>4、网络测试的不足是：人机互动，缺乏专业人员的参与和指导；准确定可能会受到影响。缺乏对测评结果的专业解读，系统本身很难给出准确的咨询意见。</li>
+					<li>5、作为初步的财商测评，本系统仍然能提供较为专业的理论测评，重点是在相关理念、理论、行为方式、习惯、性格、情商等方面给出系统的测试报告。</li>
+					<li>6、建议取得测评报告后，咨询相关专业人员，以获得更多、更准确、更专业的信息，最大限度地利用本系统的测评报告。</li>
+				</ul>
+				<p class="submit mt10" bind="hide_modal">我知道了</p>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/info-confirm.js"></script>
+</html>

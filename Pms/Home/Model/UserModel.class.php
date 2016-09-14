@@ -32,4 +32,9 @@ class UserModel extends Model {
         $user = M("User");//实例化User对象
         return $user->add($data);
     }
+    
+    public function getWrok($workId,$filed){
+        $work = M("Work");
+        return $work->field($filed)->where('work_id='.$workId)->find();
+    }
 }

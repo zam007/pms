@@ -24,4 +24,25 @@ return array(
 //        'SHOW_USE_MEM'=>true, // 显示内存开销 
 //        'SHOW_PAGE_TRACE'=>true, // 显示页面Trace信息 由Trace文件定义和Action操作赋值 
 //        'APP_FILE_CASE' => true, // 是否检查文件的大小写 对Windows平台有效 );
+    
+    
+    //来源地
+    'from' => array(
+        0 => '城镇',
+        1 => '乡村',
+    ),
+    //团体性质
+    'nature' => array(
+        0 => '公司性质1',
+        1 => '公司性质2',
+        2 => '公司性质3',
+        3 => '公司性质4',
+    ),
+    //行业属性
+    'attribute' => array(
+        0 => '行业属性1',
+        1 => '行业属性2',
+        2 => '行业属性3',
+        3 => '行业属性4',
+    ),
 );

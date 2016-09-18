@@ -21,3 +21,13 @@ Please make note of these MySQL credentials again:
   Root User: adminKkszmQU
   Root Password: u5DXBA_V4TFH
 URL: https://pms-zam007.rhcloud.com/phpmyadmin/
+*************************************************************************************
+Associated with job 'pms-build' in Jenkins server.
+Jenkins created successfully.  Please make note of these credentials:
+
+   User: admin
+   Password: Gg4EjB4JqRxV
+
+Note:  You can change your password at: https://jenkins-zam007.rhcloud.com/me/configure
+
+Your application is now building with Jenkins.

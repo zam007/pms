@@ -31,3 +31,4 @@ Jenkins created successfully.  Please make note of these credentials:
 Note:  You can change your password at: https://jenkins-zam007.rhcloud.com/me/configure
 
 Your application is now building with Jenkins.
+*************************************************************************************

@@ -26,7 +26,7 @@ Associated with job 'pms-build' in Jenkins server.
 Jenkins created successfully.  Please make note of these credentials:
 
    User: admin
-   Password: Gg4EjB4JqRxV
+   Password: iUg6L8Vazmyr
 
 Note:  You can change your password at: https://jenkins-zam007.rhcloud.com/me/configure
 

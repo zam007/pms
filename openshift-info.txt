@@ -1,0 +1,8 @@
+git clone ssh://57ddfc952d527143cf00015d@pms-zam007.rhcloud.com/~/git/pms.git/
+
+
+
+
+git add .
+git commit -m 'My changes'
+git push

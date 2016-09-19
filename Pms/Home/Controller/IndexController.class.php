@@ -117,7 +117,9 @@ class IndexController extends Controller {
                 $index_team_user = D("teamUser");
                 if (!$index_user->validate($rules)->create($user)){
                     //验证失败
+
                     $this->ajaxReturn($index_user->getError());
+                    die();
                 }else{
                     //验证通过
                     $team["code"] = rand(100000,999999);
@@ -144,6 +146,7 @@ class IndexController extends Controller {
                 if (!$index->validate($rules)->create($user)){
                     //验证失败
                     $this->ajaxReturn($index->getError());
+                    die();
                 }else{
                     //验证通过
                     $user["reg_time"] = date('Y-m-d H:i:s',time());
@@ -245,13 +248,15 @@ class IndexController extends Controller {
             if (!$user->validate($rules)->create($user)){
                 //验证失败
                 $this->ajaxReturn($user->getError());
+                die();
             }else{
                 //验证通过
                 $msg = array(
-                'info' => 'ok',
+                'mobile' => 'err',
                 'callback' => U('Index/register_1')
                 );
                 $this->ajaxReturn($msg);
+                die();
             }
         }
     }

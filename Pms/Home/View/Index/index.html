@@ -3,11 +3,6 @@
 <head>
 	<meta charset="UTF-8">
     <title>五行财商研究中心</title>
-<!--     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/login.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/home.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/zamadd/style.css"> -->
 	<load href='__PUBLIC__/css/normalize.css' />
 	<load href='__PUBLIC__/css/base.css' />
 	<load href='__PUBLIC__/css/login.css' />
@@ -64,19 +59,26 @@
 			<div class="login-form">
 				<div class="login-title"><span>用户登录</span></div>
 				<div class="login-content">
-					<form action="{:U('Index/login')}" method="post" name="login" class="login-form-box">
+					<form action="{:U('Index/login')}" id="login_form" method="post" name="login" class="login-form-box">
+					<div class="form-box">
 						<div class="form-box error">
-							<input type="text" name="username" class="account text" placeholder="请输入手机号/邮箱">
-							<p class="error-tip">请输入正确的11位手机号</p>
+							<input id="login_username" type="text" name="username" class="account text" placeholder="请输入手机号/邮箱">
+							<p style="display:none" id="login__username_err" class="error-tip"></p>
 						</div>
+					</div>
 						<div class="form-box">
-							<input type="password" name="password" class="pwd text" placeholder="请输入密码">
+							<div class="form-box error">
+							<input id="login_password" type="password" name="password" class="pwd text" placeholder="请输入密码">
+							<p style="display:none" id="login__password_err" class="error-tip"></p>
+							</div>
 						</div>
 						<div class="form-box">
 							<label><input type="checkbox" name="" class="vam"><span class="pl5 cur-pointer">五天内自动登录</span></label>
 						</div>
 						<div class="form-box">
-							<input type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/> <a href="#" onclick="reloadcode('logincodeimg')">看不清</a>
+							<div class="form-box error">
+							<input id="login_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/> <a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
+							<p style="display:none" id="login__verify_err" class="error-tip"></p>
                             <script>
                             /**
                             *刷新验证码
@@ -87,13 +89,36 @@
                              document.getElementById(id).src = yucodeurl +'?'+ Math.random();
                             }
                             </script>
+                            </div>
 						</div>
 					<button class="btn-login" onclick="login_submit()">登录</button>
 					</form>
-					<script>
+					<script type="text/javascript">
 						function login_submit(){
-							$('login').submit();
-						}
+							$("#login_form").submit(function(){
+						    var loginUsername=$("#login_username").val();
+						    var loginPassword=$("#login_password").val();
+						    var loginVerify=$("#login_verify").val();
+						    if (loginUsername == "") {
+						    	$("#login__username_err").text("请输入邮箱或手机号");
+						    	$("#login__username_err").show();
+						    	$("#login__username_err").focus();
+						    	return false;
+						    }else{$("#login__username_err").hide();}
+						    if (loginPassword == "") {
+						    	$("#login__password_err").text("请输入密码");
+						    	$("#login__password_err").show();
+						    	$("#login__password_err").focus();
+						    	return false;
+						    }else{$("#login__password_err").hide();}
+						    if (loginVerify == "") {
+						    	$("#login__verify_err").text("请输入验证码");
+						    	$("#login__verify_err").show();
+						    	$("#login__verify_err").focus();
+						    	return false;
+						    }else{}
+						})
+					 }
 					</script>
 					<div class="text-center login-help-link">
 						<a href="{:U('Index/findpasswdstepone',array(),'',0,true)}" class="pl10 pr10">找回密码</a>|<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_register">注册账号</a>
@@ -113,15 +138,10 @@
 			<div class="login-form">
 				<div class="login-title"><span>欢迎注册</span></div>
 				<div class="login-content">
-					<!-- <form name="register" method="post" action="{:U('Index/register_1')}"> -->
 					<form id = "register_form" name="register" method="post" action="">
-						<!-- <div class="form-box"> -->
 						<div class="form-box error">
 							<input id="reg_username" name="username" type="text" class="account text" placeholder="请输入手机号/邮箱" style="width:360px;">
 							<p style="display:none" id="reg_name_err" class="error-tip"></p>
-<!-- 							<div id="reg-tip1">
-							<span id="reg-name-mess"></span>
-							</div> -->
 						</div>
 						<div class="form-box">
 							<div class="form-box error">
@@ -164,16 +184,17 @@
 									data : data,
 									url : url,
 									success:function(msg){
+										var flag = true;
 										if (msg.info == 'ok') {
 											//登陆成功
 											window.location.href = msg.callback;
 										} else {
+											flag = false;
 											// var d=eval('('+d+')');//json转成object
 											if(msg.mobile){
 												$("#reg_name_err").text(msg.mobile);
 												$("#reg_name_err").show();
 						    					$("#reg_username").focus();
-						    					alert(eval(msg));
 												return false;
 											}else{
 												$("#reg_name_err").text(msg.email);
@@ -182,6 +203,9 @@
 										}
 									},
 								})
+						    }
+						    if (!flag) {
+						    	return false;
 						    }
 						})
 					}
@@ -194,5 +218,4 @@
 </body>
 	<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
 	<load href="__PUBLIC__/js/home.js" />
-<!-- 	<load href="__PUBLIC__/js/zamadd/check.js" /> -->
 </html>

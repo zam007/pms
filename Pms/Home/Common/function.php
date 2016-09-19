@@ -37,11 +37,12 @@
      */
     function sendMobile($mobel){
         $uid=C("WINIC_UID");//分配给你的账号
-        $pwd="WINIC_PWD" ;//密码
+        $pwd=C("WINIC_PWD") ;//密码
         $code = rand(100000,999999);
         saveCode($mobel,$code);
-        $content="您本次的验证码是" .$code;//短信内容
-        $sendurl="http://service.winic.org/sys_port/gateway/?id=".$uid."&pwd=".$pwd."&to=".$mobel."&content=".$content."&time=0";
+        $content="您本次的验证码是" .$code."【五行财商】";//短信内容
+        $sendurl="http://service.winic.org/sys_port/gateway/?id=".$uid."&pwd=".$pwd."&to=".$mobel."&content=".$content."&time=";
+        header("Content-type: text/html; charset=utf-8"); 
         //初始化
         $curl = curl_init();
         //设置抓取的url
@@ -55,6 +56,7 @@
         //关闭URL请求
         curl_close($curl);
         //显示获得的数据
+        print_r($data);
     }
     
     function saveCode($key,$code){
@@ -65,7 +67,7 @@
             'code'=>$code,
             'msg_time'=>time()
         );
-        $msgMode->add($data);echo $msgMode->getlastsql();
+        return $msgMode->add($data);
     }
     /**
      * 

@@ -166,7 +166,7 @@ class IndexController extends Controller {
             $email = '1435626505@qq.com';
             $title = '标题';
             $content = '内容';
-            SendMail($email,$title,$content);
+            echo SendMail($email,$title,$content);
     }
     /**
      * 用户退出
@@ -192,7 +192,7 @@ class IndexController extends Controller {
     
     public function sendmsg(){
         
-        $mobel="18628803303" ;//发送号码用逗号分隔
+        $mobel="13541319025" ;//发送号码用逗号分隔
 
         sendMobile($mobel);
     }

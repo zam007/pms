@@ -174,7 +174,7 @@ class IndexController extends Controller {
             $email = '1435626505@qq.com';
             $title = '标题';
             $content = '内容';
-            SendMail($email,$title,$content);
+            echo SendMail($email,$title,$content);
     }
     /**
      * 用户退出
@@ -199,32 +199,10 @@ class IndexController extends Controller {
     }
 
     public function sendmsg(){
-        $uid="wuxing" ;//分配给你的账号
-        $pwd="wuxing123456" ;//密码
-        $mobel="18628803303" ;//发送号码用逗号分隔
-        $content="你好短信内容" ;//短信内容
-
-        //===========================
-
-        $sendurl="http://service.winic.org/sys_port/gateway/?id=".$uid."&pwd=".$pwd."&to=".$mobel."&content=".$content."&time=";
-//        $xhr=new COM("MSXML2.XMLHTTP");
-//        $xhr->open("GET",$sendurl,false);
-//        $xhr->send();
-//        echo   $xhr->responseText  ;
-        //初始化
-        $curl = curl_init();
-        //设置抓取的url
-        curl_setopt($curl, CURLOPT_URL, $sendurl);
-        //设置头文件的信息作为数据流输出
-        curl_setopt($curl, CURLOPT_HEADER, 1);
-        //设置获取的信息以文件流的形式返回，而不是直接输出。
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        //执行命令
-        $data = curl_exec($curl);
-        //关闭URL请求
-        curl_close($curl);
-        //显示获得的数据
-        print_r($data);
+        
+        $mobel="13541319025" ;//发送号码用逗号分隔
+        sendMobile($mobel);
+        
     }
     /**
      * ajax异步验证

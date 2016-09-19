@@ -13,12 +13,16 @@ return array(
     // 配置邮件发送服务器
     'MAIL_HOST' =>'smtp.qq.com',//smtp服务器的名称
     'MAIL_SMTPAUTH' =>TRUE, //启用smtp认证
-    'MAIL_USERNAME' =>'39623162@qq.com',//你的邮箱名
-    'MAIL_FROM' =>'39623162@qq.com',//发件人地址
+    'MAIL_USERNAME' =>'wuxingcaishang@163.com',//你的邮箱名
+    'MAIL_FROM' =>'wuxingcaishang@163.com',//发件人地址
     'MAIL_FROMNAME'=>'聚丰集团',//发件人姓名
-    'MAIL_PASSWORD' =>'fengbo81859149',//邮箱密码
+    'MAIL_PASSWORD' =>'123456abc',//邮箱密码
     'MAIL_CHARSET' =>'utf-8',//设置邮件编码
     'MAIL_ISHTML' =>TRUE, // 是否HTML格式邮件
+    
+    //发送短信账户信息
+    'WINIC_UID'=>"wuxing" ,//账号
+    'WINIC_PWD'=>"wuxing123456",//密码
 
     //模板文件后缀名（U方法的伪静态）
     'URL_HTML_SUFFIX' => '.html',

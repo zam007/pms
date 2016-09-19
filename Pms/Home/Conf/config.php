@@ -19,6 +19,10 @@ return array(
     'MAIL_PASSWORD' =>'fengbo81859149',//邮箱密码
     'MAIL_CHARSET' =>'utf-8',//设置邮件编码
     'MAIL_ISHTML' =>TRUE, // 是否HTML格式邮件
+    
+    //发送短信账户信息
+    'WINIC_UID'=>"wuxing" ,//账号
+    'WINIC_PWD'=>"wuxing123456",//密码
 
     //模板文件后缀名（U方法的伪静态）
     'URL_HTML_SUFFIX' => '.html',

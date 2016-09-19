@@ -116,7 +116,33 @@
 						    	$("#login__verify_err").show();
 						    	$("#login__verify_err").focus();
 						    	return false;
-						    }else{}
+						    }else{
+						    	$("#login__verify_err").hide();
+						    	var url = "{:U('Index/login')}";
+								var data = $('#login_form').serialize();
+								$.ajax({
+									type : "POST",
+									data : data,
+									url : url,
+									success:function(msg){
+										if (msg.info == 'ok') {
+											//登陆成功
+											window.location.href = msg.callback;
+										} else {
+											// var d=eval('('+d+')');//json转成object
+											if(msg.mobile){
+												$("#reg_name_err").text(msg.mobile);
+												$("#reg_name_err").show();
+						    					$("#reg_username").focus();
+											}else{
+												$("#reg_name_err").text(msg.email);
+												$("#reg_name_err").show();
+											}
+										}
+									},
+								})
+						    }
+						    return false;
 						})
 					 }
 					</script>
@@ -177,6 +203,7 @@
 						    	$("#reg_verify").focus();
 						    	return false;
 						    }else{
+						    	$("#reg__verify_err").hide();
 						    	var url = "{:U('Index/register_1')}";
 								var data = $('#register_form').serialize();
 								$.ajax({
@@ -184,18 +211,15 @@
 									data : data,
 									url : url,
 									success:function(msg){
-										var flag = true;
 										if (msg.info == 'ok') {
-											//登陆成功
+											//注册成功
 											window.location.href = msg.callback;
 										} else {
-											flag = false;
 											// var d=eval('('+d+')');//json转成object
 											if(msg.mobile){
 												$("#reg_name_err").text(msg.mobile);
 												$("#reg_name_err").show();
 						    					$("#reg_username").focus();
-												return false;
 											}else{
 												$("#reg_name_err").text(msg.email);
 												$("#reg_name_err").show();
@@ -204,9 +228,7 @@
 									},
 								})
 						    }
-						    if (!flag) {
-						    	return false;
-						    }
+						    return false;
 						})
 					}
 					</script>

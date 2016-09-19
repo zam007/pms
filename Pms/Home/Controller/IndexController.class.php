@@ -153,7 +153,12 @@ class IndexController extends Controller {
                     SESSION("user_account",$account);
                     SESSION("user_type",0);
                     $this->assign('value',$value);
-                    $this->display("user/register_1");
+                    // $this->display("user/register_1");
+                    $msg = array(
+                    'info' => 'ok',
+                    'callback' => U('user/register_1')
+                    );
+                    $this->ajaxReturn($msg);
                 }
             }
         }
@@ -189,7 +194,7 @@ class IndexController extends Controller {
             $this->display("fundpwd_2");
         }
     }
-    
+
     public function sendmsg(){
         $uid="wuxing" ;//分配给你的账号
         $pwd="wuxing123456" ;//密码
@@ -199,10 +204,10 @@ class IndexController extends Controller {
         //===========================
 
         $sendurl="http://service.winic.org/sys_port/gateway/?id=".$uid."&pwd=".$pwd."&to=".$mobel."&content=".$content."&time=";
-//        $xhr=new COM("MSXML2.XMLHTTP"); 
-//        $xhr->open("GET",$sendurl,false); 
-//        $xhr->send(); 
-//        echo   $xhr->responseText  ;  
+//        $xhr=new COM("MSXML2.XMLHTTP");
+//        $xhr->open("GET",$sendurl,false);
+//        $xhr->send();
+//        echo   $xhr->responseText  ;
         //初始化
         $curl = curl_init();
         //设置抓取的url
@@ -217,5 +222,37 @@ class IndexController extends Controller {
         curl_close($curl);
         //显示获得的数据
         print_r($data);
+    }
+    /**
+     * ajax异步验证
+     */
+    public function checkName(){
+        if (IS_POST) {
+            if(strstr(I("username"), '@')){
+                $user['email'] = I("username");
+                $value = '手机号';
+            }else {
+                $user['mobile'] = I("username");
+                $value = '邮箱';
+            }
+            $rules = array(
+                 array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+                 array('email', 'email', '邮箱格式不正确'),
+                 array('mobile','','该手机号已经被注册！',0,'unique',1),
+                 array('email','','该邮箱已经被注册！',0,'unique',1),
+            );
+            $user = D("user");
+            if (!$user->validate($rules)->create($user)){
+                //验证失败
+                $this->ajaxReturn($user->getError());
+            }else{
+                //验证通过
+                $msg = array(
+                'info' => 'ok',
+                'callback' => U('Index/register_1')
+                );
+                $this->ajaxReturn($msg);
+            }
+        }
     }
 }

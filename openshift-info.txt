@@ -1,0 +1,34 @@
+git clone ssh://57ddfc952d527143cf00015d@pms-zam007.rhcloud.com/~/git/pms.git/
+
+git add .
+git commit -m 'My changes'
+git push
+
+*************************************************************************************
+MySQL 5.5 database added.  Please make note of these credentials:
+
+       Root User: adminKkszmQU
+   Root Password: u5DXBA_V4TFH
+   Database Name: pms
+
+Connection URL: mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/
+
+You can manage your new MySQL database by also embedding phpmyadmin.
+The phpmyadmin username and password will be the same as the MySQL credentials above.
+
+****************************phpmyadmin*********************************************************
+Please make note of these MySQL credentials again:
+  Root User: adminKkszmQU
+  Root Password: u5DXBA_V4TFH
+URL: https://pms-zam007.rhcloud.com/phpmyadmin/
+*************************************************************************************
+Associated with job 'pms-build' in Jenkins server.
+Jenkins created successfully.  Please make note of these credentials:
+
+   User: admin
+   Password: iUg6L8Vazmyr
+
+Note:  You can change your password at: https://jenkins-zam007.rhcloud.com/me/configure
+
+Your application is now building with Jenkins.
+*************************************************************************************

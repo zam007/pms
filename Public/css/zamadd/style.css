@@ -1,0 +1,326 @@
+@CHARSET "UTF-8";
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video
+	{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+ol,ul {
+	list-style: none;
+}
+
+pre,code,kbd,samp {
+	font-family: "trebuchet ms", arial, sans-serif;
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section
+	{
+	display: block;
+}
+
+audio,canvas,video {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+audio
+
+
+:not
+
+ 
+
+(
+[
+controls
+]
+
+ 
+
+)
+{
+display
+
+
+:
+
+ 
+
+none
+
+
+;
+}
+[hidden] {
+	display: none;
+}
+
+html {
+	font-size: 100%;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+body,button,input,select,textarea {
+	font-family: "trebuchet ms", arial, sans-serif;
+}
+
+a:focus {
+	outline: thin dotted;
+}
+
+a:hover,a:active {
+	outline: 0;
+}
+
+button,input,select,textarea {
+	font-size: 100%;
+	margin: 0;
+	vertical-align: baseline;
+	*vertical-align: middle;
+}
+
+button,input {
+	line-height: normal;
+	*overflow: visible;
+}
+
+table button,table input {
+	*overflow: auto;
+}
+
+button,html input[type="button"],input[type="reset"],input[type="submit"]
+	{
+	cursor: pointer;
+	-webkit-appearance: button;
+}
+
+input[type="checkbox"],input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0;
+	border-width: 0;
+}
+
+input[type="search"] {
+	-webkit-appearance: textfield;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+button::-moz-focus-inner,input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+textarea {
+	overflow: auto;
+	vertical-align: top;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/**/
+label, .label {
+  color:#51504d;
+  font-size:14px;
+  font-weight:bold;
+}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] { border:1px solid #acaca7; }
+textarea :focus, input[type="text"] :focus, input[type="password"] :focus, input[type="datetime"] :focus, input[type="datetime-local"] :focus, input[type="date"] :focus, input[type="month"] :focus, input[type="time"] :focus, input[type="week"] :focus, input[type="number"] :focus, input[type="email"] :focus, input[type="url"] :focus, input[type="search"] :focus, input[type="tel"] :focus, input[type="color"] :focus { border-color:#71706d; }
+textarea.medium, input[type="text"].medium, input[type="password"].medium, input[type="datetime"].medium, input[type="datetime-local"].medium, input[type="date"].medium, input[type="month"].medium, input[type="time"].medium, input[type="week"].medium, input[type="number"].medium, input[type="email"].medium, input[type="url"].medium, input[type="search"].medium, input[type="tel"].medium, input[type="color"].medium {
+  padding:5px 6px 4px;
+  font-size:16px;
+}
+.form-element {
+	clear: left;
+	display: block;
+	margin: 10px 0;
+	vertical-align: middle;
+}
+
+.form-element label {
+	font-weight: bold;
+	display: block;
+	float: left;
+	line-height: 1.5;
+	padding: 8px 10px;
+	margin-bottom: 0;
+	text-align: left;
+	width: 126px;
+}
+ 
+.button-action.large {
+	padding: 6px 20px;
+	font-size: 15px;
+}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+  background-color:#fff;
+  border:1px solid #acaca7;
+  color:#767471;
+  font-size:14px;
+  line-height:1.5;
+  padding:4px 10px;
+  -webkit-border-radius:3px 3px 3px 3px;
+  -webkit-background-clip:padding-box;
+  -moz-border-radius:3px 3px 3px 3px;
+  -khtml-border-radius:3px 3px 3px 3px;
+  border-radius:3px 3px 3px 3px;
+}
+.invisible { visibility:hidden; }
+/**/
+.tooltip-info {
+	position: absolute;
+	max-width: 180px;
+	_width: 204px;
+	background-color: #fff;
+	border: 2px solid #ddd;
+	padding: 8px;
+	color: #666;
+	margin-left: 15px;
+	/*font-size: 0.75em;*/
+}
+
+.tooltip-info .tooltip-icon-border {
+	border-color: transparent #ddd transparent transparent;
+	left: -17px;
+}
+
+.tooltip-info .tooltip-icon-bg {
+	border-color: transparent #fff transparent transparent;
+	left: -15px;
+}
+
+.tooltip-info .mess {
+	display: inline-block;
+	vertical-align: top;
+	width: 123px;
+	text-align: left;
+	word-wrap: break-word;
+	word-break: normal;
+}
+
+.tooltip-info .tooltip-icon-bg {
+	position: absolute;
+	border-style: solid;
+	border-width: 8px;
+	height: 0;
+	width: 0;
+	top: 8px;
+}
+
+.error {
+	display: inline;
+}
+
+.error .state {
+	background-position: 0 0;
+}
+
+.prompt .state,.success .state,.error .state,.pass-word-strength .state
+	{
+	background-image: url("../images/login-logic-icons.png");
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.tooltip-info .tooltip-icon-border,.tooltip-info .tooltip-icon-bg {
+	position: absolute;
+	border-style: solid;
+	border-width: 8px;
+	height: 0;
+	width: 0;
+	top: 8px;
+}
+
+.success {
+	display: inline;
+	border: none;
+}
+
+.success .mess {
+	display: none;
+}
+
+.success .state {
+	display: inline-block;
+	background-position: -74px 0;
+}
+
+.success .strength {
+	display: none;
+}
+
+.prompt {
+	display: inline;
+}
+
+.prompt .strength {
+	display: none;
+}
+
+.prompt .state {
+	display: inline-block;
+	background-position: -37px 0;
+}
+
+.visible-inline {
+	visibility: visible;
+}
+
+.hasnew {
+	background-position: -23px -196px;
+	height: 10px;
+	left: 143px;
+	position: absolute;
+	top: -52px;
+	width: 10px;
+	z-index: 1002;
+	background-image: url("../images/f_icon.png");
+}
+
+.menubadge {
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	margin-top: 5px;
+	background: #f2f0ed;
+	color: #767471;
+	float: right;
+	font-size: 14px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-khtml-border-radius: 50%;
+	border-radius: 50%;
+}
+
+#tabs li .badge.action {
+	background: #f51414;
+	color: #fff;
+}
+
+#tabs li .badge-red-alert {
+	background-color: #c00;
+	color: #fff;
+}
+
+.success .tooltip-icon-border,.success .tooltip-icon-bg {
+	display: none;
+}

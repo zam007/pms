@@ -117,7 +117,9 @@ class IndexController extends Controller {
                 $index_team_user = D("teamUser");
                 if (!$index_user->validate($rules)->create($user)){
                     //验证失败
+
                     $this->ajaxReturn($index_user->getError());
+                    die();
                 }else{
                     //验证通过
                     $team["code"] = rand(100000,999999);
@@ -144,6 +146,7 @@ class IndexController extends Controller {
                 if (!$index->validate($rules)->create($user)){
                     //验证失败
                     $this->ajaxReturn($index->getError());
+                    die();
                 }else{
                     //验证通过
                     $user["reg_time"] = date('Y-m-d H:i:s',time());
@@ -153,7 +156,12 @@ class IndexController extends Controller {
                     SESSION("user_account",$account);
                     SESSION("user_type",0);
                     $this->assign('value',$value);
-                    $this->display("user/register_1");
+                    // $this->display("user/register_1");
+                    $msg = array(
+                    'info' => 'ok',
+                    'callback' => U('user/register_1')
+                    );
+                    $this->ajaxReturn($msg);
                 }
             }
         }
@@ -189,11 +197,45 @@ class IndexController extends Controller {
             $this->display("fundpwd_2");
         }
     }
-    
+
     public function sendmsg(){
         
         $mobel="13541319025" ;//发送号码用逗号分隔
-
         sendMobile($mobel);
+        
+    }
+    /**
+     * ajax异步验证
+     */
+    public function checkName(){
+        if (IS_POST) {
+            if(strstr(I("username"), '@')){
+                $user['email'] = I("username");
+                $value = '手机号';
+            }else {
+                $user['mobile'] = I("username");
+                $value = '邮箱';
+            }
+            $rules = array(
+                 array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+                 array('email', 'email', '邮箱格式不正确'),
+                 array('mobile','','该手机号已经被注册！',0,'unique',1),
+                 array('email','','该邮箱已经被注册！',0,'unique',1),
+            );
+            $user = D("user");
+            if (!$user->validate($rules)->create($user)){
+                //验证失败
+                $this->ajaxReturn($user->getError());
+                die();
+            }else{
+                //验证通过
+                $msg = array(
+                'mobile' => 'err',
+                'callback' => U('Index/register_1')
+                );
+                $this->ajaxReturn($msg);
+                die();
+            }
+        }
     }
 }

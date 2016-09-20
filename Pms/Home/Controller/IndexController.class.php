@@ -14,7 +14,6 @@ class IndexController extends Controller {
 	 */
 	public function login(){
         if (IS_POST) {
-
             //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
@@ -23,7 +22,6 @@ class IndexController extends Controller {
                 $user['mobile'] = I("username");
                 $value = '邮箱';
             }
-
             //用户登陆合法验证
             $rules = array(
                  array('mobile', '/^1[34578]\d{9}$/', '请输入正确的手机号', 0),

@@ -93,6 +93,12 @@
 						</div>
 					<button class="btn-login" onclick="login_submit()">登录</button>
 					</form>
+					<div class="text-center login-help-link">
+						<a href="{:U('Index/findpasswdstepone',array(),'',0,true)}" class="pl10 pr10">找回密码</a>|<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_register">注册账号</a>
+					</div>
+					<div class="error" style="float:left;position: relative;left: 25%;top: 10px;">
+						<p id="login_error" style="display:none" class="error-tip"></p>
+					</div>
 					<script type="text/javascript">
 						function login_submit(){
 							$("#login_form").submit(function(){
@@ -124,19 +130,33 @@
 									type : "POST",
 									data : data,
 									url : url,
-									success:function(msg){
+									success:function(msg){alert(msg.info);
 										if (msg.info == 'ok') {
 											//登陆成功
 											window.location.href = msg.callback;
 										} else {
 											// var d=eval('('+d+')');//json转成object
-											if(msg.mobile){
-												$("#reg_name_err").text(msg.mobile);
-												$("#reg_name_err").show();
-						    					$("#reg_username").focus();
-											}else{
-												$("#reg_name_err").text(msg.email);
-												$("#reg_name_err").show();
+
+											for (err_info in msg){
+												switch(err_info){
+													case "password":
+							   						 	$("#login_error").text(msg.password);
+												    	$("#login_error").show();
+												    	$("#login__username_err").focus();
+						   						 		break;
+						   						 	case "repassword":
+							   						 	$("#login_error").text(msg.repassword);
+												    	$("#login_error").show();
+												    	$("#login__username_err").focus();
+						   						 		break;
+						   						 	case "verify":
+							   						 	$("#login_error").text(msg.repassword);
+												    	$("#login_error").show();
+												    	$("#login__username_err").focus();
+						   						 		break;
+						   						 	default:
+						   						 		break;
+												}
 											}
 										}
 									},
@@ -146,12 +166,6 @@
 						})
 					 }
 					</script>
-					<div class="text-center login-help-link">
-						<a href="{:U('Index/findpasswdstepone',array(),'',0,true)}" class="pl10 pr10">找回密码</a>|<a href="#" class="ml5 mr5 pl10 pr10 hover" bind="show_modal_register">注册账号</a>
-					</div>
-					<div class="error" style="float:left;position: relative;left: 25%;top: 10px;">
-						<p class="error-tip">手机号与密码不匹配</p>
-					</div>
 				</div>
 			</div>
 		</div>

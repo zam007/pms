@@ -28,6 +28,7 @@ class IndexController extends Controller {
             $rules = array(
                  array('mobile', '/^1[34578]\d{9}$/', '请输入正确的手机号', 0),
                  array('email', 'email', '请输入正确的邮箱号'),
+                 array('verify','require','验证码必须！'),
             );
 
             $index = D("user");
@@ -41,7 +42,7 @@ class IndexController extends Controller {
                 if($error['login_err'] >= 3){
                    $code = I("verify");
                    if(!check_verify($code)){
-                      $this->error('验证码错误','index');
+                      $this->error('验证码错误'.$code,'index');
                }
             }
             $user['user_id'] = $error['user_id'];
@@ -57,12 +58,17 @@ class IndexController extends Controller {
                 }
                 SESSION("user_name",$userNmae);
                 if($userInfo['status'] == 0){
-                    $this->display("User/completion");exit;
+                    $this->display("User/completion");
                 }
                 if($userInfo['status'] == 9){
                   $this->error('用户被冻结','index');
                 }
-                 $this->success('登陆成功', 'index');
+                 // $this->success('登陆成功', 'index');
+                $msg = array(
+                'info' => 'ok',
+                'callback' => U('Index/index')
+                );
+                $this->ajaxReturn($msg);
             }else{
                 if($error){
                     $update["login_err"] = $error['login_err']+1;
@@ -162,7 +168,7 @@ class IndexController extends Controller {
                     // $this->display("user/register_1");
                     $msg = array(
                     'info' => 'ok',
-                    'callback' => U('user/register_1')
+                    'callback' => U('User/register_1')
                     );
                     $this->ajaxReturn($msg);
                 }

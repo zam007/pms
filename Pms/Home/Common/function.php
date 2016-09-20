@@ -35,28 +35,26 @@
     /**
      * 发送手机验证码
      */
-    function sendMobile($mobel){
-        $uid=C("WINIC_UID");//分配给你的账号
-        $pwd=C("WINIC_PWD") ;//密码
+    function sendMobile($mobile){
+        $url="http://service.winic.org:8009/sys_port/gateway/index.asp?";
+    	$data = "id=%s&pwd=%s&to=%s&content=%s&time=";
+    	$id = C("WINIC_UID");//分配给你的账号
+    	$pwd = C("WINIC_PWD") ;//密码
         $code = rand(100000,999999);
         saveCode($mobel,$code);
-        $content="您本次的验证码是" .$code."【五行财商】";//短信内容
-        $sendurl="http://service.winic.org/sys_port/gateway/?id=".$uid."&pwd=".$pwd."&to=".$mobel."&content=".$content."&time=";
-        header("Content-type: text/html; charset=utf-8"); 
-        //初始化
-        $curl = curl_init();
-        //设置抓取的url
-        curl_setopt($curl, CURLOPT_URL, $sendurl);
-        //设置头文件的信息作为数据流输出
-        curl_setopt($curl, CURLOPT_HEADER, 1);
-        //设置获取的信息以文件流的形式返回，而不是直接输出。
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        //执行命令
-        $data = curl_exec($curl);
-        //关闭URL请求
-        curl_close($curl);
-        //显示获得的数据
-        print_r($data);
+        $msg="您本次的验证码是" .$code."【五行财商】";//短信内容
+    	$content = iconv("UTF-8","GB2312",$msg);
+    	$rdata = sprintf($data, $id, $pwd, $mobile, $content);
+    	
+    	$ch = curl_init();
+    	curl_setopt($ch, CURLOPT_POST,1);
+    	curl_setopt($ch, CURLOPT_POSTFIELDS,$rdata);
+    	curl_setopt($ch, CURLOPT_URL,$url);
+    	curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    	$result = curl_exec($ch);
+    	curl_close($ch);
+    	$result = substr($result,0,3);
+        return $result;
     }
     
     function saveCode($key,$code){

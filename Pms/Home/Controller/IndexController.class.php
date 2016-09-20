@@ -197,11 +197,34 @@ class IndexController extends Controller {
         }
     }
 
-    public function sendmsg(){
+    /**
+     * 发送手机验证码
+     * @return boolean
+     */
+    public function sendMobile(){
         
-        $mobel="13541319025" ;//发送号码用逗号分隔
-        sendMobile($mobel);
-        
+        $mobile=I('mobile') ;//发送号码用逗号分隔
+        $code = sendMobile($mobile);
+        if($code == "000"){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 实例
+     * 通过手机或者邮箱获取验证码
+     * return Array ( [code] => 182177 [time] => 1474376466 )  code:验证码，time:发送时间(时间戳)
+     */
+    public function getCode(){
+        $key = I('key');
+        $arr = getCode($key);
+        $code = key($arr);
+        $time = $arr[$code];
+        $data = array(
+            'code'=>$code,
+            'time'=>$time
+        );
+        return $data;
     }
     /**
      * ajax异步验证

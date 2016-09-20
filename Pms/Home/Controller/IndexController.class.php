@@ -198,10 +198,10 @@ class IndexController extends Controller {
     }
 
     public function sendmsg(){
-        
+
         $mobel="13541319025" ;//发送号码用逗号分隔
         sendMobile($mobel);
-        
+
     }
     /**
      * ajax异步验证

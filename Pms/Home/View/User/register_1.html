@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/login.css">
+	<load href='__PUBLIC__/css/home.css' />
 </head>
 <body>
 	<div class="wrap">
@@ -27,20 +28,41 @@
 				</div>
 				<div class="login-content">
 					<form id="register_1" class="pt20" method="post" action="{:U('User/register_2')}">
-						<div class="form-box">
-							<input type="password" name="password" class="pwd text" placeholder="请输入新密码" style="width:360px;">
-							<p class="pt5">提示：8位，同时包含大小写字母和数字</p>
+						<div class="form-box error">
+							<input id="password" type="password" name="password" class="pwd text" placeholder="请输入新密码" style="width:360px;">
+							<p id="password_info" class="pt5">提示：8位，同时包含大小写字母和数字</p>
+							<p style="display:none" id="password_err" class="error-tip"></p>
 						</div>
-						<div class="form-box">
-							<input type="password" name="repassword" class="pwd text" placeholder="请再次输入新密码" style="width:360px;">
+						<div class="form-box error">
+							<input id="repassword" type="password" name="repassword" class="pwd text" placeholder="请再次输入新密码" style="width:360px;">
+							<p style="display:none" id="repassword_err" class="error-tip"></p>
 						</div>
 					<button onclick="setpasswd_submit()" class="btn-login">下一步</button>
 					</form>
-					<script>
-					    function setpasswd_submit(){
-					        $('register_1').submit();
-					    }
-					</script>
+					 <script type="text/javascript">
+					 	function setpasswd_submit(){
+					 		$("#register_1").submit(function(){
+						    var passWord=$("#password").val();
+						    var repassWord=$("#repassword").val();
+						    if (passWord == "") {
+						    	$("#password_err").text("请输入密码");
+						    	$("#password_info").hide();
+						    	$("#password_err").show();
+						    	$("#password_err").focus();
+						    	return false;
+						    } else {$("#password_err").hide();}
+						    if (repassword == "") {
+						    	$("#repassword_err").text("请输入邮箱或手机号");
+						    	$("#repassword_err").show();
+						    	$("#repassword_err").focus();
+						    	return false;
+						    } else {
+						    	$("#repassword_err").hide();
+						    }
+					 			return false;
+					 		})
+					 	}
+					 </script>
 					<p class="step">
 						<img src="__PUBLIC__/img/step_1.png" alt="" />
 					</p>
@@ -49,4 +71,5 @@
 		</div>
 	</div>
 </body>
+	<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
 </html>

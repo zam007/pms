@@ -30,4 +30,20 @@ class AnswerSheetModel extends Model {
         $answerSheet = M("answer_sheet");
         return $answerSheet->where($where)->count();
     }
+    public function record($userId,$type = 1,$page = 1){
+        if((int)$page <= 1){
+            $page = 1;
+        }
+        $answerSheet = M("answer_sheet");
+        $pageMin = ($page-1)*20;
+        $pageMax = $page*20;
+        $data['count'] = $answerSheet->where('type='.$type)->count();
+        $data['page_max'] = ceil($data['count']/20);
+        $where = array(
+            'type' => $type,
+            'status' => 2,
+        );
+        $data['data'] = $answerSheet->where($where)->order('answer_sheet_id desc')->limit($pageMin,$pageMax)->select();
+        return $data;
+    }
 }

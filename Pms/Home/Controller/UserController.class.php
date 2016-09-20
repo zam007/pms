@@ -19,6 +19,12 @@ class UserController extends BaseController {
         $this->display("change_pwd");
     }
     public function test_record(){
+        $userId = $this->userId;
+        $answerSheetMode = D('answer_sheet');
+        $userExam = $answerSheetMode->record($userId,1);
+        $teamExam = $answerSheetMode->record($userId,2);
+        $this->assign('user_exam',$userExam);
+        $this->assign('team_exam',$teamExam);
         $this->display("test_record");
     }
     /**

@@ -365,7 +365,7 @@ class ExamController extends BaseController {
             'answer_sheet_id' => $answerSheetId,
             'user_id' => $userId
     	);
-    	$answerSheetMode = D(answer_sheet);
+    	$answerSheetMode = D('answer_sheet');
     	//获取用户试卷
         $answerSheet = $answerSheetMode->getAnswerSheet($where);
     	if(!$answerSheet){

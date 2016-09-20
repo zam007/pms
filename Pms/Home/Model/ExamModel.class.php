@@ -62,5 +62,4 @@ class ExamModel extends Model {
     	$sheet->commit();
     	return true;
     }
-
 }

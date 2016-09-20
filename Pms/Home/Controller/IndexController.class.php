@@ -91,7 +91,7 @@ class IndexController extends Controller {
 	/**
 	 * 注册
 	 */
-	public function register_1(){
+	public function registerOne(){
         if (IS_POST) {
             //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
@@ -118,7 +118,6 @@ class IndexController extends Controller {
                 if (!$index_user->validate($rules)->create($user)){
                     //验证失败
                     $this->ajaxReturn($index_user->getError());
-                    die();
                 }else{
                     //验证通过
                     $team["code"] = rand(100000,999999);
@@ -138,7 +137,12 @@ class IndexController extends Controller {
                     SESSION("user_account",$account);
                     SESSION("user_type",1);
                     $this->assign('value',$value);
-                    $this->display("user/register_1");
+                    // $this->display("user/register_1");
+                    $msg = array(
+                    'info' => 'ok',
+                    'callback' => U('user/register_1')
+                    );
+                    $this->ajaxReturn($msg);
                 }
             }else {
                 $index = D("user");

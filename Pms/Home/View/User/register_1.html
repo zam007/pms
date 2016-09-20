@@ -51,13 +51,44 @@
 						    	$("#password_err").focus();
 						    	return false;
 						    } else {$("#password_err").hide();}
-						    if (repassword == "") {
-						    	$("#repassword_err").text("请输入邮箱或手机号");
+						    if (repassWord == "") {
+						    	$("#repassword_err").text("请重复密码");
 						    	$("#repassword_err").show();
 						    	$("#repassword_err").focus();
 						    	return false;
 						    } else {
 						    	$("#repassword_err").hide();
+						    	var url = "{:U('User/registerTwo')}";
+								var data = $('#register_1').serialize();
+								$.ajax({
+									type : "POST",
+									data : data,
+									url : url,
+									success:function(msg){
+										if (msg.info == 'ok') {
+											//密码设置成功
+											window.location.href = msg.callback;
+										} else {
+											// var d=eval('('+d+')');//json转成object
+											for (err_info in msg){
+												switch(err_info){
+													case "password":
+							   						 	$("#password_err").text(msg.password);
+												    	$("#password_err").show();
+												    	$("#password_err").focus();
+						   						 		break;
+						   						 	case "repassword":
+							   						 	$("#repassword_err").text(msg.repassword);
+												    	$("#repassword_err").show();
+												    	$("#password_err").focus();
+						   						 		break;
+						   						 	default:
+						   						 		break
+												}
+											}
+										}
+									},
+								})
 						    }
 					 			return false;
 					 		})

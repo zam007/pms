@@ -24,7 +24,7 @@ class UserController extends BaseController {
     /**
      * 个人用户完善资料
      */
-    public function register_2(){
+    public function registerTwo(){
         if (IS_POST) {
             //检测验用户名是手机号码或者邮箱
             $index = D("user");
@@ -34,20 +34,27 @@ class UserController extends BaseController {
             $userInfo = $index->modify($userId,$user);
             //密码合法验证
             $rules = array(
-                array('repassword','password','两次输出的密码不一致',0,'confirm'),
-                array('password','/^[a-z]\w{6,20}$/i','请输入超过8位数且包含大小写字母和数字的组合'),
+                array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
+                array('repassword','password','两次输入的密码不一致',0,'confirm'),
             );
             if (!$index->validate($rules)->create()) {
                 //密码检验不通过，输出错误信息
-                return 111;die();
-                exit($this->ajaxReturn($index->getError()));
+                $this->ajaxReturn($index->getError());
             }
             $user["password"] = md5(I("password").C("PWD_KEY"));
             $index->modify($userId,$user);
             if(I('session.user_type') == 0){
-                $this->display("User/register_2");
+                $msg = array(
+                'info' => 'ok',
+                'callback' => U('user/register_2')
+                );
+                $this->ajaxReturn($msg);
             }else{
-                $this->display("User/register_group");
+                $msg = array(
+                'info' => 'ok',
+                'callback' => U('User/register_group')
+                );
+                $this->ajaxReturn($msg);
             }
         }
     }

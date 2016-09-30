@@ -20,12 +20,26 @@ class UserController extends BaseController {
     }
     public function test_record(){
         $userId = $this->userId;
-        $answerSheetMode = D('answer_sheet');
-        $userExam = $answerSheetMode->record($userId,1);
-        $teamExam = $answerSheetMode->record($userId,2);
+        $order = D('order');
+        $userExam = $order->getList($userId,1);
+        $teamExam = $order->getList($userId,2);
         $this->assign('user_exam',$userExam);
         $this->assign('team_exam',$teamExam);
         $this->display("test_record");
+    }
+    /**
+     * 发送测试报告
+     */
+    public function sendMile(){
+        $userId = $this->userId;
+        $userMode = D('user');
+        $userEamil = $userMode->getUserField($userId,'email');
+        if(!$userEamil['email']){
+            echo "请完善邮箱";die();
+        }
+        $anwerSheetId = I('answer_sheet_id');
+        
+        
     }
     /**
      * 个人用户完善资料

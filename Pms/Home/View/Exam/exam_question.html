@@ -8,9 +8,9 @@
 	<form id="reg1" class="pt20" method="post" action="{:U('Exam/answers')}">
 		<p><span>问题：</span>{$question.question}</p>
 		<div>
-			<foreach name="answer" item="vo">
+                    <volist name="answer" id="vo">
 		        <span><input name ="selected" type="radio" value="{$vo.answer_id}">{$vo.selected}、{$vo.answer}</span>
-		    </foreach>
+		    </volist>
 		</div>
 		<input type='submit' value="提交">
 	</form>

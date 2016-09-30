@@ -58,6 +58,16 @@ class ExamController extends BaseController {
         $where['min_age'] = array('elt',$age);
         $where['max_age'] = array('egt',$age);
         $level = $levelMode->getlevel($where,'level_id,answer_num');
+        //生成订单
+        $order = D('order');
+        $orderDate = array(
+            'user_id' => $userId,
+            'order_type' => 1,
+            'order_time' => date('Y-m-d H:i:s', time()),
+            'order_cost' => 0,
+            'is_pay' => 1
+        );
+        $order->addOrder($orderDate);
         //生成答卷,开始答题
          $examMode = D("exam");
          if($examMode->addSheet($level,$userId)){

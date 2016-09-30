@@ -177,8 +177,7 @@ class IndexController extends Controller {
      * 发送邮件
      */
     public function send(){
-    //        $email = I('email');
-            $email = '1435626505@qq.com';
+            $email = I('email');
             $title = '标题';
             $content = '内容';
             echo SendMail($email,$title,$content);

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2016-09-15 01:32:04
+Date: 2016-10-01 00:19:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,6 +61,7 @@ DROP TABLE IF EXISTS `answer_sheet`;
 CREATE TABLE `answer_sheet` (
   `answer_sheet_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '答卷',
   `user_id` varchar(10) NOT NULL,
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=个人，2=团队',
   `level_id` varchar(10) NOT NULL COMMENT '基础难度',
   `start_time` datetime NOT NULL COMMENT '答题开始时间',
   `answer_time` int(10) DEFAULT NULL COMMENT '答题用时',
@@ -69,24 +70,27 @@ CREATE TABLE `answer_sheet` (
   `score` int(5) DEFAULT '0' COMMENT '实际总得分',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '答题状态1=答题中，2=完成，3=用户取消',
   `flag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否放弃',
+  `order_id` varchar(10) DEFAULT NULL COMMENT '订单id',
   PRIMARY KEY (`answer_sheet_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer_sheet
 -- ----------------------------
-INSERT INTO `answer_sheet` VALUES ('69', '1', '1', '2016-09-11 15:22:02', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('70', '1', '1', '2016-09-11 15:25:14', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('71', '1', '1', '2016-09-11 15:25:44', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('72', '1', '1', '2016-09-11 15:28:33', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('73', '1', '1', '2016-09-11 15:29:57', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('74', '1', '1', '2016-09-11 15:30:09', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('75', '1', '1', '2016-09-11 15:34:07', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('76', '1', '1', '2016-09-11 15:35:02', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('77', '1', '1', '2016-09-11 15:36:39', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('78', '1', '1', '2016-09-11 15:42:01', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('79', '1', '1', '2016-09-11 15:42:48', '90', '2016', '2', '2', '2', '1');
-INSERT INTO `answer_sheet` VALUES ('80', '1', '1', '2016-09-11 15:44:46', '90', '2016', '2', '2', '2', '1');
+INSERT INTO `answer_sheet` VALUES ('69', '1', '1', '1', '2016-09-11 15:22:02', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('70', '1', '1', '1', '2016-09-11 15:25:14', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('71', '1', '1', '1', '2016-09-11 15:25:44', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('72', '1', '1', '1', '2016-09-11 15:28:33', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('73', '1', '1', '1', '2016-09-11 15:29:57', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('74', '1', '1', '1', '2016-09-11 15:30:09', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('75', '1', '1', '1', '2016-09-11 15:34:07', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('76', '1', '1', '1', '2016-09-11 15:35:02', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('77', '1', '1', '1', '2016-09-11 15:36:39', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('78', '1', '1', '1', '2016-09-11 15:42:01', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('79', '1', '1', '1', '2016-09-11 15:42:48', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('80', '1', '1', '1', '2016-09-11 15:44:46', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('81', '1', '1', '1', '2016-09-25 17:46:24', '90', '2016', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('82', '1', '1', '1', '2016-09-25 19:31:36', null, '0', '2', '0', '1', '1', null);
 
 -- ----------------------------
 -- Table structure for `bespeak`
@@ -160,7 +164,7 @@ CREATE TABLE `classify_sheet` (
   `score` int(5) NOT NULL COMMENT '得分',
   `is_answer` tinyint(1) DEFAULT '0' COMMENT '是否正在答题',
   PRIMARY KEY (`classify_sheet_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=361 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=365 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of classify_sheet
@@ -237,6 +241,10 @@ INSERT INTO `classify_sheet` VALUES ('357', '8', '79', '2', null, '-2', null, '5
 INSERT INTO `classify_sheet` VALUES ('358', '10', '79', '2', null, '-2', null, '5', '0', '1');
 INSERT INTO `classify_sheet` VALUES ('359', '8', '80', '2', null, '-2', null, '5', '0', '1');
 INSERT INTO `classify_sheet` VALUES ('360', '10', '80', '2', null, '-2', null, '5', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('361', '8', '81', '2', null, '-2', null, '5', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('362', '10', '81', '2', null, '-2', null, '5', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('363', '8', '82', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('364', '10', '82', '0', null, '0', '1', '3', '0', '0');
 
 -- ----------------------------
 -- Table structure for `cost`
@@ -248,6 +256,7 @@ CREATE TABLE `cost` (
   `user_id` varchar(10) NOT NULL,
   `cost_money` decimal(10,2) NOT NULL COMMENT '缴费费用',
   `cost_type` tinyint(3) NOT NULL COMMENT '缴费类型',
+  `cost_way` tinyint(3) DEFAULT '0' COMMENT '支付方式',
   PRIMARY KEY (`cost_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -330,23 +339,43 @@ CREATE TABLE `member` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `msg`
+-- ----------------------------
+DROP TABLE IF EXISTS `msg`;
+CREATE TABLE `msg` (
+  `msg_key` varchar(60) NOT NULL DEFAULT '',
+  `code` int(6) DEFAULT NULL,
+  `msg_time` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`msg_key`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of msg
+-- ----------------------------
+INSERT INTO `msg` VALUES ('18628803303', '850750', '1474287983');
+INSERT INTO `msg` VALUES ('13541319025', '182177', '1474376466');
+
+-- ----------------------------
 -- Table structure for `order`
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `order_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '订单表',
-  `order_type` tinyint(3) NOT NULL COMMENT '订单类型',
+  `order_no` varchar(60) NOT NULL COMMENT '订单编号',
+  `order_type` tinyint(3) NOT NULL DEFAULT '1' COMMENT '订单类型',
   `order_time` datetime NOT NULL,
   `user_id` varchar(10) NOT NULL,
   `order_cost` decimal(10,2) NOT NULL COMMENT '订单费用',
   `is_pay` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支付',
   `flag` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of order
 -- ----------------------------
+INSERT INTO `order` VALUES ('1', '', '1', '2016-09-25 17:46:24', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('2', 'WCGR18CT-20160925-0001', '1', '2016-09-25 19:31:36', '1', '0.00', '1', '1');
 
 -- ----------------------------
 -- Table structure for `question`
@@ -393,7 +422,7 @@ CREATE TABLE `sheet` (
   `updatetime` datetime DEFAULT NULL,
   `is_answer` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已答',
   PRIMARY KEY (`sheet_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sheet
@@ -537,6 +566,12 @@ INSERT INTO `sheet` VALUES ('136', '80', '360', '3', null, '0', null, null, '0')
 INSERT INTO `sheet` VALUES ('137', '80', '359', '1', null, '0', null, null, '0');
 INSERT INTO `sheet` VALUES ('138', '80', '360', '4', null, '0', null, null, '0');
 INSERT INTO `sheet` VALUES ('139', '80', '359', '5', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('140', '81', '361', '1', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('141', '81', '361', '4', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('142', '81', '362', '1', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('143', '81', '362', '3', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('144', '82', '363', '2', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('145', '82', '363', '5', null, '0', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `team`
@@ -617,15 +652,16 @@ CREATE TABLE `user` (
   `flag` tinyint(1) NOT NULL DEFAULT '1',
   `team_id` varchar(255) DEFAULT NULL COMMENT '团队id',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'cb876a1e38befad13143e2be953b644a', 'slowly', '1', '13541319025', '1', '1', '396231662@qq.com', null, null, '1989-06-06', '1', '0000-00-00 00:00:00', '2016-09-11 15:44:51', '0', '1', '0', '1', '1');
+INSERT INTO `user` VALUES ('1', 'cb876a1e38befad13143e2be953b644a', 'slowly', '1', '13541319025', '1', '1', '396231662@qq.com', null, null, '1989-06-06', '1', '0000-00-00 00:00:00', '2016-09-25 19:31:36', '0', '1', '1', '1', '1');
 INSERT INTO `user` VALUES ('2', '6d5da75f1a593e472e65e985579460ae', 'slowly', '0', '13541319033', '2', null, null, '', '', '2010-03-07', '', '2016-07-07 22:38:47', '2016-07-07 22:50:13', '0', '1', '1', '1', '1');
 INSERT INTO `user` VALUES ('3', '', null, null, '13541319066', '3', null, null, null, null, null, null, '2016-07-07 22:59:33', null, '0', '0', '0', '1', '1');
 INSERT INTO `user` VALUES ('4', 'e07c99301f39735b510430c6e53843b9', 'slowly', '1', '13541319027', '4', null, null, '', '', '0000-00-00', '', '2016-09-06 21:54:58', '2016-09-06 22:08:29', '0', '1', '0', '1', '1');
+INSERT INTO `user` VALUES ('5', '43e38d21f04c0a62df067c3227ef245e', 'aaa', '0', '18628803303', '', null, null, '', '', '0000-00-00', '', '2016-09-21 00:10:37', '2016-09-21 00:26:47', '0', '1', '0', '1', null);
 
 -- ----------------------------
 -- Table structure for `work`

@@ -11,26 +11,28 @@
     <body>
         <div class="wrap">
             <div class="main">
-                <p class="subject">1.如果你去一家超市买下周学校春游要用的东西，你会怎么做？</p>
                 <div class="options">
-                    <if condition="$question.type eq 1">
+                    <if condition="$question.type == 1">
                         <p class="subject">{$num}.{$question.question}</p>
-                    <elseif condition="$question.type eq 3">
+                    </if>    
+                    <if condition="$question.type == 3">
                         <p class="tip">{$num}.{$question.question}</p>
                         <video id="my-video" class="video-js" controls preload="auto" width="700" height="390" poster="../img/bg-home.jpg" data-setup="{}">
-                            <source src="../dance.mp4" type='video/mp4'>
+                            <source src="{$question.file}" type='video/mp4'>
                         </video>
-                    <elseif condition="$question.type eq 2">
-                        <p class="tip">听语音后作答</p>
-                        <audio src="../music.mp3" preload="auto" controls></audio>
-                    <else/>
+                    </if>
+                    <if condition="$question.type == 2">
+                        <p class="tip">{$num}.{$question.question}</p>
+                        <audio src="{$question.file}" preload="auto" controls></audio>
+                    </if>
+                    <if condition="$question.type == 0 or $question.type eq null">
                         <p class="subject">{$num}.{$question.question}</p>
                     </if>
 
                     <form class="form" method="post" action="{:U('Exam/answers')}" method="post">
                         <ul class="options-list">
                             <foreach name="answer" item="vo" key="key">
-                                <li><input type="radio" name="selected" value="{vo.answer_id}" class="mr10">{$selected.$key}.{$vo.answer}</li>
+                                <li><input type="radio" name="selected" value="{$vo.answer_id}" class="mr10">{$selected.$key}.{$vo.answer}</li>
                             </foreach>
                         </ul>
                     </form>

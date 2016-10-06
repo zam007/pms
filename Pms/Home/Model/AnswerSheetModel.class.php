@@ -8,12 +8,14 @@ class AnswerSheetModel extends Model {
     public function getAnswerSheet($info,$filed = '*') {
         $answerSheet = M("answer_sheet"); 
         $info['flag'] = 1;
-        return $answerSheet->field($filed)->where($info)->find();
+        return $answerSheet->order('answer_sheet_id desc')->field($filed)->where($info)->find();
     }
     
     public function modify($answerSheetId,$update){
         $answerSheet = M("answer_sheet"); 
         return $answerSheet->where('answer_sheet_id='.$answerSheetId)->save($update);
+        $answerSheet->where('answer_sheet_id='.$answerSheetId)->save($update);
+        echo $answerSheet->getlastsql();exit;
     }
     
     public function avgScore($levelId){

@@ -1,22 +1,22 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50540
+Source Server         : localhost
+Source Server Version : 50624
 Source Host           : localhost:3306
 Source Database       : pms
 
 Target Server Type    : MYSQL
-Target Server Version : 50540
+Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-10-01 00:19:28
+Date: 2016-10-06 08:49:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `answer`
+-- Table structure for answer
 -- ----------------------------
 DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer` (
@@ -28,7 +28,7 @@ CREATE TABLE `answer` (
   `score` tinyint(3) NOT NULL COMMENT '答案分值',
   `comment` varchar(50) NOT NULL COMMENT '评语',
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
@@ -53,9 +53,12 @@ INSERT INTO `answer` VALUES ('17', '5', '54', '0', '3', '3', '5');
 INSERT INTO `answer` VALUES ('18', '5', '53', '0', '3', '2', '4');
 INSERT INTO `answer` VALUES ('19', '5', '52', '0', '2', '1', '3');
 INSERT INTO `answer` VALUES ('20', '5', '51', '0', '1', '1', '2');
+INSERT INTO `answer` VALUES ('21', '6', '好听', '0', '2', '3', '好啊');
+INSERT INTO `answer` VALUES ('22', '6', '不好听', '0', '3', '3', '可以');
+INSERT INTO `answer` VALUES ('23', '', '还可以', '0', '2', '4', '鹅');
 
 -- ----------------------------
--- Table structure for `answer_sheet`
+-- Table structure for answer_sheet
 -- ----------------------------
 DROP TABLE IF EXISTS `answer_sheet`;
 CREATE TABLE `answer_sheet` (
@@ -65,35 +68,30 @@ CREATE TABLE `answer_sheet` (
   `level_id` varchar(10) NOT NULL COMMENT '基础难度',
   `start_time` datetime NOT NULL COMMENT '答题开始时间',
   `answer_time` int(10) DEFAULT NULL COMMENT '答题用时',
-  `last_time` int(10) NOT NULL COMMENT '上一次答题时间',
+  `last_time` datetime NOT NULL COMMENT '上一次答题时间',
   `answers` tinyint(3) NOT NULL COMMENT '答题数量',
   `score` int(5) DEFAULT '0' COMMENT '实际总得分',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '答题状态1=答题中，2=完成，3=用户取消',
   `flag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否放弃',
   `order_id` varchar(10) DEFAULT NULL COMMENT '订单id',
   PRIMARY KEY (`answer_sheet_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer_sheet
 -- ----------------------------
-INSERT INTO `answer_sheet` VALUES ('69', '1', '1', '1', '2016-09-11 15:22:02', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('70', '1', '1', '1', '2016-09-11 15:25:14', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('71', '1', '1', '1', '2016-09-11 15:25:44', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('72', '1', '1', '1', '2016-09-11 15:28:33', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('73', '1', '1', '1', '2016-09-11 15:29:57', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('74', '1', '1', '1', '2016-09-11 15:30:09', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('75', '1', '1', '1', '2016-09-11 15:34:07', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('76', '1', '1', '1', '2016-09-11 15:35:02', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('77', '1', '1', '1', '2016-09-11 15:36:39', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('78', '1', '1', '1', '2016-09-11 15:42:01', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('79', '1', '1', '1', '2016-09-11 15:42:48', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('80', '1', '1', '1', '2016-09-11 15:44:46', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('81', '1', '1', '1', '2016-09-25 17:46:24', '90', '2016', '2', '2', '2', '1', null);
-INSERT INTO `answer_sheet` VALUES ('82', '1', '1', '1', '2016-09-25 19:31:36', null, '0', '2', '0', '1', '1', null);
+INSERT INTO `answer_sheet` VALUES ('113', '1', '1', '1', '2016-10-03 12:00:21', null, '0000-00-00 00:00:00', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('114', '1', '1', '1', '2016-10-03 12:04:16', null, '0000-00-00 00:00:00', '2', '2', '2', '1', null);
+INSERT INTO `answer_sheet` VALUES ('115', '1', '1', '1', '2016-10-03 12:06:51', null, '0000-00-00 00:00:00', '2', '0', '1', '1', null);
+INSERT INTO `answer_sheet` VALUES ('116', '1', '1', '1', '2016-10-03 12:08:33', null, '0000-00-00 00:00:00', '2', '0', '1', '1', null);
+INSERT INTO `answer_sheet` VALUES ('117', '1', '1', '1', '2016-10-03 12:08:44', null, '0000-00-00 00:00:00', '2', '0', '1', '1', null);
+INSERT INTO `answer_sheet` VALUES ('118', '1', '1', '1', '2016-10-03 12:09:02', null, '0000-00-00 00:00:00', '2', '0', '1', '1', null);
+INSERT INTO `answer_sheet` VALUES ('119', '1', '1', '1', '2016-10-03 12:12:19', null, '0000-00-00 00:00:00', '2', '0', '1', '1', null);
+INSERT INTO `answer_sheet` VALUES ('120', '1', '1', '1', '2016-10-03 12:14:57', null, '0000-00-00 00:00:00', '2', '0', '1', '1', null);
+INSERT INTO `answer_sheet` VALUES ('121', '1', '1', '1', '2016-10-03 12:15:34', '96', '2016-10-03 12:18:25', '2', '2', '2', '1', null);
 
 -- ----------------------------
--- Table structure for `bespeak`
+-- Table structure for bespeak
 -- ----------------------------
 DROP TABLE IF EXISTS `bespeak`;
 CREATE TABLE `bespeak` (
@@ -110,7 +108,7 @@ CREATE TABLE `bespeak` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `charge`
+-- Table structure for charge
 -- ----------------------------
 DROP TABLE IF EXISTS `charge`;
 CREATE TABLE `charge` (
@@ -128,7 +126,7 @@ CREATE TABLE `charge` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `classify`
+-- Table structure for classify
 -- ----------------------------
 DROP TABLE IF EXISTS `classify`;
 CREATE TABLE `classify` (
@@ -149,7 +147,7 @@ INSERT INTO `classify` VALUES ('8', '土1', '5', '2', '1');
 INSERT INTO `classify` VALUES ('10', '火1', '4', '2', '1');
 
 -- ----------------------------
--- Table structure for `classify_sheet`
+-- Table structure for classify_sheet
 -- ----------------------------
 DROP TABLE IF EXISTS `classify_sheet`;
 CREATE TABLE `classify_sheet` (
@@ -164,90 +162,32 @@ CREATE TABLE `classify_sheet` (
   `score` int(5) NOT NULL COMMENT '得分',
   `is_answer` tinyint(1) DEFAULT '0' COMMENT '是否正在答题',
   PRIMARY KEY (`classify_sheet_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=365 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of classify_sheet
 -- ----------------------------
-INSERT INTO `classify_sheet` VALUES ('289', '', '45', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('290', '', '45', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('291', '', '46', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('292', '', '46', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('293', '', '47', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('294', '', '47', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('295', '8', '48', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('296', '10', '48', '2', null, '-1', '1', '0', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('297', '8', '49', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('298', '10', '49', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('299', '8', '50', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('300', '10', '50', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('301', '8', '51', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('302', '10', '51', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('303', '8', '52', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('304', '10', '52', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('305', '8', '53', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('306', '10', '53', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('307', '8', '54', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('308', '10', '54', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('309', '8', '55', '2', null, '-1', '1', '0', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('310', '10', '55', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('311', '8', '56', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('312', '10', '56', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('313', '8', '57', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('314', '10', '57', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('315', '8', '58', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('316', '10', '58', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('317', '8', '59', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('318', '10', '59', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('319', '8', '60', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('320', '10', '60', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('321', '8', '61', '2', null, '-1', '1', '0', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('322', '10', '61', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('323', '8', '62', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('324', '10', '62', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('325', '8', '63', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('326', '10', '63', '2', null, '-1', '1', '0', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('327', '8', '64', '2', null, '-1', '1', '0', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('328', '10', '64', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('329', '8', '65', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('330', '10', '65', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('331', '8', '66', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('332', '10', '66', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('333', '8', '67', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('334', '10', '67', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('335', '8', '68', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('336', '10', '68', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('337', '8', '69', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('338', '10', '69', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('339', '8', '70', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('340', '10', '70', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('341', '8', '71', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('342', '10', '71', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('343', '8', '72', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('344', '10', '72', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('345', '8', '73', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('346', '10', '73', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('347', '8', '74', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('348', '10', '74', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('349', '8', '75', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('350', '10', '75', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('351', '8', '76', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('352', '10', '76', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('353', '8', '77', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('354', '10', '77', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('355', '8', '78', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('356', '10', '78', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('357', '8', '79', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('358', '10', '79', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('359', '8', '80', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('360', '10', '80', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('361', '8', '81', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('362', '10', '81', '2', null, '-2', null, '5', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('363', '8', '82', '2', null, '0', '1', '3', '0', '1');
-INSERT INTO `classify_sheet` VALUES ('364', '10', '82', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('425', '8', '113', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('426', '10', '113', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('427', '8', '114', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('428', '10', '114', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('429', '8', '115', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('430', '10', '115', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('431', '8', '116', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('432', '10', '116', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('433', '8', '117', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('434', '10', '117', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('435', '8', '118', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('436', '10', '118', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('437', '8', '119', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('438', '10', '119', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('439', '8', '120', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('440', '10', '120', '0', null, '0', '1', '3', '0', '0');
+INSERT INTO `classify_sheet` VALUES ('441', '8', '121', '2', null, '0', '1', '3', '0', '1');
+INSERT INTO `classify_sheet` VALUES ('442', '10', '121', '2', null, '-2', '1', '2', '0', '1');
 
 -- ----------------------------
--- Table structure for `cost`
+-- Table structure for cost
 -- ----------------------------
 DROP TABLE IF EXISTS `cost`;
 CREATE TABLE `cost` (
@@ -265,7 +205,7 @@ CREATE TABLE `cost` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `file`
+-- Table structure for file
 -- ----------------------------
 DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file` (
@@ -281,7 +221,7 @@ CREATE TABLE `file` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `inclination`
+-- Table structure for inclination
 -- ----------------------------
 DROP TABLE IF EXISTS `inclination`;
 CREATE TABLE `inclination` (
@@ -302,7 +242,7 @@ INSERT INTO `inclination` VALUES ('4', '4', null, '1');
 INSERT INTO `inclination` VALUES ('5', '5', null, '1');
 
 -- ----------------------------
--- Table structure for `level`
+-- Table structure for level
 -- ----------------------------
 DROP TABLE IF EXISTS `level`;
 CREATE TABLE `level` (
@@ -322,7 +262,7 @@ CREATE TABLE `level` (
 INSERT INTO `level` VALUES ('1', '全部', '100', '1', '1', '2', '1');
 
 -- ----------------------------
--- Table structure for `member`
+-- Table structure for member
 -- ----------------------------
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
@@ -339,7 +279,7 @@ CREATE TABLE `member` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `msg`
+-- Table structure for msg
 -- ----------------------------
 DROP TABLE IF EXISTS `msg`;
 CREATE TABLE `msg` (
@@ -356,7 +296,7 @@ INSERT INTO `msg` VALUES ('18628803303', '850750', '1474287983');
 INSERT INTO `msg` VALUES ('13541319025', '182177', '1474376466');
 
 -- ----------------------------
--- Table structure for `order`
+-- Table structure for order
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
@@ -369,16 +309,55 @@ CREATE TABLE `order` (
   `is_pay` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支付',
   `flag` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of order
 -- ----------------------------
 INSERT INTO `order` VALUES ('1', '', '1', '2016-09-25 17:46:24', '1', '0.00', '1', '1');
 INSERT INTO `order` VALUES ('2', 'WCGR18CT-20160925-0001', '1', '2016-09-25 19:31:36', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('3', 'WCGR18CT-20161002-0000', '1', '2016-10-02 14:05:38', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('4', 'WCGR18CT-20161002-0001', '1', '2016-10-02 23:54:32', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('5', 'WCGR18CT-20161002-0002', '1', '2016-10-02 23:55:19', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('6', 'WCGR18CT-20161003-0000', '1', '2016-10-03 00:03:49', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('7', 'WCGR18CT-20161003-0001', '1', '2016-10-03 00:11:31', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('8', 'WCGR18CT-20161003-0002', '1', '2016-10-03 00:13:46', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('9', 'WCGR18CT-20161003-0003', '1', '2016-10-03 00:16:20', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('10', 'WCGR18CT-20161003-0004', '1', '2016-10-03 00:22:32', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('11', 'WCGR18CT-20161003-0005', '1', '2016-10-03 00:31:38', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('12', 'WCGR18CT-20161003-0006', '1', '2016-10-03 00:41:38', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('13', 'WCGR18CT-20161003-0007', '1', '2016-10-03 00:45:17', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('14', 'WCGR18CT-20161003-0008', '1', '2016-10-03 01:03:55', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('15', 'WCGR18CT-20161003-0009', '1', '2016-10-03 01:08:28', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('16', 'WCGR18CT-20161003-0010', '1', '2016-10-03 01:31:41', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('17', 'WCGR18CT-20161003-0011', '1', '2016-10-03 01:37:30', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('18', 'WCGR18CT-20161003-0012', '1', '2016-10-03 01:38:09', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('19', 'WCGR18CT-20161003-0013', '1', '2016-10-03 01:41:25', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('20', 'WCGR18CT-20161003-0014', '1', '2016-10-03 01:42:36', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('21', 'WCGR18CT-20161003-0015', '1', '2016-10-03 01:42:55', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('22', 'WCGR18CT-20161003-0016', '1', '2016-10-03 01:44:36', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('23', 'WCGR18CT-20161003-0017', '1', '2016-10-03 01:44:54', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('24', 'WCGR18CT-20161003-0018', '1', '2016-10-03 01:48:28', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('25', 'WCGR18CT-20161003-0019', '1', '2016-10-03 01:51:18', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('26', 'WCGR18CT-20161003-0020', '1', '2016-10-03 01:53:05', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('27', 'WCGR18CT-20161003-0021', '1', '2016-10-03 01:53:48', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('28', 'WCGR18CT-20161003-0022', '1', '2016-10-03 10:47:45', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('29', 'WCGR18CT-20161003-0023', '1', '2016-10-03 11:53:15', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('30', 'WCGR18CT-20161003-0024', '1', '2016-10-03 11:56:00', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('31', 'WCGR18CT-20161003-0025', '1', '2016-10-03 11:56:13', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('32', 'WCGR18CT-20161003-0026', '1', '2016-10-03 11:58:43', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('33', 'WCGR18CT-20161003-0027', '1', '2016-10-03 12:00:21', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('34', 'WCGR18CT-20161003-0028', '1', '2016-10-03 12:04:16', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('35', 'WCGR18CT-20161003-0029', '1', '2016-10-03 12:06:51', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('36', 'WCGR18CT-20161003-0030', '1', '2016-10-03 12:08:33', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('37', 'WCGR18CT-20161003-0031', '1', '2016-10-03 12:08:44', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('38', 'WCGR18CT-20161003-0032', '1', '2016-10-03 12:09:02', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('39', 'WCGR18CT-20161003-0033', '1', '2016-10-03 12:12:19', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('40', 'WCGR18CT-20161003-0034', '1', '2016-10-03 12:14:57', '1', '0.00', '1', '1');
+INSERT INTO `order` VALUES ('41', 'WCGR18CT-20161003-0035', '1', '2016-10-03 12:15:34', '1', '0.00', '1', '1');
 
 -- ----------------------------
--- Table structure for `question`
+-- Table structure for question
 -- ----------------------------
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
@@ -387,7 +366,7 @@ CREATE TABLE `question` (
   `question` text NOT NULL COMMENT '问题',
   `level_id` varchar(10) NOT NULL COMMENT '问题等级',
   `file` varchar(255) DEFAULT NULL COMMENT '文件路径',
-  `play_time` datetime DEFAULT NULL COMMENT '播放时间',
+  `play_time` int(6) DEFAULT NULL COMMENT '播放时间',
   `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '答题类型，0=文字，1=图片，2=语言，3=视频',
   `difficulty` tinyint(3) NOT NULL COMMENT '难度',
   `created` datetime DEFAULT NULL,
@@ -396,7 +375,7 @@ CREATE TABLE `question` (
   `update_member` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '修改人',
   `flag` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`question_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of question
@@ -404,11 +383,12 @@ CREATE TABLE `question` (
 INSERT INTO `question` VALUES ('1', '8', '你的生活费来自', '1', null, null, '0', '3', null, '', null, null, '1');
 INSERT INTO `question` VALUES ('2', '10', '你关注新闻吗', '1', null, null, '0', '3', null, '', null, null, '1');
 INSERT INTO `question` VALUES ('3', '8', '测试问题1', '1', null, null, '0', '3', null, '', null, null, '1');
-INSERT INTO `question` VALUES ('4', '8', '测试问题2', '1', null, null, '0', '3', null, '', null, null, '1');
-INSERT INTO `question` VALUES ('5', '10', '测试问题3', '1', null, null, '0', '3', null, '', null, null, '1');
+INSERT INTO `question` VALUES ('4', '8', '测试问题2', '1', 'http://pms.dev.com/Upload/voide/mp4.mp4', null, '3', '3', null, '', null, null, '1');
+INSERT INTO `question` VALUES ('5', '10', '测试问题3', '1', 'http://pms.dev.com/Upload/voide/mp4.mp4', null, '3', '3', null, '', null, null, '1');
+INSERT INTO `question` VALUES ('6', '10', '听音乐', '1', '/Upload/music/music.mp3', '0', '2', '3', null, '', null, null, '1');
 
 -- ----------------------------
--- Table structure for `sheet`
+-- Table structure for sheet
 -- ----------------------------
 DROP TABLE IF EXISTS `sheet`;
 CREATE TABLE `sheet` (
@@ -422,159 +402,30 @@ CREATE TABLE `sheet` (
   `updatetime` datetime DEFAULT NULL,
   `is_answer` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已答',
   PRIMARY KEY (`sheet_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sheet
 -- ----------------------------
-INSERT INTO `sheet` VALUES ('1', '', '289', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('2', '', '289', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('3', '', '289', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('4', '', '294', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('5', '47', '294', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('6', '47', '293', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('7', '47', '293', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('8', '48', '295', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('9', '48', '296', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('10', '48', '295', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('11', '48', '296', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('12', '49', '298', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('13', '49', '298', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('14', '49', '297', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('15', '49', '297', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('16', '50', '299', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('17', '50', '299', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('18', '50', '300', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('19', '50', '300', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('20', '51', '302', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('21', '51', '301', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('22', '51', '302', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('23', '51', '301', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('24', '52', '303', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('25', '52', '304', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('26', '52', '303', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('27', '52', '304', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('28', '53', '305', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('29', '53', '306', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('30', '53', '305', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('31', '53', '306', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('32', '54', '307', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('33', '54', '307', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('34', '54', '308', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('35', '54', '308', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('36', '55', '309', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('37', '55', '309', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('38', '55', '310', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('39', '55', '310', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('40', '56', '311', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('41', '56', '311', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('42', '56', '312', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('43', '56', '312', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('44', '57', '314', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('45', '57', '314', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('46', '57', '313', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('47', '57', '313', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('48', '58', '316', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('49', '58', '316', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('50', '58', '315', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('51', '58', '315', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('52', '59', '317', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('53', '59', '318', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('54', '59', '317', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('55', '59', '318', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('56', '60', '320', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('57', '60', '319', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('58', '60', '320', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('59', '60', '319', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('60', '61', '321', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('61', '61', '321', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('62', '61', '322', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('63', '61', '322', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('64', '62', '323', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('65', '62', '323', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('66', '62', '324', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('67', '62', '324', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('68', '63', '325', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('69', '63', '325', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('70', '63', '326', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('71', '63', '326', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('72', '64', '327', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('73', '64', '328', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('74', '64', '327', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('75', '64', '328', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('76', '65', '329', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('77', '65', '329', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('78', '65', '330', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('79', '65', '330', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('80', '66', '332', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('81', '66', '331', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('82', '66', '331', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('83', '66', '332', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('84', '67', '333', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('85', '67', '333', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('86', '67', '334', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('87', '67', '334', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('88', '68', '336', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('89', '68', '335', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('90', '68', '335', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('91', '68', '336', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('92', '69', '337', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('93', '69', '337', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('94', '69', '338', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('95', '69', '338', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('96', '70', '340', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('97', '70', '339', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('98', '70', '340', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('99', '70', '339', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('100', '71', '342', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('101', '71', '341', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('102', '71', '341', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('103', '71', '342', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('104', '72', '343', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('105', '72', '343', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('106', '72', '344', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('107', '72', '344', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('108', '73', '346', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('109', '73', '345', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('110', '73', '345', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('111', '73', '346', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('112', '74', '347', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('113', '74', '348', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('114', '74', '348', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('115', '74', '347', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('116', '75', '349', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('117', '75', '350', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('118', '75', '349', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('119', '75', '350', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('120', '76', '351', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('121', '76', '352', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('122', '76', '352', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('123', '76', '351', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('124', '77', '354', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('125', '77', '354', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('126', '77', '353', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('127', '77', '353', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('128', '78', '356', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('129', '78', '355', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('130', '78', '355', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('131', '78', '356', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('132', '79', '357', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('133', '79', '357', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('134', '79', '358', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('135', '79', '358', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('136', '80', '360', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('137', '80', '359', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('138', '80', '360', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('139', '80', '359', '5', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('140', '81', '361', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('141', '81', '361', '4', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('142', '81', '362', '1', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('143', '81', '362', '3', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('144', '82', '363', '2', null, '0', null, null, '0');
-INSERT INTO `sheet` VALUES ('145', '82', '363', '5', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('252', '113', '426', '3', '12', '0', '12', '2016-10-03 12:02:57', '1');
+INSERT INTO `sheet` VALUES ('253', '113', '426', '4', '12', '0', '12', '2016-10-03 12:03:08', '1');
+INSERT INTO `sheet` VALUES ('254', '113', '425', '4', '12', '0', '12', '2016-10-03 12:03:17', '1');
+INSERT INTO `sheet` VALUES ('255', '113', '425', '5', '12', '0', '12', '2016-10-03 12:03:20', '1');
+INSERT INTO `sheet` VALUES ('256', '114', '427', '1', '3', '0', '3', '2016-10-03 12:04:21', '1');
+INSERT INTO `sheet` VALUES ('257', '114', '428', '5', '3', '0', '3', '2016-10-03 12:04:36', '1');
+INSERT INTO `sheet` VALUES ('258', '114', '428', '6', '3', '0', '3', '2016-10-03 12:04:58', '1');
+INSERT INTO `sheet` VALUES ('259', '114', '427', '5', '3', '0', '3', '2016-10-03 12:06:42', '1');
+INSERT INTO `sheet` VALUES ('260', '115', '430', '2', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('261', '115', '429', '1', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('262', '115', '430', '6', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('263', '115', '429', '3', null, '0', null, null, '0');
+INSERT INTO `sheet` VALUES ('264', '121', '442', '1', '1', '0', '1', '2016-10-03 12:18:19', '1');
+INSERT INTO `sheet` VALUES ('265', '121', '442', '5', '1', '0', '1', '2016-10-03 12:18:22', '1');
+INSERT INTO `sheet` VALUES ('266', '121', '441', '3', '10', '0', '10', '2016-10-03 12:18:23', '1');
+INSERT INTO `sheet` VALUES ('267', '121', '441', '6', '22', '0', '22', '2016-10-03 12:18:25', '1');
 
 -- ----------------------------
--- Table structure for `team`
+-- Table structure for team
 -- ----------------------------
 DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team` (
@@ -593,7 +444,7 @@ CREATE TABLE `team` (
 INSERT INTO `team` VALUES ('1', '第一个', '2', '1', '123456', '1');
 
 -- ----------------------------
--- Table structure for `team_user`
+-- Table structure for team_user
 -- ----------------------------
 DROP TABLE IF EXISTS `team_user`;
 CREATE TABLE `team_user` (
@@ -610,7 +461,7 @@ INSERT INTO `team_user` VALUES ('1', '1', '0000-00-00 00:00:00');
 INSERT INTO `team_user` VALUES ('1', '3', '0000-00-00 00:00:00');
 
 -- ----------------------------
--- Table structure for `test`
+-- Table structure for test
 -- ----------------------------
 DROP TABLE IF EXISTS `test`;
 CREATE TABLE `test` (
@@ -628,7 +479,7 @@ CREATE TABLE `test` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `user`
+-- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -657,14 +508,14 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'cb876a1e38befad13143e2be953b644a', 'slowly', '1', '13541319025', '1', '1', '396231662@qq.com', null, null, '1989-06-06', '1', '0000-00-00 00:00:00', '2016-09-25 19:31:36', '0', '1', '1', '1', '1');
+INSERT INTO `user` VALUES ('1', 'cb876a1e38befad13143e2be953b644a', 'slowly', '1', '13541319025', '1', '1', '396231662@qq.com', null, null, '1989-06-06', '1', '0000-00-00 00:00:00', '2016-10-03 12:18:25', '0', '1', '0', '1', '1');
 INSERT INTO `user` VALUES ('2', '6d5da75f1a593e472e65e985579460ae', 'slowly', '0', '13541319033', '2', null, null, '', '', '2010-03-07', '', '2016-07-07 22:38:47', '2016-07-07 22:50:13', '0', '1', '1', '1', '1');
 INSERT INTO `user` VALUES ('3', '', null, null, '13541319066', '3', null, null, null, null, null, null, '2016-07-07 22:59:33', null, '0', '0', '0', '1', '1');
 INSERT INTO `user` VALUES ('4', 'e07c99301f39735b510430c6e53843b9', 'slowly', '1', '13541319027', '4', null, null, '', '', '0000-00-00', '', '2016-09-06 21:54:58', '2016-09-06 22:08:29', '0', '1', '0', '1', '1');
 INSERT INTO `user` VALUES ('5', '43e38d21f04c0a62df067c3227ef245e', 'aaa', '0', '18628803303', '', null, null, '', '', '0000-00-00', '', '2016-09-21 00:10:37', '2016-09-21 00:26:47', '0', '1', '0', '1', null);
 
 -- ----------------------------
--- Table structure for `work`
+-- Table structure for work
 -- ----------------------------
 DROP TABLE IF EXISTS `work`;
 CREATE TABLE `work` (

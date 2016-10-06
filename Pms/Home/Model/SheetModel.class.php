@@ -19,6 +19,8 @@ class SheetModel extends Model {
     public function modify( $sheetId,$update){
         $sheet = M("sheet"); 
         return $sheet->where('sheet_id='.$sheetId)->save($update); 
+//        $sheet->where('sheet_id='.$sheetId)->save($update); 
+//        echo $sheet->getlastsql();exit;
     }
     
     public function sum($where,$field = '*'){

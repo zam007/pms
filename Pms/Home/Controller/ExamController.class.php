@@ -33,7 +33,6 @@ class ExamController extends BaseController {
             $team['attribute'] =$attribute[$team['attribute']];
             $team['sum'] = D('Team')->count($teamId);
         }
-        $this->assign('selected',$selected);
         $this->assign('team',$team);
         $this->assign('user',$user);
         $this->display('exam/info_confirm');
@@ -112,11 +111,11 @@ class ExamController extends BaseController {
     	);
     	$field = 'classify_sheet_id,answer_sheet_id,answers,difficulty,level_id,correct';
     	$classifySheet = $classifySheetMode->generateClassifySheet($where,$field);
-    	
+    	$max = $answerSheet['answers'] * $classifySheetMode->count(array('answer_sheet_id' => $answerSheet['answer_sheet_id']));
     	if(!$classifySheet){
     		$userMode = D('user');
     		$userMode->modify($userId,array('answer'=>0));
-    		$this->success('测试完成','../Exam/report',3);
+    		$this->success('测试完成','../Index/index');
     		die();
     	}
     	
@@ -163,21 +162,56 @@ class ExamController extends BaseController {
     	$where = array(
     		'answer_sheet_id'=>$answerSheet['answer_sheet_id'],
     	);
-    	$randQue['num'] = $classifySheetMode->sum($where,'answers');
-    	//将答题信息存入session
+//    	$randQue['num'] = $classifySheetMode->sum($where,'answers');
+    	 //将答题信息存入session
     	SESSION('answer_sheet_id',$answerSheet['answer_sheet_id']);
-    	SESSION('sheet_id',$answerSheet['sheet_id']);
-    	SESSION('classify_sheet_id',$classifySheet['classify_sheet_id']);
-    	SESSION('question_id',$answerWhere['question_id']);
-    	$selected = array('A','B','C','D','E','F');
-    	//已回答题目数
+    	SESSION('sheet_id',$sheetId);
+    	SESSION('classify_sheet_id', $classifySheet['classify_sheet_id']);
+    	SESSION('question_id',$question['question_id']);
+        
+        $this->answer($randQue, $answer, $max);
+    	die();
+    }
+    /**
+     * 继续答题
+     * 说明：用户未填写答案提交或刷新页面，答题时间还未用完时使用
+     */
+    private function answerGo(){
+    	$questionId = I('session.question_id',0);
+        $answerSheetId = I('session.answer_sheet_id',0);
+        
+        $questionMode = D('question');
+        $answerMode = D('answer');
+        $answerSheetMode = D('answerSheet');
+        $classifySheetMode = D('classifySheet');
+        
+        $question = $questionMode->getQuestionOne(array('question_id' => $questionId));
+        $answer = $answerMode->getAnswer(array('question_id' => $questionId));
+        $answerSheet = $answerSheetMode->getAnswerSheet(array('answer_sheet_id' => $answerSheetId),'answers,answer_sheet_id');
+        $max = $answerSheet['answers'] * $classifySheetMode->count(array('answer_sheet_id' => $answerSheet['answer_sheet_id']));
+        $this->answer($question, $answer, $max);
+    }
+    /**
+     * 跳转答题页面
+     * @param type $question 问题
+     * @param type $answer  答案
+     * @param type $sheetId 答卷id
+     */
+    private function answer($question, $answer, $max){
+    	$answerSheetId = I('session.answer_sheet_id',0);
+        
+    	$selected = array('A','B','C','D','E','F','G','H');
+        
         $where = array(
-            'answer_sheet_id' => $answerSheet['answer_sheet_id']
+            'answer_sheet_id' => $answerSheetId
         );
+        $sheetMode = D('sheet');
+        //查询已答题数
         $num = $sheetMode->count($where);
+        $this->assign('max',$max);
     	$this->assign('num',$num);
     	$this->assign('selected',$selected);
-        $this->assign('question',$randQue);
+        $this->assign('question',$question);
         $this->assign('answer',$answer);
         $this->display('exam/answer');
     	die();
@@ -196,8 +230,12 @@ class ExamController extends BaseController {
     	$answerSheetId = I('session.answer_sheet_id',0);
     	$classifySheetId = I('session.classify_sheet_id',0);
     	$sheetId = I('session.sheet_id',0);
-    	$answerId = I('selected',0);
-    	if(!$question_id){
+    	(int)$answerId = I('selected',0);
+        
+        $now = C('NOW');
+        $date = date('Y-m-d H:i:s',$now);
+        
+    	if($question_id != 0){
     		return false;
     	}
         $userModel = D("User");
@@ -207,23 +245,41 @@ class ExamController extends BaseController {
         	die();
 //        	$this->redirect('answerQuestion');
         }
-    	//获取问题
-    	$questionMode = D('Question');
+        $questionMode = D('Question');
+        $answerMode = D('Answer');
+        $classifySheetMode = D('ClassifySheet');
+        $answerSheetMode = D('AnswerSheet');
+        $levelMode = D('Level');
+        
+        //获取问题
     	$where['question_id'] = $question_id;
-    	$question = $questionMode->getQuestionOne($where,'question_id,level_id,difficulty');
+    	$question = $questionMode->getQuestionOne($where,'question_id,level_id,play_time,difficulty');
+        
+        //获取试卷
     	
-    	//获取答案
-    	$answerMode = D('Answer');
-    	$where['answer_id'] = $answerId;
-    	$answer = $answerMode->getAnswer($where,'answer_id,score,inclination_id');
-    	
-    	//获取试卷
-    	$answerSheetMode = D('AnswerSheet');
     	$answerInfo['answer_sheet_id'] = array('eq',$answerSheetId);
     	$answerSheet = $answerSheetMode->getAnswerSheet($answerInfo);
+       echo $answerId;
+        if($answerId == 0){echo 3;exit;
+            $t = C('NOW');
+            $answerTime = C('ANSWER_TIME');
+            $time =  $answerTime + strtotime($answerSheet['last_time']) + $question['play_time'] - $t;
+            //如果用户未填写答案且答题时间超过10s，择让用户继续作答
+            if($time >= 10){
+                $this->answerGo($time);
+            }
+        }
+    	
+    	//获取答案
+    	
+    	$where = array('answer_id' => $answerId);
+    	$answer = $answerMode->getAnswer($where,'answer_id,score,inclination_id');
+    	$answer = $answer[0];
+    	
+    	
     	
     	//获取分类试卷
-    	$classifySheetMode = D('ClassifySheet');
+    	
     	$info['classify_sheet_id'] = $classifySheetId;
     	$classifySheet = $classifySheetMode->getClassifySheet($info);
     	$correct = $classifySheet['correct'];
@@ -234,7 +290,7 @@ class ExamController extends BaseController {
     	$sheet = $sheetMode->getSheet($info);
     	
     	//计算得分
-    	$levelMode = D('Level');
+    	
     	$leaveInfo['level_id'] = $question['level_id'];
     	$leaveQuestion = $levelMode->getLevel($leaveInfo,'sort');
     	$answerScore = (int)$answer['score'];
@@ -243,22 +299,14 @@ class ExamController extends BaseController {
     	$leaveBase = $levelMode->getLevel($leaveInfo,'sort');
     	
     	//得分计算公式-未完成
-    	if(empty($leaveQuestion)){
+    	if($leaveQuestion){
     		$score = (($leaveQuestion['sort']-1)*5+$question['difficulty']) - (($leaveBase['sort']-1)*5);
     		$score1 = $answerScore*$score/3;
     	}else{
     		$score = 0;
     		$score1 = 0;
     	}
-    	//修改答卷
-    	$update = array(
-    		'answer_id' => $answerId,
-    		'score' => $score1,
-    		'inclination_id' => $answerId,
-    		'updatetime' => date('Y-m-d H:i:s',time()),
-    		'is_answer' => 1,
-    	);
-    	$sheetMode->modify($sheetId,$updat);
+    	
     	//答题难度曲线
     	if($answerScore>3){
     		if($correct<=0){
@@ -301,27 +349,37 @@ class ExamController extends BaseController {
     				$difficulty = 1;
     			}
     		}
-    	}
+        }else{
+            $difficulty = $classifySheet['difficulty'];
+        }
+        //修改答卷
+    	$update = array(
+    		'answer_id' => $answerId,
+    		'score' => $score1,
+    		'inclination_id' => $answerId,
+    		'updatetime' => $date,
+    		'is_answer' => 1,
+    	);
+    	$sheetMode->modify($sheetId,$update);
     	//修改分类答卷
     	$update = array(
     		'correct' => $correct,
     		'level_id' => $levelId,
     		'difficulty' => $difficulty,
-    		'updated' => date('Y-m-d H:i:s',time()),
+    		'updated' => $date,
     	);
     	if($classifySheetMode->modify($classifySheetId,$update)){
-    		//修改答卷
-    		$last = $answerSheet['last_time'];
-    		$answerTime = $answerSheet['answer_time'];
-    		$time = time()-strtotime($answerSheet['last_time']);
-    		if($time > 90){
-    			$time = 90;
-    		}else if($time < 0){
-    			$time = 0;
-    		}
-    		$res['last_time'] = date('Y-m-d H:i:s',time());
-    		$res['answer_time'] = $answerTime+$time;
-    		$answerSheetMode->modify($answerSheetId,$res);
+            //修改答卷
+            $answerTime = $answerSheet['answer_time'];
+            $time = $now - strtotime($answerSheet['last_time']);
+            if($time > 90){
+                    $time = 90;
+            }else if($time < 0){
+                    $time = 0;
+            }
+            $res['last_time'] = $date;
+            $res['answer_time'] = $answerTime+$time;
+            $answerSheetMode->modify($answerSheetId,$res);
     	}
     	
     	$where = array(

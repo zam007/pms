@@ -52,14 +52,14 @@
 						<div class="test-way">
 							<span>测试方式：</span>
 							<label><input type="radio" checked name="test" value="0" class="pr10"><span class="pl5">个人测试</span></label>
-							<label class="pl10"><input type="radio" name="test" value="1" class="pr10"><span class="pl5">团体测试（成都市高新区市政府）</span></label>
+							<label class="pl10"><input type="radio" name="test" value="1" class="pr10"><span class="pl5">团体测试（{$team.sum}）</span></label>
 						</div>
 						<div>
 							<span class="grey">确认无误后，生成试题</span>
 						</div>
 						<div>
                                                     <form class="form" method="post" action="{:U('Exam/userExam')}" method="post">
-                                                        <p class="submit">生成试题</p>
+                                                        <a href="{:U('Exam/userExam')}"><p class="submit">生成试题</p></a>
                                                     </form>
 						</div>
 					</div>

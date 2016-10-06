@@ -5,8 +5,10 @@ return array(
 //    'DB_HOST'=>'112.74.73.22',// 服务器地址
     'DB_HOST'=>'127.0.0.1',// 服务器地址
     'DB_NAME'=>'pms',// 数据库名
-    'DB_USER'=>'pms',// 用户名
-    'DB_PWD'=>'fqtmms136',// 密码
+//    'DB_USER'=>'pms',// 用户名
+//    'DB_PWD'=>'fqtmms136',// 密码
+    'DB_USER'=>'root',// 用户名
+    'DB_PWD'=>'',// 密码
     'DB_PORT'=>3306,// 端口
     'DB_PREFIX'=>'',// 数据库表前缀
     'DB_CHARSET'=>'utf8',// 数据库字符集
@@ -28,4 +30,8 @@ return array(
     //模板文件后缀名（U方法的伪静态）
     'URL_HTML_SUFFIX' => '.html',
     'URL_MODLE' => 1,
+    //当前时间戳
+    'NOW' => time(),
+    //答题基础用时
+    'ANSWER_TIME' => 90,
 );

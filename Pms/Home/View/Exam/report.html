@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/video-js.min.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/report.css">
+</head>
+<body>
+	<div class="wrap">
+		<div class="main">
+			<div class="report-header">
+				<img src="__PUBLIC__/img/log_1.png">
+				<div class="report-header-title">
+					<p class="title">五行财商测评系统网络测评报告</p>
+					<p class="en">FIVE LINES OF FINANCIAL EVALUATION SYSTEM OF NETWORK EVALUATION REPORT</p>
+					<div class="separate"></div>
+					<div class="info">
+						<span>
+							<span>姓名：</span><span>张三</span>
+							<span>性别：</span><span>男</span>
+							<span>年龄：</span><span>25</span>
+						</span>
+						<span>
+                                                    <span>来源地：</span><span>城市</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="hr"></div>
+			<div class="report-content">
+				<div class="zongti">
+					<div class="graph">
+						<div class="graph-l-title">
+							<p class="graph-l-title-main">总体得分</p>
+							<p class="graph-l-title-des">花钱得分反应您在花投钱、挣钱、保钱、花钱、借钱方面的能力</p>
+							<div>
+								<!-- 图表 -->
+                                                                <input type="hidden" id="data_beat" value="{$data.beat}">
+							</div>
+							<p class="graph-l-title-ratio">打败{$data.beat}同龄人</p>
+							<p class="graph-l-title-score"><span>相对得分：{$data.relative_score}</span><span>显著程度：{$data.beat}</span><span>标准差：{$data.SD_score}</span></p>
+						</div>
+						<div id="zongti_graph"></div>
+					</div>
+				</div>
+				<div class="hr"></div>
+				<div class="huaqian">
+					<div class="graph">
+						<div class="graph-l-title">
+							<p class="graph-l-title-main">花钱得分</p>
+							<p class="graph-l-title-des">花钱得分反应您在花钱平稳性、合理性、与人对比等方面的情况</p>
+							<div>
+								<!-- 图表 -->
+							</div>
+							<p class="graph-l-title-ratio">打败{$classify.4.beat}同龄人</p>
+							<p class="graph-l-title-score"><span>相对得分：{$classifys[4].relative_score}</span><span>显著程度：{$classifys[4].beat}</span><span>标准差：{$classifys[4].SD_score}</span></p>
+						</div>
+						<div id="huaqian_graph"></div>
+					</div>
+					<div class="table">
+						<div class="table-title" style="background-color: #79c0ff;">
+							<div>
+								<p class="table-title-main">花钱</p>
+								<p class="table-title-sub">（按得分比例排序）</p>
+							</div>
+						</div>
+						<table class="table-content" cellpadding="0" cellspacing="0">
+							<tr>
+								<th>小类</th>
+								<th>题目数量</th>
+								<th>应得分</th>
+								<th>实得分</th>
+								<th>得分比例</th>
+								<th>年龄组平均得分</th>
+								<th>相对得分</th>
+							</tr>
+                                                        <foreach name="classifys[4].classify" item="vo" key="key">
+							<tr>
+								<td>平衡性</td>
+								<td>{$vo.answer_num}</td>
+								<td>{$vo.basic_score}</td>
+								<td>{$vo.total_score}</td>
+								<td>{$vo.probability_score}%</td>
+								<td>{$vo.avg_score}</td>
+								<td>{$vo.relative_score}</td>
+							</tr>
+                                                        </foreach>
+						</table>
+					</div>
+				</div>
+				<div class="hr" style="background-color: #fff;"></div>
+				<div class="zhengqian">
+					<div class="graph">
+						<div class="graph-l-title">
+							<p class="graph-l-title-main">挣钱得分</p>
+							<p class="graph-l-title-des">挣钱得分反应您在挣钱理念、挣钱稳定性等方面的能力</p>
+							<div>
+								<!-- 图表 -->
+							</div>
+							<p class="graph-l-title-ratio">打败70%同龄人</p>
+							<p class="graph-l-title-score"><span>相对得分：-139</span><span>显著程度：无明显差异</span><span>标准差：12</span></p>
+						</div>
+						<div id="zhengqian_graph"></div>
+					</div>
+					<div class="table">
+						<div class="table-title" style="background-color: #f5d96c;">
+							<div>
+								<p class="table-title-main">挣钱</p>
+								<p class="table-title-sub">（按得分比例排序）</p>
+							</div>
+						</div>
+						<table class="table-content" cellpadding="0" cellspacing="0">
+							<tr>
+								<th>小类</th>
+								<th>题目数量</th>
+								<th>应得分</th>
+								<th>实得分</th>
+								<th>得分比例</th>
+								<th>年龄组平均得分</th>
+								<th>相对得分</th>
+							</tr>
+							<tr>
+								<td>平衡性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>18</td>
+								<td>60</td>
+								<td>27</td>
+								<td>-33</td>
+							</tr>
+							<tr>
+								<td>合理性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>18</td>
+								<td>60</td>
+								<td>27</td>
+								<td>-33</td>
+							</tr>
+							<tr>
+								<td>人己比</td>
+								<td>6</td>
+								<td>30</td>
+								<td>18</td>
+								<td>60</td>
+								<td>27</td>
+								<td>-33</td>
+							</tr>
+							<tr>
+								<td>规划性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>18</td>
+								<td>60</td>
+								<td>27</td>
+								<td>-33</td>
+							</tr>
+							<tr>
+								<td>长效性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>18</td>
+								<td>60</td>
+								<td>27</td>
+								<td>-33</td>
+							</tr>
+							<tr>
+								<td>合计性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>18</td>
+								<td>60</td>
+								<td>27</td>
+								<td>-33</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="hr"></div>
+				<div>
+					<div class="chart-title">
+						<p class="title-nd">相对得分</p>
+						<p class="title-nd-sub">相对得分是您所在年龄组平均得分的差距</p>
+					</div>
+					<div id="xiangdui"></div>
+				</div>
+				<div class="hr" style="background-color: #fff;"></div>
+				<div class="rank">
+					<div class="chart-title">
+						<p class="title-nd">各类得分排序</p>
+						<p class="title-nd-sub">看看在哪些方面能力突出或欠缺，获得准确提升方向</p>
+					</div>
+					<div class="table">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<th>序号</th>
+								<th>小类</th>
+								<th>题目数量</th>
+								<th>应得分</th>
+								<th>实得分</th>
+								<th>得分比例</th>
+								<th>标准差</th>
+								<th>显著程度</th>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>合理性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>6</td>
+								<td>无明显差异</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>规划性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>5</td>
+								<td>95%显著差异</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>结构性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>6</td>
+								<td>95%显著差异</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>合理性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>6</td>
+								<td>无明显差异</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>规划性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>5</td>
+								<td>95%显著差异</td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>结构性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>6</td>
+								<td>95%显著差异</td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td>合理性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>6</td>
+								<td>无明显差异</td>
+							</tr>
+							<tr>
+								<td>8</td>
+								<td>规划性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>5</td>
+								<td>95%显著差异</td>
+							</tr>
+							<tr>
+								<td>9</td>
+								<td>结构性</td>
+								<td>6</td>
+								<td>30</td>
+								<td>29</td>
+								<td>97</td>
+								<td>6</td>
+								<td>95%显著差异</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="hr" style="background-color: #fff;"></div>
+				<div>
+					<div class="chart-title">
+						<p class="title-nd">偏向性统计</p>
+						<p class="title-nd-sub">偏向性是可以看出您的性格倾向，有助于合理的提升自己</p>
+					</div>
+					<div id="pianxiangxing"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="__PUBLIC__/js/jquery-3.1.0.min.js" charset="utf-8"></script>
+	<script src="__PUBLIC__/js/highcharts.js" charset="utf-8"></script>
+	<script src="__PUBLIC__/js/highcharts-more.js" charset="utf-8"></script>
+	<script src="__PUBLIC__/js/video.min.js"></script>
+	<script src="__PUBLIC__/js/report.js"></script>
+</body>
+</html>

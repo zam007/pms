@@ -10,7 +10,7 @@ class ClassifyModel extends Model {
     public function getClassify($info,$field = '*') {
         $classifySheet = M("classify"); 
     	$where['flag'] = array('eq',1); 
-        return $classifySheet->field($field)->where($info)->find();
+        return $classifySheet->field($field)->where($info)->select();
     }
 
 }

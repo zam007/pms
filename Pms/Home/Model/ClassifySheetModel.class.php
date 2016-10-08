@@ -13,16 +13,16 @@ class ClassifySheetModel extends Model {
     	return $classify[array_rand($classify)];//随机数组
     }
 
-	public function getClassifySheet($info,$field = '*') {
+    public function getClassifySheet($info,$field = '*') {
         $classifySheet = M("classify_sheet"); 
     	$info['flag'] = array('eq',1); 
         return $classifySheet->field($field)->where($info)->find();
     }
 
-	public function getClassifySheets($info,$field = '*') {
+    public function getClassifySheets($info,$field = '*') {
         $classifySheet = M("classify_sheet"); 
     	$info['flag'] = array('eq',1); 
-        return $classifySheet->field($field)->where($info)->select();
+        return $classifySheet->alias('a')->field($field)->join('left join classify as b on b.classify_id = a.classify_id')->where($info)->select();
     }
     
     public function modify( $classifySheetId,$update){

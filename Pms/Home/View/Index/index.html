@@ -81,7 +81,7 @@
 							<p style="display:none" id="login__verify_err" class="error-tip"></p>
                             <script>
                             /**
-                            *刷新验证码
+                            *刷新验证码..
                             */
                             function reloadcode(id)
                             {
@@ -108,19 +108,19 @@
 						    if (loginUsername == "") {
 						    	$("#login__username_err").text("请输入邮箱或手机号");
 						    	$("#login__username_err").show();
-						    	$("#login__username_err").focus();
+						    	$("#login__username").focus();
 						    	return false;
 						    }else{$("#login__username_err").hide();}
 						    if (loginPassword == "") {
 						    	$("#login__password_err").text("请输入密码");
 						    	$("#login__password_err").show();
-						    	$("#login__password_err").focus();
+						    	$("#login__password").focus();
 						    	return false;
 						    }else{$("#login__password_err").hide();}
 						    if (loginVerify == "") {
 						    	$("#login__verify_err").text("请输入验证码");
 						    	$("#login__verify_err").show();
-						    	$("#login__verify_err").focus();
+						    	$("#login__verify").focus();
 						    	return false;
 						    }else{
 						    	$("#login__verify_err").hide();
@@ -130,7 +130,7 @@
 									type : "POST",
 									data : data,
 									url : url,
-									success:function(msg){alert(msg.info);
+									success:function(msg){
 										if (msg.info == 'ok') {
 											//登陆成功
 											window.location.href = msg.callback;
@@ -139,21 +139,25 @@
 
 											for (err_info in msg){
 												switch(err_info){
-													case "password":
-							   						 	$("#login_error").text(msg.password);
-												    	$("#login_error").show();
-												    	$("#login__username_err").focus();
+													case "mobile":
+							   						 	$("#login__username_err").text(msg.mobile);
+												    	$("#login__username_err").show();
+												    	$("#login_username").focus();
 						   						 		break;
-						   						 	case "repassword":
-							   						 	$("#login_error").text(msg.repassword);
-												    	$("#login_error").show();
-												    	$("#login__username_err").focus();
+						   						 	case "email":
+							   						 	$("#login__username_err").text(msg.email);
+												    	$("#login__username_err").show();
+												    	$("#login_username").focus();
 						   						 		break;
 						   						 	case "verify":
-							   						 	$("#login_error").text(msg.repassword);
-												    	$("#login_error").show();
-												    	$("#login__username_err").focus();
+							   						 	$("#login__verify_err").text(msg.verify);
+												    	$("#login__verify_err").show();
+												    	$("#login_verify").focus();
 						   						 		break;
+						   						 	case "error":
+							   						 	$("#login__username_err").text(msg.error);
+												    	$("#login__username_err").show();
+												    	$("#login_username").focus();
 						   						 	default:
 						   						 		break;
 												}

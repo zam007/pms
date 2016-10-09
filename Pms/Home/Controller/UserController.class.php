@@ -38,8 +38,6 @@ class UserController extends BaseController {
             echo "请完善邮箱";die();
         }
         $anwerSheetId = I('answer_sheet_id');
-        
-        
     }
     /**
      * 个人用户完善资料
@@ -116,5 +114,11 @@ class UserController extends BaseController {
             $this->assign('name',$userInfo['name']);
             $this->display("Index/index");
             }
+    }
+    /**
+     * 修改密码
+     */
+    public function changePwd(){
+        
     }
 }

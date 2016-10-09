@@ -544,8 +544,66 @@ class ExamController extends BaseController {
     	die();
     }
     
+    
+    
     public function ajaxExam(){
         $answerSheetId = I('answer_sheet_id');
+        $classifySheetMode = D('classify_sheet');
+        $classifyMode = D('classify');
+        $levelModel = D('level');
+        
+        $where = array(
+            'level_id' => $answerSheet['level_id'],
+        );
+        $filed = "answer_num";
+        $level = $levelModel->getLevel($where, $filed);
+        $answerNum = $level['answer_num'];
+        //获取大类
+    	$where = array(
+    		'level' => 1,
+    	);
+    	$field = "classify_id";
+    	$classify = $classifyMode->getClassify($where, $field);
+        foreach($classify as $r){
+            $classifys[$r['classify_id']] = $r;
+        }
+        $where = array(
+    		'answer_sheet_id'=>$answerSheetId
+    	);
+        $field = "classify_sheet.classify_id,classify.classify_name,classify_sheet.score,classify.father_id";
+    	$classifySheet = $classifySheetMode->getClassifySheets($where);
+    	foreach($classifySheet as $key=>$res){
+                if($classifys[$res['father_id']]['classify_id'] == $res['father_id']){
+                    //总答题数
+                    $val['answer_num'] = $answerNum;
+                    $classifys[$res['father_id']]['count_answer'] += $answerNum;
+                    //基础分
+                    $val['basic_score'] = $answerNum * 3;
+                    $classifys[$res['father_id']]['basic_score'] += $res['basic_score'];
+                    //实际得分
+                    $val['total_score'] = $res['score'];
+                    $classifys[$res['father_id']]['total_score'] += $res['score'];
+                    //得分率
+                    $val['probability_score'] = round($val['total_score'] / $answerNum * 5, 2);
+                    $classifys[$res['father_id']]['probability_score'] = round($classifys[$res['father_id']]['classify_sheet']['basic_score'] / $classifys[$res['father_id']]['classify_sheet']['total_score'], 2)."%";
+                    //年龄组平均得分
+                    $where = array(
+                        'classify_id' => $res['classify_id'],
+                        'answer_sheet.level_id' => $answerSheet['level_id']
+                    );
+                    $val['avg_score'] = round($classifySheetMode->avgScore($where),2);
+                    $classifys[$res['father_id']]['avg_score'] += $val['avg_score'];
+                    //相对得分
+                    $val['relative_score'] = $val['total_score'] - $val['avg_score'];
+                    //标准差
+                    $classifys[$res['father_id']]['SD_score'] = $val['total_score'] - $answerNum * 3;
+                    
+                    $classifys[$res['father_id']]['relative_score'] += $val['relative_score'];
+                    $classifys[$res['father_id']]['classify'][] = $val;
+                    //数组重新排序
+                    $classifys[$res['father_id']]['classify'] = $this->my_sort($classifys[$res['father_id']]['classify'],'probability_score',SORT_DESC,SORT_NUMERIC);
+                }
+    	}
     }
     
     function my_sort($arrays,$sort_key,$sort_order=SORT_ASC,$sort_type=SORT_NUMERIC ){   

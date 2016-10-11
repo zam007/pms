@@ -37,7 +37,7 @@
         $code = rand(100000,999999);
         saveCode($mail,$code);
         $msg="您本次的验证码是" .$code."【五行财商】";//短信内容
-        return snedMail($mail,$title,$mail);
+        return sendMail($mail,$title,$mail);
         
     }
     

@@ -207,28 +207,53 @@ class IndexController extends Controller {
                 $this->ajaxReturn($index_user->getError());
             }else{
 	            $email = $user['email'];
-	            $title = '西南财经大学五行财商研究中心';
-	            $content = '内容';
-	            echo SendMail($email,$title,$content);
+	            if (mailCode($email)) {
+	            	    	echo I("username");die;
+                    $msg = array(
+                    'staut' => 'ok',
+                    'info' => '邮件发送成功，请注意查收邮件'
+                    );
+                    $this->ajaxReturn($msg);
+	            }else{
+                    $msg = array(
+                    'staut' => 'no',
+                    'info' => '邮件发送失败，请稍后重试'
+                    );
+                    $this->ajaxReturn($msg);
+	            }
             }
         }else {
             $user['mobile'] = I("username");
             $index_user = D("user");
             if (!$index_user->validate($rules)->create($user)){
-                //邮箱不合法或者已经存在
+                //电话号码不合法或者已经存在
                 $this->ajaxReturn($index_user->getError());
             }else{
-	            $email = I('email');
-	            $title = '标题';
-	            $content = '内容';
-	            echo SendMail($email,$title,$content);
+	            $mobile = I('email');
+	            if(mobileCode($mobile)){
+                    $msg = array(
+                    'staut' => 'ok',
+                    'info' => '短信发送成功，请注意查看手机短信'
+                    );
+                    $this->ajaxReturn($msg);
+	            }else{
+                    $msg = array(
+                    'staut' => 'no',
+                    'info' => '短信发送失败，请稍后重试'
+                    );
+                    $this->ajaxReturn($msg);
+	            }
             }
         }
+    }
+    public function s(){
+    	$email = "12345@qq.com";
+    	echo mailCode($email);
     }
     /**
      * 发送邮件
      */
-    public function send(a,b,c){
+    public function send(){
             $email = I('email');
             $title = '标题';
             $content = '内容';

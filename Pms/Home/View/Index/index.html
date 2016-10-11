@@ -241,6 +241,7 @@
 											}else{
 												$("#reg_name_err").text(msg.email);
 												$("#reg_name_err").show();
+						    					$("#reg_username").focus();
 											}
 										}
 									},
@@ -250,26 +251,27 @@
 						})
 					}
 					//获取验证码
-					$('send_msg').click(function(){
+					$('#send_msg').click(function(){
 						var url = "{:U('Index/sendMsg')}";
-						var loginUsername=$("#reg_username").val();
+						var reg_username=$("#reg_username").val();
 						$.ajax({
 							type : "POST",
-							data : loginUsername,
+							data : {username:reg_username},
 							url : url,
 							success:function(msg){
-								if (msg.info == 'ok') {
-									//验证码发送成功
-									window.location.href = msg.callback;
+								alert(msg);return;
+								if (msg.staut == 'ok' || msg.staut == 'no') {
+									alert(msg.info)
 								} else {
 									// var d=eval('('+d+')');//json转成object
-									if(msg.mobile){
+									if(mobile in msg){
 										$("#reg_name_err").text(msg.mobile);
 										$("#reg_name_err").show();
 				    					$("#reg_username").focus();
 									}else{
 										$("#reg_name_err").text(msg.email);
 										$("#reg_name_err").show();
+				    					$("#reg_username").focus();
 									}
 								}
 							},

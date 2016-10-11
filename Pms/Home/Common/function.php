@@ -37,14 +37,18 @@
         $code = rand(100000,999999);
         saveCode($mail,$code);
         $msg="您本次的验证码是" .$code."【五行财商】";//短信内容
-        snedMail($mail,$title,$mail);
+        return snedMail($mail,$title,$mail);
+        
     }
     
     function mobile($mobile){
         $code = rand(100000,999999);
         saveCode($mobel,$code);
         $msg="您本次的验证码是" .$code."【五行财商】";//短信内容
-        sendMobile($mobile,$msg);
+        if (sendMobile($mobile,$msg) == "000"){
+            return true;
+        }
+        return false;
     }
     /**
      * 发送手机验证码

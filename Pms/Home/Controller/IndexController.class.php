@@ -189,9 +189,46 @@ class IndexController extends Controller {
         }
     }
     /**
+     * 发送邮件或者短信(朱安明)
+     */
+    public function sendMsg(){
+        //账号合法验证
+        $rules = array(
+             array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+             array('email', 'email', '邮箱格式不正确'),
+             array('mobile','','该手机号已经被注册，请直接登陆！',0,'unique',1),
+             array('email','','该邮箱已经被注册，请直接登陆！',0,'unique',1),
+        );
+        if(strstr(I("username"), '@')){
+            $user['email'] = I("username");
+            $index_user = D("user");
+            if (!$index_user->validate($rules)->create($user)){
+                //邮箱不合法或者已经存在
+                $this->ajaxReturn($index_user->getError());
+            }else{
+	            $email = $user['email'];
+	            $title = '西南财经大学五行财商研究中心';
+	            $content = '内容';
+	            echo SendMail($email,$title,$content);
+            }
+        }else {
+            $user['mobile'] = I("username");
+            $index_user = D("user");
+            if (!$index_user->validate($rules)->create($user)){
+                //邮箱不合法或者已经存在
+                $this->ajaxReturn($index_user->getError());
+            }else{
+	            $email = I('email');
+	            $title = '标题';
+	            $content = '内容';
+	            echo SendMail($email,$title,$content);
+            }
+        }
+    }
+    /**
      * 发送邮件
      */
-    public function send(){
+    public function send(a,b,c){
             $email = I('email');
             $title = '标题';
             $content = '内容';

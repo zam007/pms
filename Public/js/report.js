@@ -12,12 +12,13 @@ $(function () {
             var json=eval('('+msg+')');
             var data = json['classifys'];
             var relative = json['relative'];
-            
+            var totle;
+            var avg;
             /*总体*/
             for(var i = 1; i <= data.length;i++){
                 if(i == 1){
-                    var totle = new Array(data[i]['total_score']);
-                    var avg = new Array(data[i]['avg_score']);
+                    totle = new Array(data[i]['total_score']);
+                    avg = new Array(data[i]['avg_score']);
                 }else{
                     totle.concact(data[i]['total_score']);
                     avg.concact(data[i]['avg_score']);
@@ -76,17 +77,19 @@ $(function () {
 
             /*花钱*/
             var huaqian = data[4]['classify'];
-            if(typeof(huaqian) == "undefined"){
-                var long = 0;
-            }else{
+            var long = 0;
+            if(typeof(huaqian) != "undefined"){
                 var long = huaqian.length;
             }
+            var hua_name;
+            var avg;
+            var totle;
             for(var i = 0; i < long;i++){
                 var n = i+1;
                 if(i == 0){
-                    var hua_name = new Array(n+"."+huaqian[i]['name']);
-                    var avg = new Array(huaqian[i]['avg_score']);
-                    var totle = new Array(huaqian[i]['total_score']);
+                    hua_name = new Array(n+"."+huaqian[i]['name']);
+                    avg = new Array(huaqian[i]['avg_score']);
+                    totle = new Array(huaqian[i]['total_score']);
                 }else{
                     hua_name.concact(n+"."+huaqian[i]['name']);
                     totle.concat(huaqian[i]['total_score']);
@@ -146,17 +149,19 @@ $(function () {
 
             /*挣钱*/
             var huaqian = data[2]['classify'];
-            if(typeof(huaqian) == "undefined"){
-                var long = 0;
-            }else{
-                var long = huaqian.length;
+            var long = 0;
+            if(typeof(huaqian) != "undefined"){
+                long = huaqian.length;
             }
+            var hua_name;
+            var avg;
+            var totle;
             for(var i = 0; i < long;i++){
                 var n = i+1;
                 if(i == 0){
-                    var hua_name = new Array(n+"."+huaqian[i]['name']);
-                    var avg = new Array(huaqian[i]['avg_score']);
-                    var totle = new Array(huaqian[i]['total_score']);
+                    hua_name = new Array(n+"."+huaqian[i]['name']);
+                    avg = new Array(huaqian[i]['avg_score']);
+                    totle = new Array(huaqian[i]['total_score']);
                 }else{
                     hua_name.concat(n+"."+huaqian[i]['name']);
                     totle.concat(data[i]['total_score']);

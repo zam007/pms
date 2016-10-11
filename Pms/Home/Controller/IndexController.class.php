@@ -247,7 +247,7 @@ class IndexController extends Controller {
         }
     }
     public function s(){
-    	$email = "12345@qq.com";
+    	$email = "396236162@qq.com";
     	echo mailCode($email);
     }
     /**

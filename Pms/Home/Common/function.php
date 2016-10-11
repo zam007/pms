@@ -28,9 +28,16 @@
         $mail->CharSet=C('MAIL_CHARSET'); //设置邮件编码
         $mail->Subject =$title; //邮件主题
         $mail->Body = $content; //邮件内容
-        $mail->AltBody = "这是一个纯文本的身体在非营利的HTML电子邮件客户端"; //邮件正文不支持HTML的备用显示
         
         return($mail->Send());
+    }
+    
+    function mailCode($mail){
+        $title = "五行财商邮箱验证码";
+        $code = rand(100000,999999);
+        saveCode($mail,$code);
+        $msg="您本次的验证码是" .$code."【五行财商】";//短信内容
+        snedMail($mail,$title,$mail);
     }
     
     /**

@@ -40,17 +40,21 @@
         snedMail($mail,$title,$mail);
     }
     
+    function mobile($mobile){
+        $code = rand(100000,999999);
+        saveCode($mobel,$code);
+        $msg="您本次的验证码是" .$code."【五行财商】";//短信内容
+        sendMobile($mobile,$msg);
+    }
     /**
      * 发送手机验证码
      */
-    function sendMobile($mobile){
+    function sendMobile($mobile,$msg){
         $url="http://service.winic.org:8009/sys_port/gateway/index.asp?";
     	$data = "id=%s&pwd=%s&to=%s&content=%s&time=";
     	$id = C("WINIC_UID");//分配给你的账号
     	$pwd = C("WINIC_PWD") ;//密码
-        $code = rand(100000,999999);
-        saveCode($mobel,$code);
-        $msg="您本次的验证码是" .$code."【五行财商】";//短信内容
+        
     	$content = iconv("UTF-8","GB2312",$msg);
     	$rdata = sprintf($data, $id, $pwd, $mobile, $content);
     	

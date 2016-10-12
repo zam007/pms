@@ -89,18 +89,18 @@
      */
     function getCode($key){
         $msgMode = M("msg");
-        return $msgMode->where("msg_key=".$key)->getField("code,msg_time");
+        return $msgMode->where("msg_key='$key'")->getField("code,msg_time");
     }
     /**
      * 邮箱、短信验证
      */
     function verifyCode($key, $verifyCode){
-    $arr = getCode($key);
-    $code = key($arr);
-    $codeTime = $arr[$code];
-    $time = time()-300;
-    if ($code === $verifyCode & $time <= $codeTime) {
-        return true;
+        $arr = getCode($key);
+        $code = key($arr);
+        $codeTime = $arr[$code];
+        $time = time()-300;
+        if ((int)$code === (int)$verifyCode and $time <= $codeTime) {
+            return true;
+        }
+        return false;
     }
-    return false;
-}

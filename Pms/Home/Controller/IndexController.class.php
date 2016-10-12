@@ -246,7 +246,7 @@ class IndexController extends Controller {
                 //电话号码不合法或者已经存在
                 $this->ajaxReturn($index_user->getError());
             }else{
-	            $mobile = I('email');
+	            $mobile = I('username');
 	            if(mobileCode($mobile)){
                     $msg = array(
                     'staut' => 'ok',

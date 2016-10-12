@@ -136,7 +136,6 @@
 											window.location.href = msg.callback;
 										} else {
 											// var d=eval('('+d+')');//json转成object
-
 											for (err_info in msg){
 												switch(err_info){
 													case "mobile":
@@ -238,10 +237,14 @@
 												$("#reg_name_err").text(msg.mobile);
 												$("#reg_name_err").show();
 						    					$("#reg_username").focus();
-											}else{
+											}else if (msg.email){
 												$("#reg_name_err").text(msg.email);
 												$("#reg_name_err").show();
 						    					$("#reg_username").focus();
+											}else{
+												$("#reg__verify_err").text(msg.info);
+												$("#reg__verify_err").show();
+						    					$("#reg_verify").focus();
 											}
 										}
 									},

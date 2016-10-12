@@ -141,6 +141,14 @@ class IndexController extends Controller {
                     //验证失败
                     $this->ajaxReturn($index_user->getError());
                 }else{
+                	//验证码匹配
+                	if (!verifyCode($account,$verify)) {
+	                   $msg = array(
+	                    'staut' => 'no',
+	                    'info' => '验证码错误，请输入正确的验证码'
+	                    );
+                		$this->ajaxReturn($msg);
+                	}
                     //验证通过
                     $team["code"] = rand(100000,999999);
                     $teamId = $index_team->addTeam($team);

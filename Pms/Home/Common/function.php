@@ -89,19 +89,17 @@
      */
     function getCode($key){
         $msgMode = M("msg");
-        return $msgMode->where("msg_key=".$key)->getField("code,msg_time");
+        return $msgMode->where("msg_key='$key'")->getField("code,msg_time");
     }
     /**
      * 邮箱、短信验证
      */
     function verifyCode($key, $verifyCode){
-        $this->ajaxReturn
         $arr = getCode($key);
-        $this->ajaxReturn($arr);die;
         $code = key($arr);
         $codeTime = $arr[$code];
         $time = time()-300;
-        if ($code === $verifyCode && $time <= $codeTime) {
+        if ((int)$code === (int)$verifyCode and $time <= $codeTime) {
             return true;
         }
         return false;

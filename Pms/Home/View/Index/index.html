@@ -136,7 +136,6 @@
 											window.location.href = msg.callback;
 										} else {
 											// var d=eval('('+d+')');//json转成object
-
 											for (err_info in msg){
 												switch(err_info){
 													case "mobile":
@@ -189,7 +188,7 @@
 						</div>
 						<div class="form-box">
 							<div class="form-box error">
-								<input id="reg_verify" type="text" name="" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#" id="send_msg">发送验证码</a>
+								<input id="reg_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#" id="send_msg">发送验证码</a>
 								<p style="display:none" id="reg__verify_err" class="error-tip"></p>
 							</div>
 						</div>
@@ -238,10 +237,14 @@
 												$("#reg_name_err").text(msg.mobile);
 												$("#reg_name_err").show();
 						    					$("#reg_username").focus();
-											}else{
+											}else if (msg.email){
 												$("#reg_name_err").text(msg.email);
 												$("#reg_name_err").show();
 						    					$("#reg_username").focus();
+											}else{
+												$("#reg__verify_err").text(msg.info);
+												$("#reg__verify_err").show();
+						    					$("#reg_verify").focus();
 											}
 										}
 									},
@@ -259,12 +262,11 @@
 							data : {username:reg_username},
 							url : url,
 							success:function(msg){
-								alert(msg);return;
 								if (msg.staut == 'ok' || msg.staut == 'no') {
 									alert(msg.info)
 								} else {
 									// var d=eval('('+d+')');//json转成object
-									if(mobile in msg){
+									if(msg.mobile){
 										$("#reg_name_err").text(msg.mobile);
 										$("#reg_name_err").show();
 				    					$("#reg_username").focus();

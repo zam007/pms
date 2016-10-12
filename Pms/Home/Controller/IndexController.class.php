@@ -116,10 +116,12 @@ class IndexController extends Controller {
             //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
+                $verify = I("verify");
                 $value = '手机号';
                 $account = I("username");
             }else {
                 $user['mobile'] = I("username");
+                $verify = I("verify");
                 $value = '邮箱';
                 $account = I("username");
             }
@@ -139,6 +141,14 @@ class IndexController extends Controller {
                     //验证失败
                     $this->ajaxReturn($index_user->getError());
                 }else{
+                	//验证码匹配
+                	if (!verifyCode($account,$verify)) {
+	                   $msg = array(
+	                    'staut' => 'no',
+	                    'info' => '验证码错误，请输入正确的验证码'
+	                    );
+                		$this->ajaxReturn($msg);
+                	}
                     //验证通过
                     $team["code"] = rand(100000,999999);
                     $teamId = $index_team->addTeam($team);
@@ -170,6 +180,14 @@ class IndexController extends Controller {
                     //验证失败
                     $this->ajaxReturn($index->getError());
                 }else{
+                	//验证码匹配
+                	if (!verifyCode($account,$verify)) {
+	                   $msg = array(
+	                    'staut' => 'no',
+	                    'info' => '验证码错误，请输入正确的验证码'
+	                    );
+                		$this->ajaxReturn($msg);
+                	}
                     //验证通过
                     $user["reg_time"] = date('Y-m-d H:i:s',time());
                     $userId = $index->addUser($user);
@@ -208,7 +226,6 @@ class IndexController extends Controller {
             }else{
 	            $email = $user['email'];
 	            if (mailCode($email)) {
-	            	    	echo I("username");die;
                     $msg = array(
                     'staut' => 'ok',
                     'info' => '邮件发送成功，请注意查收邮件'
@@ -245,10 +262,6 @@ class IndexController extends Controller {
 	            }
             }
         }
-    }
-    public function s(){
-    	$email = "12345@qq.com";
-    	echo mailCode($email);
     }
     /**
      * 发送邮件

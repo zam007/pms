@@ -10,9 +10,17 @@ class UserController extends BaseController {
      * 跳转
      */
     public function personal_info(){
+        $userId = $this->userId;
+        $userMode = D('user');
+        $user = $userMode->getUserField($userId);
+        $this->assign('user',$user);
         $this->display("personal_info");
     }
     public function account_bind(){
+        $userId = $this->userId;
+        $userMode = D('user');
+        $user = $userMode->getUserField($userId,"mobile,email");
+        $this->assign('user',$user);
         $this->display("account_bind");
     }
     public function change_pwd(){
@@ -44,12 +52,10 @@ class UserController extends BaseController {
      */
     public function registerTwo(){
         if (IS_POST) {
-            //检测验用户名是手机号码或者邮箱
             $index = D("user");
-            //检测之前输入的是邮箱还是手机号码
             $userId = $this->userId;
-            $info = $index->getUserField($userId,'mobile,email');
-            $userInfo = $index->modify($userId,$user);
+//            $info = $index->getUserField($userId,'mobile,email');
+//            $userInfo = $index->modify($userId,$user);
             //密码合法验证
             $rules = array(
                 array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
@@ -76,6 +82,41 @@ class UserController extends BaseController {
             }
         }
     }
+    
+    /**
+     * 修改密码
+     */
+    public function updatePwd(){
+//        if (IS_POST) {
+            $index = D("user");
+            $userId = $this->userId;
+            //密码合法验证
+            $rules = array(
+                array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
+                array('repassword','password','两次输入的密码不一致',0,'confirm'),
+            );
+            if (!$index->validate($rules)->create()) {
+                //密码检验不通过，输出错误信息
+                $this->ajaxReturn($index->getError());
+            }
+            $user["password"] = md5(I("password").C("PWD_KEY"));
+            $index->modify($userId,$user);
+            if(I('session.user_type') == 0){
+                $msg = array(
+                'info' => 'ok',
+                'callback' => U('index/index')
+                );
+                $this->ajaxReturn($msg);
+            }else{
+                $msg = array(
+                'info' => 'ok',
+                'callback' => U('index/index')
+                );
+                $this->ajaxReturn($msg);
+            }
+//        }
+    }
+    
     /**
      * 补全资料
      */

@@ -65,9 +65,9 @@
 						<div>
 							<span name="work_id" class="item">职业：</span>
 							<select class="pl5 pr5" style="width:425px;">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
+								<option value="1">医生</option>
+								<option value="2">程序员</option>
+								<option value="3">教师</option>
 							</select>
 							<p class="grey tip-grey">&nbsp;</p>
 						</div>
@@ -79,9 +79,8 @@
 						<div>
 							<span class="item" name="from_add">来源地：</span>
 							<select class="pl5 pr5" style="width:425px;">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
+								<option value="1">城镇</option>
+								<option value="2">乡村</option>
 							</select>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
@@ -105,11 +104,19 @@
 					<div class="content-main-form-info">
 						<div>
 							<span class="item bind-phone">手机号：</span>
-							<span><span>13512345678</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
+                                                        <if condition="$Think.session.mobile neq null">
+							<span><span>{$Think.session.mobile}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
+                                                        <else/>
+                                                        <span><span></span><span class="pl20 pr20 grey">未绑定</span><a href="#" class="unbind">绑定</a></span>
+                                                        </if>
 						</div>
 						<div>
 							<span class="item bind-email">邮箱：</span>
-							<span><span>abc@163.com</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
+                                                        <if condition="$Think.session.email neq null">
+							<span><span>{$Think.session.email}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
+                                                        <else/>
+                                                        <span><span></span><span class="pl20 pr20 grey">未绑定</span><a href="#" class="unbind">绑定</a></span>
+                                                        </if>
 						</div>
 						<div>
 							<p id="submit_button" class="submit">完成</p>

@@ -9,6 +9,9 @@ class IndexController extends Controller {
     public function log(){
             $this->display("login");
     }
+    public function test(){
+        phpinfo();exit;
+    }
 	/**
 	 *登陆
 	 */

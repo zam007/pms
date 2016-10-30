@@ -8,7 +8,7 @@ class IndexController extends Controller {
     }
     public function log(){
             $this->display("login");
-    }
+    }public function test(){echo 3;exit;}
 	/**
 	 *登陆
 	 */
@@ -119,11 +119,13 @@ class IndexController extends Controller {
                 $verify = I("verify");
                 $value = '手机号';
                 $account = I("username");
+                SESSION("email",$account);
             }else {
                 $user['mobile'] = I("username");
                 $verify = I("verify");
                 $value = '邮箱';
                 $account = I("username");
+                SESSION("mobile",$account);
             }
             //注册账号合法验证
             $rules = array(

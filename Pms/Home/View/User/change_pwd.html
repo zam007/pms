@@ -6,6 +6,7 @@
 	<load href='__PUBLIC__/css/normalize.css' />
 	<load href='__PUBLIC__/css/base.css' />
 	<load href='__PUBLIC__/css/info.css' />
+	<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
 </head>
 <body>
 	<div class="wrap">
@@ -31,46 +32,87 @@
 						<!-- <div>
 							<span class="item">当前账号：</span><span class="pl5 pr5">13512345678</span>
 						</div> -->
+                                            <form id="register_form" method="post" action="{:U('User/register_2')}">
 						<div>
 							<span class="item">原密码：</span>
-							<input type="password" name="" placeholder="请输入原密码">
+							<input type="password"  placeholder="请输入原密码">
 							<p class="grey tip-grey">&nbsp;</p>
 						</div>
 						<div>
 							<span class="item">新密码：</span>
-							<input type="password" name="" placeholder="请输入新密码">
-							<p class="grey tip-grey">提示：8位以上，同时包含大小写字母和数字</p>
+							<input type="password" name="password" id="pwd" placeholder="请输入新密码">
+							<p style="display:none" id="password_err" class="tip-grey">提示：8位以上，同时包含大小写字母和数字</p>
 						</div>
 						<div>
 							<span class="item">确认密码：</span>
-							<input type="password" name="" placeholder="请再次输入新密码">
-							<p class="grey tip-grey">&nbsp;</p>
+							<input type="password" name="repassword" id="repwd"  placeholder="请再次输入新密码">
+							<p style="display:none" id="repassword_err" class="error-tip"></p>
 						</div>
 						<div>
-							<p class="submit">保存修改</p>
+							<!--<a href="" onclick="setpasswd_submit();return false;"><p class="submit">保存修改</p></a>-->
+                                                        <button onclick="setpasswd_submit()" class="submit">保存修改</button>
 						</div>
+                                            </form>
 					</div>
 				</div>
 			</div>
 		</div>
 		<include file="Public:footer" />
-<!-- 		<div class="footer">
-			<div class="wrap-content">
-				<div class="wrap-content">
-				<div class="wrap-header-content">
-					<img class="inline-block vam" src="__PUBLIC__/img/erweima.png" alt="logo">
-					<div class="inline-block vam">
-						<P class="fz-14 fw-500 grey-deep">成都财情科技有限公司 版权所有</P>
-						<P class="fz-14 fw-100 grey">电话02887095141</P>
-						<P class="fz-14 fw-100 grey">微信号：成都财情（FQEQTECH）</P>
-					</div>
-					<div class="fr link vam">
-						<a href="#" class="fz-14 pl10 pr10 c999">蜀ICP备1201424号|工商注册号510109000090786</a>
-					</div>
-				</div>
-			</div>
-			</div>
-		</div> -->
 	</div>
+    <script type="text/javascript">
+        function setpasswd_submit(){
+            $("#register_form").submit(function(){
+                var passWord=$("#pwd").val();
+                var repassWord=$("#repwd").val();
+                if (passWord == "") {
+                    $("#password_err").text("请输入密码");
+                    $("#password_info").hide();
+                    $("#password_err").show();
+                    $("#password_err").focus();
+                    return false;
+                } else {$("#password_err").hide();}
+                if (repassWord == "") {
+                    $("#repassword_err").text("请重复密码");
+                    $("#repassword_err").show();
+                    $("#repassword_err").focus();
+                    return false;
+                } else {
+                    $("#repassword_err").hide();
+                    var url = "{:U('User/updatePwd')}";
+                    var data = $('#register_1').serialize();
+                    $.ajax({
+                        type : "POST",
+                        data : data,
+                        url : url,
+                        success:function(msg){
+                            if (msg.info == 'ok') {
+                                //密码设置成功
+                                window.location.href = msg.callback;
+                            } else {
+                                for (err_info in msg){
+                                    switch(err_info){
+                                        case "password":
+                                            $("#password_err").text(msg.password);
+                                            $("#password_err").show();
+                                            $("#password_err").focus();
+                                            break;
+                                        case "repassword":
+                                            $("#repassword_err").text(msg.repassword);
+                                            $("#repassword_err").show();
+                                            $("#password_err").focus();
+                                            break;
+                                        default:
+                                            break
+                                    }
+                                }
+                            }
+                        },
+                    })
+                }
+                return false;
+            })
+        }
+ </script>
 </body>
+<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
 </html>

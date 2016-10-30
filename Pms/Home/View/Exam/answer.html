@@ -29,7 +29,7 @@
                         <p class="subject">{$num}.{$question.question}</p>
                     </if>
 
-                    <form class="form" method="post" action="{:U('Exam/answers')}" method="post">
+                    <form class="form" method="post" action="{:U('Exam/answers')}" method="post" style="display: block">
                         <ul class="options-list">
                             <foreach name="answer" item="vo" key="key">
                                 <li><input type="radio" name="selected" value="{$vo.answer_id}" class="mr10">{$selected.$key}.{$vo.answer}</li>

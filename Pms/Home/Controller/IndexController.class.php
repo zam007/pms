@@ -16,6 +16,11 @@ class IndexController extends Controller {
 	 */
 	public function login(){
         if (IS_POST) {
+            //测试
+            // $user['uname'] = I("username");
+            // $user['pwd'] = I("password");
+            // $user['md']=md5(I("password").C("PWD_KEY"));
+            // $this->ajaxReturn($user);die;
             //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");

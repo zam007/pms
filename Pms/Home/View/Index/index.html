@@ -59,7 +59,7 @@
 			<div class="login-form">
 				<div class="login-title"><span>用户登录</span></div>
 				<div class="login-content">
-					<form action="{:U('Index/login')}" id="login_form" method="post" name="login" class="login-form-box">
+					<form  id="login_form" method="post" name="login" class="login-form-box">
 					<div class="form-box">
 						<div class="form-box error">
 							<input id="login_username" type="text" name="username" class="account text" placeholder="请输入手机号/邮箱">
@@ -124,48 +124,52 @@
 						    	return false;
 						    }else{
 						    	$("#login__verify_err").hide();
-						    	var url = "{:U('Index/login')}";
-								var data = $('#login_form').serialize();
-								$.ajax({
-									type : "POST",
-									data : data,
-									url : url,
-									success:function(msg){
-										if (msg.info == 'ok') {
-											//登陆成功
-											window.location.href = msg.callback;
-										} else {
-											// var d=eval('('+d+')');//json转成object
-											for (err_info in msg){
-												switch(err_info){
-													case "mobile":
-							   						 	$("#login__username_err").text(msg.mobile);
-												    	$("#login__username_err").show();
-												    	$("#login_username").focus();
-						   						 		break;
-						   						 	case "email":
-							   						 	$("#login__username_err").text(msg.email);
-												    	$("#login__username_err").show();
-												    	$("#login_username").focus();
-						   						 		break;
-						   						 	case "verify":
-							   						 	$("#login__verify_err").text(msg.verify);
-												    	$("#login__verify_err").show();
-												    	$("#login_verify").focus();
-						   						 		break;
-						   						 	case "error":
-							   						 	$("#login__username_err").text(msg.error);
-												    	$("#login__username_err").show();
-												    	$("#login_username").focus();
-						   						 	default:
-						   						 		break;
-												}
+
+					    	var url = "{:U('Index/login')}";
+							var data = $('#login_form').serialize();
+							$.ajax({
+								type : "POST",
+								data : data,
+								url : url,
+								success:function(msg){
+									//测试代码
+									// alert(msg.length);
+									// return;
+									if (msg.info == 'ok') {
+										//登陆成功
+										window.location.href = msg.callback;
+									} else {
+										// var d=eval('('+d+')');//json转成object
+										for (err_info in msg){
+											switch(err_info){
+												case "mobile":
+						   						 	$("#login__username_err").text(msg.mobile);
+											    	$("#login__username_err").show();
+											    	$("#login_username").focus();
+					   						 		break;
+					   						 	case "email":
+						   						 	$("#login__username_err").text(msg.email);
+											    	$("#login__username_err").show();
+											    	$("#login_username").focus();
+					   						 		break;
+					   						 	case "verify":
+						   						 	$("#login__verify_err").text(msg.verify);
+											    	$("#login__verify_err").show();
+											    	$("#login_verify").focus();
+					   						 		break;
+					   						 	case "error":
+						   						 	$("#login__username_err").text(msg.error);
+											    	$("#login__username_err").show();
+											    	$("#login_username").focus();
+					   						 	default:
+					   						 		break;
 											}
 										}
-									},
-								})
+									}
+								},
+							})
 						    }
-						    return false;
+					    return false;
 						})
 					 }
 					</script>

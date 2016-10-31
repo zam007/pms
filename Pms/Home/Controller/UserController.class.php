@@ -82,7 +82,7 @@ class UserController extends BaseController {
             }
         }
     }
-    
+
     /**
      * 修改密码
      */

@@ -115,7 +115,7 @@ class ExamController extends BaseController {
     	if(!$classifySheet){
     		$userMode = D('user');
     		$userMode->modify($userId,array('answer'=>0));
-    		$this->success('测试完成','../Index/index');
+                $this->success('答题报告','report_htm?answer_sheet_id='.$answerSheet['answer_sheet_id']);
     		die();
     	}
     	
@@ -167,7 +167,7 @@ class ExamController extends BaseController {
     	SESSION('answer_sheet_id',$answerSheet['answer_sheet_id']);
     	SESSION('sheet_id',$sheetId);
     	SESSION('classify_sheet_id', $classifySheet['classify_sheet_id']);
-    	SESSION('question_id',$question['question_id']);
+    	SESSION('question_id',$randQue['question_id']);
         
         $this->answer($randQue, $answer, $max);
     	die();
@@ -235,15 +235,15 @@ class ExamController extends BaseController {
         $now = C('NOW');
         $date = date('Y-m-d H:i:s',$now);
         
-    	if($question_id != 0){
-    		return false;
+    	if($question_id == 0){
+    		return "没有答题1";
     	}
         $userModel = D("User");
         $user = $userModel->getUserField($userId,'birth,answer');
         if($user['answer'] != 1){
         	echo '没有答题';
         	die();
-//        	$this->redirect('answerQuestion');
+//        	$this->success('答题报告','report_htm?answer_sheet_id='.$answerSheetId);
         }
         $questionMode = D('Question');
         $answerMode = D('Answer');
@@ -257,10 +257,10 @@ class ExamController extends BaseController {
         
         //获取试卷
     	
-    	$answerInfo['answer_sheet_id'] = array('eq',$answerSheetId);
+    	$answerInfo['answer_sheet_id'] = $answerSheetId;
     	$answerSheet = $answerSheetMode->getAnswerSheet($answerInfo);
-       echo $answerId;
-        if($answerId == 0){echo 3;exit;
+        
+        if($answerId == 0){
             $t = C('NOW');
             $answerTime = C('ANSWER_TIME');
             $time =  $answerTime + strtotime($answerSheet['last_time']) + $question['play_time'] - $t;
@@ -275,8 +275,6 @@ class ExamController extends BaseController {
     	$where = array('answer_id' => $answerId);
     	$answer = $answerMode->getAnswer($where,'answer_id,score,inclination_id');
     	$answer = $answer[0];
-    	
-    	
     	
     	//获取分类试卷
     	
@@ -398,7 +396,7 @@ class ExamController extends BaseController {
     		$answerSheetMode->modify($answerSheetId,$info);
     		$userModel->modify($userId,array('answer'=>0));
 //    		$this->report($answerSheetId);
-                $this->success('操作完成','reportHtm?answer_sheet_id='.$answerSheetId);
+                $this->success('操作完成','report_htm?answer_sheet_id='.$answerSheetId);
     		die();
     	}
     	$this->answerQuestion();

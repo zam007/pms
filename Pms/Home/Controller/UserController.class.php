@@ -125,7 +125,7 @@ class UserController extends BaseController {
             $userId = $this->userId;
             $user["name"] = I("name");
             $user["sex"] = I("sex");
-            $user["birth"] = I("birth");
+            $user["birth"] = date("Y-m-d", strtotime(I("birth")));
             $user["work_id"] = I("work_id");
             $user["company_id"] = I("company_id");
             $user["invite_id"] = I("invite_id");

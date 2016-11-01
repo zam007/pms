@@ -123,60 +123,17 @@
 								<th>年龄组平均得分</th>
 								<th>相对得分</th>
 							</tr>
+							<foreach name="classifys[2].classify" item="vo" key="key">
 							<tr>
 								<td>平衡性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>18</td>
-								<td>60</td>
-								<td>27</td>
-								<td>-33</td>
+								<td>{$vo.answer_num}</td>
+								<td>{$vo.basic_score}</td>
+								<td>{$vo.total_score}</td>
+								<td>{$vo.probability_score}%</td>
+								<td>{$vo.avg_score}</td>
+								<td>{$vo.relative_score}</td>
 							</tr>
-							<tr>
-								<td>合理性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>18</td>
-								<td>60</td>
-								<td>27</td>
-								<td>-33</td>
-							</tr>
-							<tr>
-								<td>人己比</td>
-								<td>6</td>
-								<td>30</td>
-								<td>18</td>
-								<td>60</td>
-								<td>27</td>
-								<td>-33</td>
-							</tr>
-							<tr>
-								<td>规划性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>18</td>
-								<td>60</td>
-								<td>27</td>
-								<td>-33</td>
-							</tr>
-							<tr>
-								<td>长效性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>18</td>
-								<td>60</td>
-								<td>27</td>
-								<td>-33</td>
-							</tr>
-							<tr>
-								<td>合计性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>18</td>
-								<td>60</td>
-								<td>27</td>
-								<td>-33</td>
-							</tr>
+                                                        </foreach>
 						</table>
 					</div>
 				</div>
@@ -216,86 +173,7 @@
 								<td>6</td>
 								<td>无明显差异</td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>规划性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>5</td>
-								<td>95%显著差异</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>结构性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>6</td>
-								<td>95%显著差异</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>合理性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>6</td>
-								<td>无明显差异</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>规划性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>5</td>
-								<td>95%显著差异</td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>结构性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>6</td>
-								<td>95%显著差异</td>
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>合理性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>6</td>
-								<td>无明显差异</td>
-							</tr>
-							<tr>
-								<td>8</td>
-								<td>规划性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>5</td>
-								<td>95%显著差异</td>
-							</tr>
-							<tr>
-								<td>9</td>
-								<td>结构性</td>
-								<td>6</td>
-								<td>30</td>
-								<td>29</td>
-								<td>97</td>
-								<td>6</td>
-								<td>95%显著差异</td>
-							</tr>
+							
 						</table>
 					</div>
 				</div>

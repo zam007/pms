@@ -10,7 +10,7 @@ class ExamController extends BaseController {
 //		$userId = $this->userId;
 //
 //
-//	}
+//	}   
     
     public function confirm(){
     	$userId = $this->userId;

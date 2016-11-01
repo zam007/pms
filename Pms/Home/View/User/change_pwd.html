@@ -71,7 +71,8 @@
                     $("#repassword_err").hide();
                     $("#oldpassword_err").show();
                     $("#oldpassword_err").focus();
-                }
+                    return false;
+                }else{}
                 if (passWord == "") {
                     $("#password_err").text("请输入密码");
                     $("#oldpassword_err").hide();
@@ -90,7 +91,7 @@
                 } else {
                     $("#repassword_err").hide();
                     var url = "{:U('User/updatePwd')}";
-                    var data = $('#register_1').serialize();
+                    var data = $('#updatePwd_form').serialize();
                     $.ajax({
                         type : "POST",
                         data : data,
@@ -102,6 +103,11 @@
                             } else {
                                 for (err_info in msg){
                                     switch(err_info){
+                                        case "oldpassword":
+                                            $("#oldpassword_err").text(msg.password);
+                                            $("#oldpassword_err").show();
+                                            $("#oldpassword_err").focus();
+                                            break;
                                         case "password":
                                             $("#password_err").text(msg.password);
                                             $("#password_err").show();

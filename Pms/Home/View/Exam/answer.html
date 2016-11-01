@@ -17,7 +17,7 @@
                     </if>    
                     <if condition="$question.type == 3">
                         <p class="tip">{$num}.{$question.question}</p>
-                        <video id="my-video" class="video-js" controls preload="auto" width="700" height="390" poster="../img/bg-home.jpg" data-setup="{}">
+                        <video id="my-video" class="video-js" controls preload="auto" width="700" height="390" poster="__PUBLIC__/img/bg-home.jpg" data-setup="{}">
                             <source src="{$question.file}" type='video/mp4'>
                         </video>
                     </if>
@@ -36,6 +36,11 @@
                             </foreach>
                         </ul>
                     </form>
+                    <if condition="$question.type == 3">
+                        <div class="check-options hide">
+                               <img src="__PUBLIC__/img/check_options.png" alt="" />
+                        </div>
+                    </if>
                 </div>
                 <div class="operating">
                         <p><a href="#">暂停</a><span class="tip">（完成此题后暂停）</span></p>

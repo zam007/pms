@@ -103,8 +103,8 @@
                             } else {
                                 for (err_info in msg){
                                     switch(err_info){
-                                        case "oldpassword":
-                                            $("#oldpassword_err").text(msg.password);
+                                        case "pwd_err":
+                                            $("#oldpassword_err").text("旧密码错误，请输出正确的密码");
                                             $("#oldpassword_err").show();
                                             $("#oldpassword_err").focus();
                                             break;

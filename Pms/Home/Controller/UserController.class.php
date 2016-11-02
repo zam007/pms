@@ -98,15 +98,17 @@ class UserController extends BaseController {
         $info["user_id"] = $this->userId;
         $userInfo = $index->getUser($info);
         if (md5(I("oldpassword").C("PWD_KEY")) != $userInfo["password"]) {
-            $msg['info'] = 'error';
+            $msg['info'] = 'pwd_err';
             $this->ajaxReturn($msg);
         }
         //新密码合法验证
+        $newinfo['password'] = I("password");
+        $newinfo['repassword'] = I("repassword");
         $rules = array(
             array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
             array('repassword','password','两次输入的密码不一致',0,'confirm'),
         );
-        if (!$index->validate($rules)->create()) {
+        if (!$index->validate($rules)->create($newinfo)) {
             //密码检验不通过，输出错误信息
             $this->ajaxReturn($index->getError());
         }

@@ -30,7 +30,7 @@ class ExamModel extends Model {
     	}
     	//查询问题分类
     	$classify = M("classify");
-    	$classification = $classify->field('classify_id')->where('level=2 and flag=1')->select();
+    	$classification = $classify->field('classify_id')->where('father_id != 0 and flag=1')->select();
     	if(!$classification){
             $sheet->rollback();
             return false;
@@ -60,6 +60,6 @@ class ExamModel extends Model {
             return false;
     	}
     	$sheet->commit();
-    	return true;
+    	return $sheetId;
     }
 }

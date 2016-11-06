@@ -75,192 +75,258 @@ $(function () {
                 }]
             });
 
-            /*花钱*/
-            var huaqian = data[4]['classify'];
-            var long = 0;
-            if(typeof(huaqian) != "undefined"){
-                var long = huaqian.length;
-            }
-            var hua_name;
-            var avg;
-            var totle;
-            for(var i = 0; i < long;i++){
-                var n = i+1;
-                if(i == 0){
-                    hua_name = new Array(n+"."+huaqian[i]['name']);
-                    avg = new Array(huaqian[i]['avg_score']);
-                    totle = new Array(huaqian[i]['total_score']);
-                }else{
-                    hua_name.concact(n+"."+huaqian[i]['name']);
-                    totle.concat(huaqian[i]['total_score']);
-                    avg.concat(huaqian[i]['avg_score']);
-                }
-            }
-            $('#huaqian_graph').highcharts({
-                credits:{
-                    enabled:false // 禁用版权信息
-                },
-                chart: {
-                    polar: true,
-                    type: 'line'
-                },
-                title: {
-                    text: '花钱得分比例',
-                    x: -65,
-                    style: {
-                        color: '#333',
-                        fontWeight: 'bold',
-                        fontSize: '18px'
-                    }
-                },
-                pane: {
-                    size: '80%'
-                },
-                xAxis: {
-                    categories: hua_name,
-                    tickmarkPlacement: 'on',
-                    lineWidth: 0
-                },
-                yAxis: {
-                    gridLineInterpolation: 'polygon',
-                    lineWidth: 0,
-                    min: 0
-                },
-                tooltip: {
-                    shared: true,
-                    pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
-                },
-                legend: {
-                    align: 'right',
-                    verticalAlign: 'top',
-                    y: 70,
-                    layout: 'vertical'
-                },
-                series: [{
-                    name: '年龄组平均分',
-                    data: avg,
-                    pointPlacement: 'on'
-                }, {
-                    name: '您的得分',
-                    data: totle,
-                    pointPlacement: 'on'
-                }]
+            //循环生成图表
+            $.each(data,function(index,item){
+                var 
+                    _graphItem          = item.classify,
+                    Array_Score_avg     = [],
+                    Array_Score_totle   = [],
+                    Array_graphItemList = [];
+
+                $.each(_graphItem,function(index,item){
+                    Array_Score_avg.push(item.avg_score);
+                    Array_Score_totle.push(item.total_score);
+                    Array_graphItemList.push(item.name);
+                });
+
+                $('#'+item.en+'_graph').highcharts({
+                    credits:{
+                        enabled:false // 禁用版权信息
+                    },
+                    chart: {
+                        polar: true,
+                        type: 'line'
+                    },
+                    title: {
+                        text: item.classify_name + '得分比例',
+                        x: -65,
+                        style: {
+                            color: '#333',
+                            fontWeight: 'bold',
+                            fontSize: '18px'
+                        }
+                    },
+                    pane: {
+                        size: '80%'
+                    },
+                    xAxis: {
+                        categories: Array_graphItemList,
+                        tickmarkPlacement: 'on',
+                        lineWidth: 0
+                    },
+                    yAxis: {
+                        gridLineInterpolation: 'polygon',
+                        lineWidth: 0,
+                        min: 0
+                    },
+                    tooltip: {
+                        shared: true,
+                        pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+                    },
+                    legend: {
+                        align: 'right',
+                        verticalAlign: 'top',
+                        y: 70,
+                        layout: 'vertical'
+                    },
+                    series: [{
+                        name: '年龄组平均分',
+                        data: Array_Score_avg,
+                        pointPlacement: 'on'
+                    }, {
+                        name: '您的得分',
+                        data: Array_Score_totle,
+                        pointPlacement: 'on'
+                    }]
+                });
             });
 
-            /*挣钱*/
-            var huaqian = data[2]['classify'];
-            var long = 0;
-            if(typeof(huaqian) != "undefined"){
-                long = huaqian.length;
-            }
-            var hua_name;
-            var avg;
-            var totle;
-            for(var i = 0; i < long;i++){
-                var n = i+1;
-                if(i == 0){
-                    hua_name = new Array(n+"."+huaqian[i]['name']);
-                    avg = new Array(huaqian[i]['avg_score']);
-                    totle = new Array(huaqian[i]['total_score']);
-                }else{
-                    hua_name.concat(n+"."+huaqian[i]['name']);
-                    totle.concat(data[i]['total_score']);
-                    avg.concat(data[i]['avg_score']);
-                }
-            }
-            $('#zhengqian_graph').highcharts({
-                credits:{
-                    enabled:false // 禁用版权信息
-                },
-                chart: {
-                    polar: true,
-                    type: 'line'
-                },
-                title: {
-                    text: '挣钱得分比例',
-                    x: -65,
-                    style: {
-                        color: '#333',
-                        fontWeight: 'bold',
-                        fontSize: '18px'
-                    }
-                },
-                pane: {
-                    size: '80%'
-                },
-                xAxis: {
-                    categories: hua_name,
-                    tickmarkPlacement: 'on',
-                    lineWidth: 0
-                },
-                yAxis: {
-                    gridLineInterpolation: 'polygon',
-                    lineWidth: 0,
-                    min: 0
-                },
-                tooltip: {
-                    shared: true,
-                    pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
-                },
-                legend: {
-                    align: 'right',
-                    verticalAlign: 'top',
-                    y: 70,
-                    layout: 'vertical'
-                },
-                series: [{
-                    name: '年龄组平均分',
-                    data: avg,
-                    pointPlacement: 'on'
-                }, {
-                    name: '您的得分',
-                    data: totle,
-                    pointPlacement: 'on'
-                }]
-            });
-            if(typeof(relative) == "undefined"){
-                var long = 0;
-            }else{
-                var long = relative.length;
-            }
-            var namearr;
-            var scorearr ;
-            for(var i = 0; i < long;i++){
+            // /*花钱*/
+            // var huaqian = data[4]['classify'];
+            // var long = 0;
+            // if(typeof(huaqian) != "undefined"){
+            //     var long = huaqian.length;
+            // }
+            // var hua_name;
+            // var avg;
+            // var totle;
+            // for(var i = 0; i < long;i++){
+            //     var n = i+1;
+            //     if(i == 0){
+            //         hua_name = new Array(n+"."+huaqian[i]['name']);
+            //         avg = new Array(huaqian[i]['avg_score']);
+            //         totle = new Array(huaqian[i]['total_score']);
+            //     }else{
+            //         hua_name.concat(n+"."+huaqian[i]['name']);
+            //         totle.concat(huaqian[i]['total_score']);
+            //         avg.concat(huaqian[i]['avg_score']);
+            //     }
+            // }
+            // $('#huaqian_graph').highcharts({
+            //     credits:{
+            //         enabled:false // 禁用版权信息
+            //     },
+            //     chart: {
+            //         polar: true,
+            //         type: 'line'
+            //     },
+            //     title: {
+            //         text: '花钱得分比例',
+            //         x: -65,
+            //         style: {
+            //             color: '#333',
+            //             fontWeight: 'bold',
+            //             fontSize: '18px'
+            //         }
+            //     },
+            //     pane: {
+            //         size: '80%'
+            //     },
+            //     xAxis: {
+            //         categories: hua_name,
+            //         tickmarkPlacement: 'on',
+            //         lineWidth: 0
+            //     },
+            //     yAxis: {
+            //         gridLineInterpolation: 'polygon',
+            //         lineWidth: 0,
+            //         min: 0
+            //     },
+            //     tooltip: {
+            //         shared: true,
+            //         pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+            //     },
+            //     legend: {
+            //         align: 'right',
+            //         verticalAlign: 'top',
+            //         y: 70,
+            //         layout: 'vertical'
+            //     },
+            //     series: [{
+            //         name: '年龄组平均分',
+            //         data: avg,
+            //         pointPlacement: 'on'
+            //     }, {
+            //         name: '您的得分',
+            //         data: totle,
+            //         pointPlacement: 'on'
+            //     }]
+            // }); 
+
+            // /*挣钱*/
+            // var huaqian = data[2]['classify'];
+            // var long = 0;
+            // if(typeof(huaqian) != "undefined"){
+            //     long = huaqian.length;
+            // }
+            // var hua_name;
+            // var avg;
+            // var totle;
+            // for(var i = 0; i < long;i++){
+            //     var n = i+1;
+            //     if(i == 0){
+            //         hua_name = new Array(n+"."+huaqian[i]['name']);
+            //         avg = new Array(huaqian[i]['avg_score']);
+            //         totle = new Array(huaqian[i]['total_score']);
+            //     }else{
+            //         hua_name.concat(n+"."+huaqian[i]['name']);
+            //         totle.concat(data[i]['total_score']);
+            //         avg.concat(data[i]['avg_score']);
+            //     }
+            // }
+            // $('#zhengqian_graph').highcharts({
+            //     credits:{
+            //         enabled:false // 禁用版权信息
+            //     },
+            //     chart: {
+            //         polar: true,
+            //         type: 'line'
+            //     },
+            //     title: {
+            //         text: '挣钱得分比例',
+            //         x: -65,
+            //         style: {
+            //             color: '#333',
+            //             fontWeight: 'bold',
+            //             fontSize: '18px'
+            //         }
+            //     },
+            //     pane: {
+            //         size: '80%'
+            //     },
+            //     xAxis: {
+            //         categories: hua_name,
+            //         tickmarkPlacement: 'on',
+            //         lineWidth: 0
+            //     },
+            //     yAxis: {
+            //         gridLineInterpolation: 'polygon',
+            //         lineWidth: 0,
+            //         min: 0
+            //     },
+            //     tooltip: {
+            //         shared: true,
+            //         pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+            //     },
+            //     legend: {
+            //         align: 'right',
+            //         verticalAlign: 'top',
+            //         y: 70,
+            //         layout: 'vertical'
+            //     },
+            //     series: [{
+            //         name: '年龄组平均分',
+            //         data: avg,
+            //         pointPlacement: 'on'
+            //     }, {
+            //         name: '您的得分',
+            //         data: totle,
+            //         pointPlacement: 'on'
+            //     }]
+            // });
+            // if(typeof(relative) == "undefined"){
+            //     var long = 0;
+            // }else{
+            //     var long = relative.length;
+            // }
+            // var namearr;
+            // var scorearr ;
+            // for(var i = 0; i < long;i++){
                 
-                if(i == 0){
-                     namearr = new Array(relative[i]['name']);
-                     scorearr = new Array(relative[i]['score']);
-                }else{
-                    namearr.concat(relative[i]['name']);
-                    scorearr.concat(relative[i]['score']);
-                }
-            }
+            //     if(i == 0){
+            //          namearr = new Array(relative[i]['name']);
+            //          scorearr = new Array(relative[i]['score']);
+            //     }else{
+            //         namearr.concat(relative[i]['name']);
+            //         scorearr.concat(relative[i]['score']);
+            //     }
+            // }
             
-            /*相对得分*/
-            $('#xiangdui').highcharts({
-                credits:{
-                    enabled:false // 禁用版权信息
-                },
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: null
-                },
-                pane: {
-                    size: '100%'
-                },
-                xAxis: {
-                    categories: namearr,
-                },
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    name: '得分',
-                    data: scorearr,
-                }]
-            });
+            // /*相对得分*/
+            // $('#xiangdui').highcharts({
+            //     credits:{
+            //         enabled:false // 禁用版权信息
+            //     },
+            //     chart: {
+            //         type: 'column'
+            //     },
+            //     title: {
+            //         text: null
+            //     },
+            //     pane: {
+            //         size: '100%'
+            //     },
+            //     xAxis: {
+            //         categories: namearr,
+            //     },
+            //     credits: {
+            //         enabled: false
+            //     },
+            //     series: [{
+            //         name: '得分',
+            //         data: scorearr,
+            //     }]
+            // });
 
             /*偏向性统计*/
             $('#pianxiangxing').highcharts({

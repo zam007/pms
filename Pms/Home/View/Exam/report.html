@@ -39,7 +39,7 @@
 							<p class="graph-l-title-des">花钱得分反应您在花投钱、挣钱、保钱、花钱、借钱方面的能力</p>
 							<div>
 								<!-- 图表 -->
-                                                                <input type="hidden" id="data_beat" value="{$data.beat}">
+                                <input type="hidden" id="data_beat" value="{$data.beat}">
 							</div>
 							<p class="graph-l-title-ratio">打败{$data.beat}同龄人</p>
 							<p class="graph-l-title-score"><span>相对得分：{$data.relative_score}</span><span>显著程度：{$data.beat}</span><span>标准差：{$data.SD_score}</span></p>
@@ -47,24 +47,25 @@
 						<div id="zongti_graph"></div>
 					</div>
 				</div>
+				<volist name="classifys" id="data">
 				<div class="hr"></div>
 				<div class="huaqian">
 					<div class="graph">
 						<div class="graph-l-title">
-							<p class="graph-l-title-main">花钱得分</p>
+							<p class="graph-l-title-main">{$data.classify_name}得分</p>
 							<p class="graph-l-title-des">花钱得分反应您在花钱平稳性、合理性、与人对比等方面的情况</p>
 							<div>
 								<!-- 图表 -->
 							</div>
-							<p class="graph-l-title-ratio">打败{$classify.4.beat}同龄人</p>
-							<p class="graph-l-title-score"><span>相对得分：{$classifys[4].relative_score}</span><span>显著程度：{$classifys[4].beat}</span><span>标准差：{$classifys[4].SD_score}</span></p>
+							<p class="graph-l-title-ratio">打败{$data.beat}同龄人</p>
+							<p class="graph-l-title-score"><span>相对得分：{$data.relative_score}</span><span>显著程度：{$data.beat}</span><span>标准差：{$data.SD_score}</span></p>
 						</div>
-						<div id="huaqian_graph"></div>
+						<div id="{$data.en}_graph"></div>
 					</div>
 					<div class="table">
 						<div class="table-title" style="background-color: #79c0ff;">
 							<div>
-								<p class="table-title-main">花钱</p>
+								<p class="table-title-main">{$data.classify_name}</p>
 								<p class="table-title-sub">（按得分比例排序）</p>
 							</div>
 						</div>
@@ -78,7 +79,7 @@
 								<th>年龄组平均得分</th>
 								<th>相对得分</th>
 							</tr>
-                                                        <foreach name="classifys[4].classify" item="vo" key="key">
+                            <volist name="data.classify" id="vo">
 							<tr>
 								<td>平衡性</td>
 								<td>{$vo.answer_num}</td>
@@ -88,18 +89,19 @@
 								<td>{$vo.avg_score}</td>
 								<td>{$vo.relative_score}</td>
 							</tr>
-                                                        </foreach>
+							</volist>
 						</table>
 					</div>
 				</div>
-				<div class="hr" style="background-color: #fff;"></div>
+				</volist>
+				<!-- <div class="hr" style="background-color: #fff;"></div>
 				<div class="zhengqian">
 					<div class="graph">
 						<div class="graph-l-title">
 							<p class="graph-l-title-main">挣钱得分</p>
 							<p class="graph-l-title-des">挣钱得分反应您在挣钱理念、挣钱稳定性等方面的能力</p>
 							<div>
-								<!-- 图表 -->
+								
 							</div>
 							<p class="graph-l-title-ratio">打败70%同龄人</p>
 							<p class="graph-l-title-score"><span>相对得分：-139</span><span>显著程度：无明显差异</span><span>标准差：12</span></p>
@@ -136,7 +138,7 @@
                                                         </foreach>
 						</table>
 					</div>
-				</div>
+				</div> -->
 				<div class="hr"></div>
 				<div>
 					<div class="chart-title">

@@ -40,12 +40,14 @@
 						<div>
 							<span class="item">新密码：</span>
 							<input type="password" id="password" name="password" placeholder="请输入新密码">
-							<p style="display:none" id="password_err" class="error-tip">提示：8位以上，同时包含大小写字母和数字</p>
+<!-- 							<p style="display:none" id="password_err" class="error-tip">提示：8位以上，同时包含大小写字母和数字</p> -->
+                            <p class="grey tip-grey">&nbsp;</p>
 						</div>
 						<div>
 							<span class="item">确认密码：</span>
 							<input type="password" id="repassword" name="repassword" id="repwd"  placeholder="请再次输入新密码">
-							<p style="display:none" id="repassword_err" class="error-tip"></p>
+<!-- 							<p style="display:none" id="repassword_err" class="error-tip"></p> -->
+                            <p class="grey tip-grey">&nbsp;</p>
 						</div>
 						<div>
 							<!--<a href="" onclick="setpasswd_submit();return false;"><p class="submit">保存修改</p></a>-->
@@ -68,69 +70,61 @@
                 var repassWord=$("#repassword").val();
                 if (oldpassword == ""){
                     $("#oldpassword").next().text("原始密码不能为空").css({'color':'red'}).show();
-                    $("#password_err").hide();
-                    $("#repassword_err").hide();
-                    $("#oldpassword_err").show();
                     $("#oldpassword_err").focus();
                     return false;
                 }else{
                     $("#oldpassword").next().hide();
                 }
                 if (passWord == "") {
-                    $("#password_err").text("请输入密码");
-                    $("#oldpassword_err").hide();
-                    $("#repassword_err").hide();
-                    $("#password_err").show();
+                    $("#password").next().text("新密码不能为空").css({'color':'red'}).show();
                     $("#password_err").focus();
                     return false;
-                } else {$("#password_err").hide();}
+                } else {
+                    $("#password").next().hide();
+                }
                 if (repassWord == "") {
-                    $("#repassword_err").text("请重复密码");
-                    $("#oldpassword_err").hide();
-                    $("#password_err").hide();
-                    $("#repassword_err").show();
+                    $("#repassword").next().text("请再次输入新密码").css({'color':'red'}).show();
                     $("#repassword_err").focus();
                     return false;
                 } else {
-                    $("#repassword_err").hide();
-                    var url = "{:U('User/updatePwd')}";
-                    var data = $('#updatePwd_form').serialize();
-                    $.ajax({
-                        type : "POST",
-                        data : data,
-                        url : url,
-                        success:function(msg){
-                            if (msg.info == 'ok') {
-                                //密码设置成功
-                                window.location.href = msg.callback;
-                            } else {
-                                for (err_info in msg){
-                                    switch(err_info){
-                                        case "pwd_err":
-                                            $("#oldpassword_err").text("旧密码错误，请输出正确的密码");
-                                            $("#oldpassword_err").show();
-                                            $("#oldpassword_err").focus();
-                                            break;
-                                        case "password":
-                                            $("#password_err").text(msg.password);
-                                            $("#password_err").show();
-                                            $("#password_err").focus();
-                                            break;
-                                        case "repassword":
-                                            $("#repassword_err").text(msg.repassword);
-                                            $("#repassword_err").show();
-                                            $("#password_err").focus();
-                                            break;
-                                        default:
-                                            break
-                                    }
+                    $("#repassword").next().hide();
+                }
+                var url = "{:U('User/updatePwd')}";
+                var data = $('#updatePwd_form').serialize();
+                $.ajax({
+                    type : "POST",
+                    data : data,
+                    url : url,
+                    success:function(msg){
+                        alert(msg.pwd);return;
+                        if (msg.info == 'ok') {
+                            //密码设置成功
+                            window.location.href = msg.callback;
+                        } else {
+                            for (err_info in msg){
+                                switch(err_info){
+                                    case "pwd_err":
+                                        $("#oldpassword").next().text("原密码错误，请重新输入").css({'color':'red'}).show();
+                                        $("#oldpassword_err").focus();
+                                        break;
+                                    case "password":
+                                        $("#password").next().text(msg.password).css({'color':'red'}).show();
+                                        $("#password_err").focus();
+                                        break;
+                                    case "repassword":
+                                        $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
+                                        $("#repassword_err").show();
+                                        $("#password_err").focus();
+                                        break;
+                                    default:
+                                        break
                                 }
                             }
-                        },
-                    })
-                }
-                return false;
-            })
+                        }
+                    },
+                })
+            return false;
+        })
         }
  </script>
 </html>

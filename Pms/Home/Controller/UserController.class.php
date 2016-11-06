@@ -52,6 +52,7 @@ class UserController extends BaseController {
      */
     public function registerTwo(){
         if (IS_POST) {
+
             $index = D("user");
             $userId = $this->userId;
 //            $info = $index->getUserField($userId,'mobile,email');
@@ -87,6 +88,12 @@ class UserController extends BaseController {
      * 修改密码
      */
     public function updatePwd(){
+            //测试
+            $user['oldpassword'] = I("username");
+            $user['pwd'] = I("password");
+            $user['repwd']= I("repassword");
+            $this->ajaxReturn($user);die;
+
         $index = D("user");
         $userId = $this->userId;
         //修改成功后ajax返回信息

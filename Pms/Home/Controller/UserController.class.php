@@ -87,34 +87,34 @@ class UserController extends BaseController {
      * 修改密码
      */
     public function updatePwd(){
-//        if (IS_POST) {
-            $index = D("user");
-            $userId = $this->userId;
-            //密码合法验证
-            $rules = array(
-                array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
-                array('repassword','password','两次输入的密码不一致',0,'confirm'),
+        $index = D("user");
+        $userId = $this->userId;
+        //修改成功后ajax返回信息
+        $msg = array(
+            'info' => 'ok',
+            'callback' => U('User/change_pwd')
             );
-            if (!$index->validate($rules)->create()) {
-                //密码检验不通过，输出错误信息
-                $this->ajaxReturn($index->getError());
-            }
-            $user["password"] = md5(I("password").C("PWD_KEY"));
-            $index->modify($userId,$user);
-            if(I('session.user_type') == 0){
-                $msg = array(
-                'info' => 'ok',
-                'callback' => U('index/index')
-                );
-                $this->ajaxReturn($msg);
-            }else{
-                $msg = array(
-                'info' => 'ok',
-                'callback' => U('index/index')
-                );
-                $this->ajaxReturn($msg);
-            }
-//        }
+        //验证原始密码是否正确
+        $info["user_id"] = $this->userId;
+        $userInfo = $index->getUser($info);
+        if (md5(I("oldpassword").C("PWD_KEY")) != $userInfo["password"]) {
+            $msg['info'] = 'pwd_err';
+            $this->ajaxReturn($msg);
+        }
+        //新密码合法验证
+        $newinfo['password'] = I("password");
+        $newinfo['repassword'] = I("repassword");
+        $rules = array(
+            array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
+            array('repassword','password','两次输入的密码不一致',0,'confirm'),
+        );
+        if (!$index->validate($rules)->create($newinfo)) {
+            //密码检验不通过，输出错误信息
+            $this->ajaxReturn($index->getError());
+        }
+        $user["password"] = md5(I("password").C("PWD_KEY"));
+        $index->modify($userId,$user);
+        $this->ajaxReturn($msg);
     }
     
     /**

@@ -35,7 +35,6 @@
 						<div>
 							<span class="item">原密码：</span>
 							<input type="password" id='oldpassword' name='oldpassword' placeholder="请输入原密码">
-                            <p style="display:none" id="oldpassword_err" class="error-tip">
 							<p class="grey tip-grey">&nbsp;</p>
 						</div>
 						<div>
@@ -59,18 +58,23 @@
 		</div>
 		<include file="Public:footer" />
 	</div>
-    <script type="text/javascript">
+</body>
+<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
+<script type="text/javascript">
         function setpasswd_submit(){
             $("#updatePwd_form").submit(function(){
-                var oldpassword=$("oldpassword").val();
+                var oldpassword=$("#oldpassword").val();
                 var passWord=$("#password").val();
                 var repassWord=$("#repassword").val();
-                if (oldpassword = ""){
-                    $("#oldpassword_err").text("原始密码不能为空");
+                if (oldpassword == ""){
+                    $("#oldpassword").next().text("原始密码不能为空").css({'color':'red'}).show();
                     $("#password_err").hide();
                     $("#repassword_err").hide();
                     $("#oldpassword_err").show();
                     $("#oldpassword_err").focus();
+                    return false;
+                }else{
+                    $("#oldpassword").next().hide();
                 }
                 if (passWord == "") {
                     $("#password_err").text("请输入密码");
@@ -90,7 +94,7 @@
                 } else {
                     $("#repassword_err").hide();
                     var url = "{:U('User/updatePwd')}";
-                    var data = $('#register_1').serialize();
+                    var data = $('#updatePwd_form').serialize();
                     $.ajax({
                         type : "POST",
                         data : data,
@@ -102,6 +106,11 @@
                             } else {
                                 for (err_info in msg){
                                     switch(err_info){
+                                        case "pwd_err":
+                                            $("#oldpassword_err").text("旧密码错误，请输出正确的密码");
+                                            $("#oldpassword_err").show();
+                                            $("#oldpassword_err").focus();
+                                            break;
                                         case "password":
                                             $("#password_err").text(msg.password);
                                             $("#password_err").show();
@@ -124,6 +133,4 @@
             })
         }
  </script>
-</body>
-<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
 </html>

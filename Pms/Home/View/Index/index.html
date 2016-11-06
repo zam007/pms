@@ -7,10 +7,6 @@
 	<load href='__PUBLIC__/css/base.css' />
 	<load href='__PUBLIC__/css/login.css' />
 	<load href='__PUBLIC__/css/home.css' />
-	<load href='__PUBLIC__/css/zamadd/style.css' />
-	<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
-	<load href="__PUBLIC__/js/home.js" />
-	<load href="__PUBLIC__/js/zamadd/other.js" />
 </head>
 <body>
 	<div class="wrap">
@@ -61,13 +57,14 @@
 				<div class="login-content">
 					<form  id="login_form" method="post" name="login" class="login-form-box">
 					<div class="form-box">
-						<div class="form-box error">
+						<div class="form-box">
 							<input id="login_username" type="text" name="username" class="account text" placeholder="请输入手机号/邮箱">
-							<p style="display:none" id="login__username_err" class="error-tip"></p>
+							<!-- <p style="display:none" id="login__username_err" class="error-tip"></p> -->
+							<p id="login__username_err" class="error-tip"></p>
 						</div>
 					</div>
 						<div class="form-box">
-							<div class="form-box error">
+							<div class="form-box ">
 							<input id="login_password" type="password" name="password" class="pwd text" placeholder="请输入密码">
 							<p style="display:none" id="login__password_err" class="error-tip"></p>
 							</div>
@@ -76,7 +73,7 @@
 							<label><input type="checkbox" name="" class="vam"><span class="pl5 cur-pointer">五天内自动登录</span></label>
 						</div>
 						<div class="form-box">
-							<div class="form-box error">
+							<div class="form-box ">
 							<input id="login_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/> <a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
 							<p style="display:none" id="login__verify_err" class="error-tip"></p>
                             <script>
@@ -106,11 +103,14 @@
 						    var loginPassword=$("#login_password").val();
 						    var loginVerify=$("#login_verify").val();
 						    if (loginUsername == "") {
-						    	$("#login__username_err").text("请输入邮箱或手机号");
-						    	$("#login__username_err").show();
+						    	$("#login_username").next().text('请输入正确的11位手机号');
+						    	$("#login_username").parent().addClass('error');
 						    	$("#login__username").focus();
 						    	return false;
-						    }else{$("#login__username_err").hide();}
+						    }else{
+						    	$("#login_username").next().text('');
+						    	$("#login_username").parent().removeClass('error');
+						    }
 						    if (loginPassword == "") {
 						    	$("#login__password_err").text("请输入密码");
 						    	$("#login__password_err").show();
@@ -190,8 +190,8 @@
 							<input id="reg_username" name="username" type="text" class="account text" placeholder="请输入手机号/邮箱" style="width:360px;">
 							<p style="display:none" id="reg_name_err" class="error-tip"></p>
 						</div>
-						<div class="form-box">
-							<div class="form-box error">
+						<div >
+							<div class="form-box">
 								<input id="reg_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#" id="send_msg">发送验证码</a>
 								<p style="display:none" id="reg__verify_err" class="error-tip"></p>
 							</div>

@@ -34,7 +34,7 @@ class IndexController extends Controller {
             //用户登陆合法验证
             $user['verify'] = I("verify");
             $rules = array(
-                 array('mobile', '/^1[34578]\d{9}$/', '请输入正确的手机号', 0),
+                 array('mobile', '/^1[34578]\d{9}$/', '请输入正确的11位数手机号码', 0),
                  array('email', 'email', '请输入正确的邮箱号'),
                  array('verify','require','验证码必须！'),
             );
@@ -56,7 +56,7 @@ class IndexController extends Controller {
                 $verify = I("verify");
                 if(!check_verify($user['verify'])){
                     $this->ajaxReturn(array('info' => 'no',
-                                            'verify'=> '验证码错误'
+                                            'verify'=> '请输入正确的验证码'
                      ));
                 }
                 if(md5(I("password").C("PWD_KEY")) === $userInfo["password"]){
@@ -79,7 +79,7 @@ class IndexController extends Controller {
                     if($userInfo['status'] == 9){
                         $msg = array(
                             'info' => 'no',
-                            'error'=> '账户被禁用',
+                            'error'=> '账户被禁用,请联系管理员接触禁用',
                         'callback' => U('Index/index')
                         );
                     }

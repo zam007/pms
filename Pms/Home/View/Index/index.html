@@ -66,7 +66,8 @@
 						<div class="form-box">
 							<div class="form-box ">
 							<input id="login_password" type="password" name="password" class="pwd text" placeholder="请输入密码">
-							<p style="display:none" id="login__password_err" class="error-tip"></p>
+<!-- 							<p style="display:none" id="login__password_err" class="error-tip"></p> -->
+							<p id="login__password_err" class="error-tip"></p>
 							</div>
 						</div>
 						<div class="form-box">
@@ -74,8 +75,11 @@
 						</div>
 						<div class="form-box">
 							<div class="form-box ">
-							<input id="login_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/> <a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
-							<p style="display:none" id="login__verify_err" class="error-tip"></p>
+							<input id="login_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> 
+							<p id="login__verify_err" class="error-tip"></p>
+							<img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/> 
+							<a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
+<!-- 							<p style="display:none" id="login__verify_err" class="error-tip"></p> -->
                             <script>
                             /**
                             *刷新验证码..
@@ -112,19 +116,23 @@
 						    	$("#login_username").parent().removeClass('error');
 						    }
 						    if (loginPassword == "") {
-						    	$("#login__password_err").text("请输入密码");
-						    	$("#login__password_err").show();
+						    	$("#login_password").next().text("请输入密码");
+						    	$("#login_password").parent().addClass('error');
 						    	$("#login__password").focus();
 						    	return false;
-						    }else{$("#login__password_err").hide();}
+						    }else{
+						    	$("#login_password").next().text('');
+						    	$("#login_password").parent().removeClass('error');
+						    }
 						    if (loginVerify == "") {
-						    	$("#login__verify_err").text("请输入验证码");
-						    	$("#login__verify_err").show();
+						    	$("#login_verify").next().text("请输入验证码");
+						    	$("#login_verify").parent().addClass('error');
 						    	$("#login__verify").focus();
 						    	return false;
 						    }else{
-						    	$("#login__verify_err").hide();
-
+						    	$("#login_verify").next().text('');
+						    	$("#login_verify").parent().removeClass('error');
+						    }
 					    	var url = "{:U('Index/login')}";
 							var data = $('#login_form').serialize();
 							$.ajax({
@@ -143,23 +151,27 @@
 										for (err_info in msg){
 											switch(err_info){
 												case "mobile":
-						   						 	$("#login__username_err").text(msg.mobile);
-											    	$("#login__username_err").show();
+						   						 	$("#login_username").next().text(msg.mobile);
+						    						$("#login_username").parent().addClass('error');
+						    						$("#login_verify").parent().removeClass('error');
 											    	$("#login_username").focus();
 					   						 		break;
 					   						 	case "email":
-						   						 	$("#login__username_err").text(msg.email);
-											    	$("#login__username_err").show();
-											    	$("#login_username").focus();
+						   						 	$("#login_username").next().text(msg.email);
+						    						$("#login_username").parent().addClass('error');
+						    						$("#login_verify").parent().removeClass('error');
+											    	$("#login_username").focus();verify
 					   						 		break;
 					   						 	case "verify":
-						   						 	$("#login__verify_err").text(msg.verify);
-											    	$("#login__verify_err").show();
+						   						 	$("#login_verify").next().text(msg.verify);
+						    						$("#login_verify").parent().addClass('error');
+						    						$("#login_username").parent().removeClass('error');
 											    	$("#login_verify").focus();
 					   						 		break;
 					   						 	case "error":
-						   						 	$("#login__username_err").text(msg.error);
-											    	$("#login__username_err").show();
+						   						 	$("#login_username").next().text(msg.error);
+						    						$("#login_username").parent().addClass('error');
+						    						$("#login_verify").parent().removeClass('error');
 											    	$("#login_username").focus();
 					   						 	default:
 					   						 		break;
@@ -168,7 +180,6 @@
 									}
 								},
 							})
-						    }
 					    return false;
 						})
 					 }

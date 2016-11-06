@@ -55,3 +55,4 @@
 .bg-untest{background: url('../img/log_1.png') 0 50% no-repeat;background-size: initial;}
 
 .log-info{display: inline-block;position: relative;}
+*, *:before, *:after{-webkit-box-sizing:inherit;box-sizing: initial;}

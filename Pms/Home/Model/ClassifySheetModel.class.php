@@ -46,4 +46,6 @@ class ClassifySheetModel extends Model {
         $classifySheet = M('classify_sheet');
         return $classifySheet->join('answer_sheet on answer_sheet.answer_sheet_id = classify_sheet.answer_sheet_id')->where($where)->avg('classify_sheet.score');
     }
+
+    
 }

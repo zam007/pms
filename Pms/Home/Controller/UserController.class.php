@@ -92,14 +92,15 @@ class UserController extends BaseController {
         $userId = $this->userId;
         //修改成功后ajax返回信息
         $msg = array(
-            'info' => 'ok',
+            'info' => '',
             'callback' => U('User/change_pwd')
             );
         //验证原始密码是否正确
         $info["user_id"] = $this->userId;
         $userInfo = $index->getUser($info);
         if (md5(I("oldpassword").C("PWD_KEY")) != $userInfo["password"]) {
-            $msg['info'] = 'pwd_err';
+            $msg['info'] = 'no';
+            $msg['pwd_err'] = "旧密码错误，请输入正确的旧密码";
             $this->ajaxReturn($msg);
         }
         //新密码合法验证
@@ -115,6 +116,7 @@ class UserController extends BaseController {
         }
         $user["password"] = md5(I("password").C("PWD_KEY"));
         $index->modify($userId,$user);
+        $msg['info'] = 'ok';
         $this->ajaxReturn($msg);
     }
     

@@ -104,7 +104,7 @@
                         for (err_info in msg){
                             switch(err_info){
                                 case "pwd_err":
-                                    $("#oldpassword").next().text("原密码错误，请重新输入").css({'color':'red'}).show();
+                                    $("#oldpassword").next().text(msg.pwd_err).css({'color':'red'}).show();
                                     $("#oldpassword_err").focus();
                                     break;
                                 case "password":

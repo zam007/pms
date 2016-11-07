@@ -49,11 +49,10 @@
 <!-- 							<p style="display:none" id="repassword_err" class="error-tip"></p> -->
                             <p class="grey tip-grey">&nbsp;</p>
 						</div>
-						<div>
-							<!--<a href="" onclick="setpasswd_submit();return false;"><p class="submit">保存修改</p></a>-->
-                        <button onclick="setpasswd_submit()" class="submit">保存修改</button>
-						</div>
                         </form>
+                        <div>
+                        <button onclick="setpasswd_submit()" class="submit">保存修改</button>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -64,67 +63,67 @@
 <load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
 <script type="text/javascript">
         function setpasswd_submit(){
-            $("#updatePwd_form").submit(function(){
-                var oldpassword=$("#oldpassword").val();
-                var passWord=$("#password").val();
-                var repassWord=$("#repassword").val();
-                if (oldpassword == ""){
-                    $("#oldpassword").next().text("原始密码不能为空").css({'color':'red'}).show();
-                    $("#oldpassword_err").focus();
-                    return false;
-                }else{
-                    $("#oldpassword").next().hide();
-                }
-                if (passWord == "") {
-                    $("#password").next().text("新密码不能为空").css({'color':'red'}).show();
-                    $("#password_err").focus();
-                    return false;
-                } else {
-                    $("#password").next().hide();
-                }
-                if (repassWord == "") {
-                    $("#repassword").next().text("请再次输入新密码").css({'color':'red'}).show();
-                    $("#repassword_err").focus();
-                    return false;
-                } else {
-                    $("#repassword").next().hide();
-                }
-                var url = "{:U('User/updatePwd')}";
-                var data = $('#updatePwd_form').serialize();
-                $.ajax({
-                    type : "POST",
-                    data : data,
-                    url : url,
-                    success:function(msg){
-                        alert(msg.pwd);return;
-                        if (msg.info == 'ok') {
-                            //密码设置成功
-                            window.location.href = msg.callback;
-                        } else {
-                            for (err_info in msg){
-                                switch(err_info){
-                                    case "pwd_err":
-                                        $("#oldpassword").next().text("原密码错误，请重新输入").css({'color':'red'}).show();
-                                        $("#oldpassword_err").focus();
-                                        break;
-                                    case "password":
-                                        $("#password").next().text(msg.password).css({'color':'red'}).show();
-                                        $("#password_err").focus();
-                                        break;
-                                    case "repassword":
-                                        $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
-                                        $("#repassword_err").show();
-                                        $("#password_err").focus();
-                                        break;
-                                    default:
-                                        break
-                                }
+            var oldpassword=$("#oldpassword").val();
+            var passWord=$("#password").val();
+            var repassWord=$("#repassword").val();
+            var url = "{:U('User/updatePwd')}";
+            var data = $('#updatePwd_form').serialize();
+            if (oldpassword == ""){
+                $("#oldpassword").next().text("原始密码不能为空").css({'color':'red'}).show();
+                $("#oldpassword_err").focus();
+                return false;
+            }else{
+                $("#oldpassword").next().hide();
+            }
+            if (passWord == "") {
+                $("#password").next().text("新密码不能为空").css({'color':'red'}).show();
+                $("#password_err").focus();
+                return false;
+            } else {
+                $("#password").next().hide();
+            }
+            if (repassWord == "") {
+                $("#repassword").next().text("请再次输入新密码").css({'color':'red'}).show();
+                $("#repassword_err").focus();
+                return false;
+            } else {
+                $("#repassword").next().hide();
+            }
+            //ajax提交form表单
+            $.ajax({
+                type : "POST",
+                data : data,
+                url : url,
+                success:function(msg){
+                    if (msg.info == 'ok') {
+                        //密码设置成功
+                        // window.location.href = msg.callback;
+                        alert("密码修改成功！");
+                     }
+                    else {
+                        for (err_info in msg){
+                            switch(err_info){
+                                case "pwd_err":
+                                    $("#oldpassword").next().text("原密码错误，请重新输入").css({'color':'red'}).show();
+                                    $("#oldpassword_err").focus();
+                                    break;
+                                case "password":
+                                    $("#password").next().text(msg.password).css({'color':'red'}).show();
+                                    $("#password_err").focus();
+                                    break;
+                                case "repassword":
+                                    $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
+                                    $("#repassword_err").show();
+                                    $("#password_err").focus();
+                                    break;
+                                default:
+                                    break
                             }
                         }
-                    },
-                })
+                    }
+                }
+            });
             return false;
-        })
         }
  </script>
 </html>

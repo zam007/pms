@@ -295,33 +295,6 @@
 						    return false;
 						})
 					}
-					//获取验证码
-					$('#send_msg').click(function(){
-						var url = "{:U('Index/sendMsg')}";
-						var reg_username=$("#reg_username").val();
-						$.ajax({
-							type : "POST",
-							data : {username:reg_username},
-							url : url,
-							success:function(msg){
-								if (msg.staut == 'ok' || msg.staut == 'no') {
-									alert(msg.info)
-								} else {
-									// alert(msg);return;
-									// var d=eval('('+d+')');//json转成object
-									if(msg.mobile){
-										$("#reg_name_err").text(msg.mobile);
-										$("#reg_name_err").show();
-				    					$("#reg_username").focus();
-									}else{
-										$("#reg_name_err").text(msg.email);
-										$("#reg_name_err").show();
-				    					$("#reg_username").focus();
-									}
-								}
-							},
-						})
-					})
 					</script>
 				</div>
 			</div>
@@ -331,4 +304,33 @@
 </body>
 	<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
 	<load href="__PUBLIC__/js/home.js" />
+	<script type="text/javascript">
+		//获取验证码
+		$('#send_msg').click(function(){
+			var url = "{:U('Index/sendMsg')}";
+			var reg_username=$("#reg_username").val();
+			$.ajax({
+				type : "POST",
+				data : {username:reg_username},
+				url : url,
+				success:function(msg){
+					if (msg.staut == 'ok' || msg.staut == 'no') {
+						alert(msg.info)
+					} else {
+						// alert(msg);return;
+						// var d=eval('('+d+')');//json转成object
+						if(msg.mobile){
+							$("#reg_name_err").text(msg.mobile);
+							$("#reg_name_err").show();
+	    					$("#reg_username").focus();
+						}else{
+							$("#reg_name_err").text(msg.email);
+							$("#reg_name_err").show();
+	    					$("#reg_username").focus();
+						}
+					}
+				},
+			})
+		})
+	</script>
 </html>

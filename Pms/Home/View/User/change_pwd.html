@@ -40,13 +40,11 @@
 						<div>
 							<span class="item">新密码：</span>
 							<input type="password" id="password" name="password" placeholder="请输入新密码">
-<!-- 							<p style="display:none" id="password_err" class="error-tip">提示：8位以上，同时包含大小写字母和数字</p> -->
                             <p class="grey tip-grey">&nbsp;</p>
 						</div>
 						<div>
 							<span class="item">确认密码：</span>
 							<input type="password" id="repassword" name="repassword" id="repwd"  placeholder="请再次输入新密码">
-<!-- 							<p style="display:none" id="repassword_err" class="error-tip"></p> -->
                             <p class="grey tip-grey">&nbsp;</p>
 						</div>
                         </form>
@@ -70,21 +68,21 @@
             var data = $('#updatePwd_form').serialize();
             if (oldpassword == ""){
                 $("#oldpassword").next().text("原始密码不能为空").css({'color':'red'}).show();
-                $("#oldpassword_err").focus();
+                $("#oldpassword").focus();
                 return false;
             }else{
                 $("#oldpassword").next().hide();
             }
             if (passWord == "") {
                 $("#password").next().text("新密码不能为空").css({'color':'red'}).show();
-                $("#password_err").focus();
+                $("#password").focus();
                 return false;
             } else {
                 $("#password").next().hide();
             }
             if (repassWord == "") {
                 $("#repassword").next().text("请再次输入新密码").css({'color':'red'}).show();
-                $("#repassword_err").focus();
+                $("#repassword").focus();
                 return false;
             } else {
                 $("#repassword").next().hide();
@@ -105,16 +103,16 @@
                             switch(err_info){
                                 case "pwd_err":
                                     $("#oldpassword").next().text(msg.pwd_err).css({'color':'red'}).show();
-                                    $("#oldpassword_err").focus();
+                                    $("#oldpassword").focus();
                                     break;
                                 case "password":
                                     $("#password").next().text(msg.password).css({'color':'red'}).show();
-                                    $("#password_err").focus();
+                                    $("#password").focus();
                                     break;
                                 case "repassword":
                                     $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
                                     $("#repassword_err").show();
-                                    $("#password_err").focus();
+                                    $("#password").focus();
                                     break;
                                 default:
                                     break

@@ -76,9 +76,10 @@
 						<div class="form-box">
 							<div class="form-box ">
 							<input id="login_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> 
-							<p id="login__verify_err" class="error-tip"></p>
+
 							<img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/> 
 							<a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
+							<p id="login__verify_err" class="error-tip"></p>
 <!-- 							<p style="display:none" id="login__verify_err" class="error-tip"></p> -->
                             <script>
                             /**
@@ -126,7 +127,7 @@
 						    	$("#login_password").parent().removeClass('error');
 						    }
 						    if (loginVerify == "") {
-						    	$("#login_verify").next().text("请输入验证码");
+						    	$("#login__verify_err").text("请输入验证码");
 						    	$("#login_verify").parent().addClass('error');
 						    	$("#login__verify").focus();
 						    	return false;

@@ -21,23 +21,23 @@
 			<div class="login-form">
 				<div class="login-title"><span>找回密码</span></div>
 				<div class="login-content">
-					<form name="fdpasswd1" method="post" action="{:U('Index/findpasswdsteptwo')}">
+					<form id="find_pwd_one">
 						<div class="form-box">
-							<input type="text" name="" class="pwd text account" placeholder="请输入手机号/邮箱" style="width:360px;">
+							<input type="text" id="username" name="username" class="pwd text account" placeholder="请输入手机号/邮箱" style="width:360px;">
+							<p class="error-tip"></p>
 						</div>
 						<div class="form-box">
-							<input type="text" name="" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#">看不清</a>
+							<input type="text" id="verify" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="">
+							<img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/>
+							<a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
+							<p id="findpwd_verify_err" class="error-tip"></p>
 						</div>
 						<div class="form-box">
-							<input type="text" name="" class="pwd text" placeholder="请输入短信验证码" style="width:250px;"><a href="#">发送验证码</a>
+							<input type="text" id="code" name="code" class="pwd text" placeholder="请输入手机/邮件验证码" style="width:250px;"><a href="#">发送验证码</a>
+							<p class="error-tip"></p>
 						</div>
-					<button onclick="fdpasswd_submit()" class="btn-login">下一步</button>
 					</form>
-					<script>
-						function fdpasswd_submit(){
-							$('fdpasswd1').submit();
-						}
-					</script>
+					<button class="btn-login" onclick="fdpasswd_submit()">下一步</button>
 					<p class="step">
 						<img src="__PUBLIC__/img/step_1.png" alt="" />
 					</p>
@@ -46,4 +46,28 @@
 		</div>
 	</div>
 </body>
+<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
+<script type="text/javascript">
+	//验证码刷新
+	function reloadcode(id)
+	{
+	 var yucodeurl = document.getElementById(id).src;
+	 document.getElementById(id).src = yucodeurl +'?'+ Math.random();
+	}
+	//button表单提交
+	function fdpasswd_submit(){
+        var username=$("#username").val();
+        var findpwd_verify=$("#findpwd_verify").val();
+        var code=$("#code").val();
+        var url = "{:U('Index/findpasswdsteptwo')}";
+        var data = $('#find_pwd_one').serialize();
+        if (username == ""){
+            $("#username").next().text("请输入手机/邮箱号").css({'color':'red'}).show();
+            $("#username").focus();
+            return false;
+        }else{
+            $("#username").next().hide();
+        }
+    }
+</script>
 </html>

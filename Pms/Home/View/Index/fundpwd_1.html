@@ -27,14 +27,14 @@
 							<p class="error-tip"></p>
 						</div>
 						<div class="form-box">
-							<input type="text" id="verify" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="">
+							<input type="text" id="findpwd_verify" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src="">
 							<img src="/home/Index/verify" id="logincodeimg" onclick="reloadcode('logincodeimg')" align="absmiddle"/>
 							<a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
 							<p id="findpwd_verify_err" class="error-tip"></p>
 						</div>
 						<div class="form-box">
 							<input type="text" id="code" name="code" class="pwd text" placeholder="请输入手机/邮件验证码" style="width:250px;"><a href="#">发送验证码</a>
-							<p class="error-tip"></p>
+							<p id="findpwd_code_err" class="error-tip"></p>
 						</div>
 					</form>
 					<button class="btn-login" onclick="fdpasswd_submit()">下一步</button>
@@ -67,6 +67,20 @@
             return false;
         }else{
             $("#username").next().hide();
+        }
+        if (findpwd_verify == ""){
+            $("#findpwd_verify_err").text("请输入图中的验证码").css({'color':'red'}).show();
+            $("#findpwd_verify").focus();
+            return false;
+        }else{
+            $("#findpwd_verify_err").hide();
+        }
+        if (code == ""){
+            $("#findpwd_code_err").text("请输入短信/邮箱验证码").css({'color':'red'}).show();
+            $("#code").focus();
+            return false;
+        }else{
+            $("#findpwd_code_err").hide();
         }
     }
 </script>

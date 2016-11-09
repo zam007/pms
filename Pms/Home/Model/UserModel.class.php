@@ -27,6 +27,18 @@ class UserModel extends Model {
         $update["update_time"] = date("Y-m-d H:i:s", time());
         return $user->where('user_id='.$userId)->save($update);
     }
+    /**
+     * 修改密码
+     * @param type $user 用户id
+     * @param array $password 修改参数
+     * @return type
+     */
+    public function updatePwd( $user,$password){
+        $user = M("User"); // 实例化User对象
+        $update["update_time"] = date("Y-m-d H:i:s", time());
+        $update["password"] = $password;
+        return $user->where($user)->save($update);
+    }
 
     public function addUser($data){
         $user = M("User");//实例化User对象

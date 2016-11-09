@@ -16,12 +16,6 @@ class IndexController extends Controller {
 	 */
 	public function login(){
         if (IS_POST) {
-            //测试
-            // $user['uname'] = I("username");
-            // $user['pwd'] = I("password");
-            // $user['md']=md5(I("password").C("PWD_KEY"));
-            // $this->ajaxReturn($user);die;
-            //检测验用户输入账户类型
             if(strstr(I("username"), '@')){
                 $user['email'] = I("username");
                 $value = '手机号';
@@ -216,7 +210,7 @@ class IndexController extends Controller {
         }
     }
     /**
-     * 发送邮件或者短信(朱安明)
+     * 发送注册邮件或者短信
      */
     public function sendMsg(){
         //账号合法验证
@@ -273,6 +267,94 @@ class IndexController extends Controller {
         }
     }
     /**
+     * 发送找回密码的验证码
+     */
+    public function sendMsgfindnpwd(){
+        //账号合法验证
+        $rules = array(
+             array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+             array('email', 'email', '邮箱格式不正确'),
+        );
+        if(strstr(I("username"), '@')){
+            $user['email'] = I("username");
+            $index_user = D("user");
+            if (!$index_user->validate($rules)->create($user)){
+                $this->ajaxReturn($index_user->getError());
+            }else{
+                // 检查邮箱账户是否存在
+                $user["flag"] = 1;
+                if (!$index_user->getUser($user)) {
+                    $msg = array(
+                    'staut' => 'no',
+                    'info' => '邮箱账户不存在，请先注册账户'
+                    );
+                    $this->ajaxReturn($msg);
+                }
+                //检查验证码
+                $user['verify'] = I("verify");
+                if(!check_verify($user['verify'])){
+                    $this->ajaxReturn(array('staut' => 'no',
+                                            'info'=> '请输入正确的验证码'
+                     ));
+                }
+                //发送验证码
+                $email = $user['email'];
+                if (mailCode($email)) {
+                    $msg = array(
+                    'staut' => 'ok',
+                    'info' => '邮件发送成功，请注意查收邮件'
+                    );
+                    $this->ajaxReturn($msg);
+                }else{
+                    $msg = array(
+                    'staut' => 'no',
+                    'info' => '邮件发送失败，请稍后重试'
+                    );
+                    $this->ajaxReturn($msg);
+                }
+            }
+        }else {
+            $user['mobile'] = I("username");
+            $index_user = D("user");
+            if (!$index_user->validate($rules)->create($user)){
+                //电话号码不合法或者已经存在
+                $this->ajaxReturn($index_user->getError());
+            }else{
+                // 检查手机账户是否存在
+                $index = D("user");
+                $user["flag"] = 1;
+                if (!$index->getUser($user)) {
+                    $msg = array(
+                    'staut' => 'no',
+                    'info' => '手机账户不存在，请先注册账户'
+                    );
+                    $this->ajaxReturn($msg);
+                }
+                //检查验证码
+                $user['verify'] = I("verify");
+                if(!check_verify($user['verify'])){
+                    $this->ajaxReturn(array('staut' => 'no',
+                                            'info'=> '请输入正确的验证码'
+                     ));
+                }
+                $mobile = I('username');
+                if(mobileCode($mobile)){
+                    $msg = array(
+                    'staut' => 'ok',
+                    'info' => '短信发送成功，请注意查看手机短信'
+                    );
+                    $this->ajaxReturn($msg);
+                }else{
+                    $msg = array(
+                    'staut' => 'no',
+                    'info' => '短信发送失败，请稍后重试'
+                    );
+                    $this->ajaxReturn($msg);
+                }
+            }
+        }
+    }
+    /**
      * 发送邮件
      */
     public function send(){
@@ -298,8 +380,55 @@ class IndexController extends Controller {
     }
 
      public function findpasswdsteptwo(){
-        if(IS_POST){
-            $this->display("fundpwd_2");
+        //检测验用户输入账户类型
+        if(strstr(I("username"), '@')){
+            $user['email'] = I("username");
+            $verify = I("code");
+            $value = '手机号';
+            $account = I("username");
+            SESSION("email",$account);
+        }else {
+            $user['mobile'] = I("username");
+            $verify = I("code");
+            $value = '邮箱';
+            $account = I("username");
+            SESSION("mobile",$account);
+        }
+        //注册账号合法验证
+        $rules = array(
+             array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+             array('email', 'email', '邮箱格式不正确'),
+        );
+        //短信、邮箱验证码匹配
+        if (!verifyCode($account,$verify)) {
+           $msg = array(
+            'staut' => 'no',
+            'info' => '请输入正确的短信/邮箱验证码'
+            );
+            $this->ajaxReturn($msg);
+        }
+        //验证通过
+        $index = D("user");
+        if (!$index->validate($rules)->create($user)){
+            $this->ajaxReturn($index->getError());
+        }else{
+            //短信、邮箱验证码匹配
+            if (!verifyCode($account,$verify)) {
+               $msg = array(
+                'staut' => 'no',
+                'info' => '请输入正确的短信/邮箱验证码'
+                );
+                $this->ajaxReturn($msg);
+            }
+            //验证通过
+            $userId = $index->addUser($user);
+            SESSION("user_account",$account);
+            $this->assign('value',$value);
+            $msg = array(
+            'staut' => 'ok',
+            'callback' => U('Index/fundpwd_2')
+            );
+            $this->ajaxReturn($msg);
         }
     }
 

@@ -119,7 +119,7 @@ class UserController extends BaseController {
         $msg['info'] = 'ok';
         $this->ajaxReturn($msg);
     }
-    
+
     /**
      * 补全资料
      */

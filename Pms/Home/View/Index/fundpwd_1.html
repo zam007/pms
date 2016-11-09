@@ -33,7 +33,7 @@
 							<p id="findpwd_verify_err" class="error-tip"></p>
 						</div>
 						<div class="form-box">
-							<input type="text" id="code" name="code" class="pwd text" placeholder="请输入手机/邮件验证码" style="width:250px;"><a href="#">发送验证码</a>
+							<input type="text" id="code" name="code" class="pwd text" placeholder="请输入手机/邮件验证码" style="width:250px;"><a href="#" id="send_msg">获取验证码</a>
 							<p id="findpwd_code_err" class="error-tip"></p>
 						</div>
 					</form>
@@ -54,13 +54,11 @@
 	 var yucodeurl = document.getElementById(id).src;
 	 document.getElementById(id).src = yucodeurl +'?'+ Math.random();
 	}
-	//button表单提交
-	function fdpasswd_submit(){
-        var username=$("#username").val();
-        var findpwd_verify=$("#findpwd_verify").val();
-        var code=$("#code").val();
-        var url = "{:U('Index/findpasswdsteptwo')}";
-        var data = $('#find_pwd_one').serialize();
+	//获取验证码
+	$('#send_msg').click(function(){
+		var url = "{:U('Index/sendMsgfindnpwd')}";
+		var username=$("#username").val();
+		var findpwd_verify=$("#findpwd_verify").val();
         if (username == ""){
             $("#username").next().text("请输入手机/邮箱号").css({'color':'red'}).show();
             $("#username").focus();
@@ -75,6 +73,39 @@
         }else{
             $("#findpwd_verify_err").hide();
         }
+		$.ajax({
+			type : "POST",
+			data : {username:username,verify:findpwd_verify},
+			url : url,
+			success:function(msg){
+				if (msg.staut == 'ok' || msg.staut == 'no') {
+					alert(msg.info);
+				} else {
+					if(msg.mobile){
+			            $("#username").next().text(msg.mobile).css({'color':'red'}).show();
+			            $("#username").focus();
+					}else{
+			            $("#username").next().text(msg.email).css({'color':'red'}).show();
+			            $("#username").focus();
+					}
+				}
+			},
+		})
+	})
+	//button数据提交
+	function fdpasswd_submit(){
+        var username=$("#username").val();
+        var findpwd_verify=$("#findpwd_verify").val();
+        var code=$("#code").val();
+        var url = "{:U('Index/findpasswdsteptwo')}";
+        var data = $('#find_pwd_one').serialize();
+        if (username == ""){
+            $("#username").next().text("请输入手机/邮箱号").css({'color':'red'}).show();
+            $("#username").focus();
+            return false;
+        }else{
+            $("#username").next().hide();
+        }
         if (code == ""){
             $("#findpwd_code_err").text("请输入短信/邮箱验证码").css({'color':'red'}).show();
             $("#code").focus();
@@ -82,6 +113,29 @@
         }else{
             $("#findpwd_code_err").hide();
         }
+        //ajax 提交表单
+		$.ajax({
+			type : "POST",
+			data : data,
+			url : url,
+			success:function(msg){
+				if (msg.staut == 'ok') {
+					//登陆成功
+					window.location.href = msg.callback;
+				}
+				if (msg.staut == 'no') {
+					alert(msg.info);
+				}
+				if(msg.mobile){
+		            $("#username").next().text(msg.mobile).css({'color':'red'}).show();
+		            $("#username").focus();
+				}else{
+		            $("#username").next().text(msg.email).css({'color':'red'}).show();
+		            $("#username").focus();
+				}
+			}
+		});
+        return false;
     }
 </script>
 </html>

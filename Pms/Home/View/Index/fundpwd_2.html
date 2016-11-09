@@ -21,16 +21,18 @@
 			<div class="login-form">
 				<div class="login-title"><span>找回密码</span></div>
 				<div class="login-content">
-					<form>
+					<form id="updatePwd_form">
 						<div class="form-box">
-							<input type="password" name="" class="pwd text" placeholder="请输入新密码" style="width:360px;">
+							<input type="password" id="password" name="password" class="pwd text" placeholder="请输入新密码" style="width:360px;">
 							<p class="pt5">提示：8位，同时包含大小写字母和数字</p>
+							<p id="password_err" class="error-tip"></p>
 						</div>
 						<div class="form-box">
-							<input type="password" name="" class="pwd text" placeholder="请再次输入新密码" style="width:360px;">
+							<input type="password" id="repassword" name="repassword" class="pwd text" placeholder="请再次输入新密码" style="width:360px;">
+							<p id="repassword_err" class="error-tip"></p>
 						</div>
 					</form>
-					<button class="btn-login">确定</button>
+					<button class="btn-login" onclick="chgpwd_submit()">确定</button>
 					<p class="step">
 						<img src="__PUBLIC__/img/step_2.png" alt="" />
 					</p>
@@ -39,4 +41,58 @@
 		</div>
 	</div>
 </body>
+<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
+<script type="text/javascript">
+    function chgpwd_submit(){
+        var password=$("#password").val();
+        var repassWord=$("#repassword").val();
+        var url = "{:U('User/updatePwd')}";
+        var data = $('#updatePwd_form').serialize();
+        if (password == "") {
+            $("#password_err").text("新密码不能为空").css({'color':'red'}).show();
+            $("#password").focus();
+            return false;
+        } else {
+            $("#password_err").hide();
+        }
+        if (repassword == "") {
+            $("#repassword_err").text("请再次输入新密码").css({'color':'red'}).show();
+            $("#repassword").focus();
+            return false;
+        } else {
+            $("#repassword_err").hide();
+        }
+        //ajax提交form表单
+        $.ajax({
+            type : "POST",
+            data : data,
+            url : url,
+            success:function(msg){
+                if (msg.info == 'ok') {
+                    //密码设置成功
+                    // window.location.href = msg.callback;
+                    alert("密码修改成功！");
+                 }
+                else {
+                    for (err_info in msg){
+                        switch(err_info){
+                            case "password":
+                                $("#password_err").text(msg.password).css({'color':'red'}).show();
+                                $("#password").focus();
+                                break;
+                            case "repassword":
+                                $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
+                                $("#repassword_err").show();
+                                $("#password").focus();
+                                break;
+                            default:
+                                break
+                        }
+                    }
+                }
+            }
+        });
+        return false;
+    }
+</script>
 </html>

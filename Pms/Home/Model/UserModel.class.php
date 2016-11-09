@@ -29,15 +29,15 @@ class UserModel extends Model {
     }
     /**
      * 修改密码
-     * @param type $user 用户id
+     * @param type $info 用户id
      * @param array $password 修改参数
      * @return type
      */
-    public function updatePwd( $user,$password){
+    public function updatePwd( $info,$password){
         $user = M("User"); // 实例化User对象
         $update["update_time"] = date("Y-m-d H:i:s", time());
         $update["password"] = $password;
-        return $user->where($user)->save($update);
+        $user->where($info)->save($update);return $this->getlastsql();
     }
 
     public function addUser($data){

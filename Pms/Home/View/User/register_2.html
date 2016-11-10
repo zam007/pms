@@ -135,8 +135,9 @@
 	        var work_id=$("#work_id").val();
 	        var from_add=$("#from_add").val();
 	        //ajax变量
-	        var data=$('#regCompleteform').serialize();
+	        var data=$('#groupCompleteform').serialize();
 	        var url="{:U('User/completion')}";
+	        alert(data);return false;
 	        if (name == "") {
 	            $("#name_err").text("请输入您的真实姓名").css({'color':'red'}).show();
 	            $("#name").focus();

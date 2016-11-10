@@ -4,11 +4,11 @@
 	<meta charset="UTF-8">
 	<title>注册</title>
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/info.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/login.css">
-    <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js">
-    </script>
 </head>
 <body>
 	<div class="wrap">
@@ -25,7 +25,7 @@
 			</div>
 			<div class="register-form-2" style="border-bottom: none;">
 				<div class="register-title-2"><span>个人信息</span><p>为了更好为您服务，请如是填写以下。个人信息仅做测试使用，我们承诺保证您的信息安全</p></div>
-				<form id="form2" method="post" action="{:U('User/completion')}">
+				<form id="groupCompleteform">
 				<div class="content-main-form" method="post" >
 					<div class="content-main-form-info">
 						<div>
@@ -40,27 +40,7 @@
 						</div>
 						<div>
 							<span class="item">生日：</span>
-							<select name="date" class="pl5 pr5">
-								<option>---</option>
-								<option>1990</option>
-								<option>1991</option>
-								<option>1992</option>
-							</select>
-							<span class="pl5 pr5">年</span>
-							<select class="pl5 pr5">
-								<option>---</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-							</select>
-							<span class="pl5 pr5">月</span>
-							<select class="pl5 pr5">
-								<option>---</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-							</select>
-							<span class="pl5 pr5">日</span>
+							<input   id="datetimepicker" name="datetimepicker" data-date-format="yyyy-mm-dd" />
 							<p class="grey tip-grey">为了准确测试，请如实填写</p>
 						</div>
 						<div>
@@ -141,27 +121,79 @@
 							<span class="item bind-email">邮箱：</span>
 							<span><span>abc@163.com</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
 						</div>
-						<div>
-							<p id="group_button" class="submit">完成</p>
-						</div>
-						<p class="step">
-							<img src="__PUBLIC__/img/step_2.png" alt="" />
-						</p>
 					</div>
 				</form>
-<!-- 				<script>
-					$('form').attr('action', '{:U('User/completion')}' );
-					$('#group_button').on('click',function(){
-						$('form').submit()
-					});
-				</script> -->
-				<script>
-					$('#group_button').on('click',function(){
-						$('#form2').submit()
-					});
-				</script>
+				<div>
+<!-- 					<p id="group_button" class="submit">完成</p> -->
+					<button id="group_button" class="submit" onclick="groupComplete()">完成</button>
+				</div>
+				<p class="step">
+					<img src="__PUBLIC__/img/step_2.png" alt="" />
+				</p>
+				<p class="tip-green">&nbsp;</p>
 			</div>
 		</div>
 	</div>
 </body>
+    <load href="__PUBLIC__/js/jquery/jquery-1.9.1.min.js" />
+	<load href="__PUBLIC__/bootstrap/js/bootstrap.min.js" />
+	<load href="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.min.js" />
+	<load href="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" />
+	<script type="text/javascript">
+		//时间控件
+		$('#datetimepicker').datetimepicker({
+			language: "zh-CN",
+			minView: '2',
+			bootcssVer: 3
+		});
+		//regComplete按钮响应
+	    function groupComplete(){
+	    	//前端检查变量
+	        var name=$("#name").val();
+	        var sex=$('input:radio[name="sex"]:checked').val();
+	        var birth=$("#datetimepicker").val();
+	        var work_id=$("#work_id").val();
+	        var from_add=$("#from_add").val();
+	        //ajax变量
+	        var data=$('#regCompleteform').serialize();
+	        var url="{:U('User/completion')}";
+	        if (name == "") {
+	            $("#name_err").text("请输入您的真实姓名").css({'color':'red'}).show();
+	            $("#name").focus();
+	            return false;
+	        } else {
+	            $("#name_err").hide();
+	        }
+	        //ajax提交form表单
+	        $.ajax({
+	            type : "POST",
+	            data : data,
+	            url : url,
+	            success:function(msg){
+	                if (msg.statu == 'ok') {
+	                    window.location.href = msg.callback;
+	                 }
+	                if (msg.statu == 'no') {
+	                    alert("密码修改失败！");
+	                 }
+	                for (err_info in msg){
+	                    switch(err_info){
+	                        case "password":
+	                            $("#password_err").text(msg.password).css({'color':'red'}).show();
+	                            $("#password").focus();
+	                            break;
+	                        case "repassword":
+	                            $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
+	                            $("#repassword_err").show();
+	                            $("#password").focus();
+	                            break;
+	                        default:
+	                            break
+	                    }
+	                }
+	            }
+	        });
+	        return false;
+	    }
+	</script>
 </html>

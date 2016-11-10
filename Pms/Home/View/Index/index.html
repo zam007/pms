@@ -191,29 +191,28 @@
 			<div class="login-form">
 				<div class="login-title"><span>欢迎注册</span></div>
 				<div class="login-content">
-					<form id = "register_form" name="register" method="post" action="">
-						<div class="form-box error">
+					<form id = "register_form" >
+						<div class="form-box ">
 							<input id="reg_username" name="username" type="text" class="account text" placeholder="请输入手机号/邮箱" style="width:360px;">
-							<p style="display:none" id="reg_name_err" class="error-tip"></p>
+<!-- 							<p style="display:none" id="reg_name_err" class="error-tip"></p> -->
+							<p id="reg_name_err" class="error-tip"></p>
 						</div>
 						<div >
 							<div class="form-box">
-								<input id="reg_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#" id="send_msg">发送验证码</a>
-								<p style="display:none" id="reg__verify_err" class="error-tip"></p>
+								<input id="reg_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;">
+								<img src=""> <a href="#" id="send_msg">发送验证码</a>
+<!-- 								<p style="display:none" id="reg__verify_err" class="error-tip"></p> -->
+								<p id="reg_verify_err" class="error-tip"></p>
 							</div>
 						</div>
 						<div class="form-box">
 							<label><input type="radio" checked="true" name="register_property" value="1" class="pr10"><span class="pl5">个人</span></label>
 							<label class="pl30"><input type="radio" name="register_property" value="2" class="pr10"><span class="pl5">团体</span></label>
 						</div>
-					<button class="btn-login" onclick="register_submit()"">注册并登录</button>
+<!-- 					<button class="btn-login" onclick="register_submit()"">注册并登录</button> -->
 					</form>
-<!-- 					<script>
-						function register_submit(){
-							$('register').submit();
-						}
-					</script> -->
-					<script type="text/javascript">
+					<button class="btn-login" onclick="register_submit()"">注册并登录</button>
+<!-- 					<script type="text/javascript">
 					function register_submit(){
 						$("#register_form").submit(function(){
 						    var regUsername=$("#reg_username").val();
@@ -263,7 +262,7 @@
 						    return false;
 						})
 					}
-					</script>
+					</script> -->
 				</div>
 			</div>
 		</div>
@@ -285,20 +284,70 @@
 					if (msg.staut == 'ok' || msg.staut == 'no') {
 						alert(msg.info)
 					} else {
-						// alert(msg);return;
-						// var d=eval('('+d+')');//json转成object
 						if(msg.mobile){
-							$("#reg_name_err").text(msg.mobile);
-							$("#reg_name_err").show();
+							$("#reg_username").next().text(msg.mobile);
+							$("#reg_username").parent().addClass('error');
 	    					$("#reg_username").focus();
-						}else{
-							$("#reg_name_err").text(msg.email);
-							$("#reg_name_err").show();
+						}else if (msg.email){
+							$("#reg_username").next().text(msg.email);
+							$("#reg_username").parent().addClass('error');
 	    					$("#reg_username").focus();
 						}
 					}
 				},
 			})
 		})
+		//注册按钮
+		function register_submit(){
+		    var regUsername=$("#reg_username").val();
+		    var regVerify=$("#reg_verify").val();
+	    	var url = "{:U('Index/registerOne')}";
+			var data = $('#register_form').serialize();
+		    if (regUsername == "") {
+				$("#reg_username").next().text('请输入邮箱或手机号');
+				$("#reg_username").parent().addClass('error');
+		    	$("#reg_username").focus();
+		    	return false;
+		    }else {
+				$("#reg_username").next().text('');
+				$("#reg_username").parent().removeClass('error');
+		    }
+		    if (regVerify == "") {
+				$("#reg_verify_err").text('请输入验证码');
+				$("#reg_verify").parent().addClass('error');
+		    	$("#reg_verify").focus();
+		    	return false;
+		    }else{
+				$("#reg_verify_err").text('');
+				$("#reg_verify").parent().removeClass('error');
+		    }
+			$.ajax({
+				type : "POST",
+				data : data,
+				url : url,
+				success:function(msg){
+					if (msg.info == 'ok') {
+						//注册成功
+						window.location.href = msg.callback;
+					} else {
+						// var d=eval('('+d+')');//json转成object
+						if(msg.mobile){
+							$("#reg_username").next().text(msg.mobile);
+							$("#reg_username").parent().addClass('error');
+	    					$("#reg_username").focus();
+						}else if (msg.email){
+							$("#reg_username").next().text(msg.email);
+							$("#reg_username").parent().addClass('error');
+	    					$("#reg_username").focus();
+						}else{
+							$("#reg_verify_err").text(msg.info);
+							$("#reg_verify").parent().addClass('error');
+	    					$("#reg_verify").focus();
+						}
+					}
+				},
+			})
+		    return false;
+		}
 	</script>
 </html>

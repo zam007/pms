@@ -178,6 +178,7 @@ class IndexController extends Controller {
                     $this->ajaxReturn($msg);
                 }
             }else {
+                //个人注册
                 $index = D("user");
                 if (!$index->validate($rules)->create($user)){
                     //验证失败

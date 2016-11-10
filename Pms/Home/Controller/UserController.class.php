@@ -128,10 +128,10 @@ class UserController extends BaseController {
             $userId = $this->userId;
             $user["name"] = I("name");
             $user["sex"] = I("sex");
-            $user["birth"] = date("Y-m-d", strtotime(I("birth")));
+            $user["birth"] = date("Y-m-d", strtotime(I("datetimepicker")));
             $user["work_id"] = I("work_id");
             $user["company_id"] = I("company_id");
-            $user["invite_id"] = I("invite_id");
+            $user["team_id"] = I("team_id");
             $user["from_add"] = I("from_add");
             $user["weixin"] = I("weixin");
             $user["qq"] = I("qq");
@@ -141,7 +141,11 @@ class UserController extends BaseController {
             $index = D("user");
             //资料完善合法验证
             $rules = array(
-                 array('name','require','标题不能为空。'),
+                 array('name','require','请输出姓名'),
+                 array('sex','require','请选择性别'),
+                 array('birth','require','请补充生日信息'),
+                 array('work_id','require','请补充职业信息'),
+                 array('from_add','require','请补充出生地信息'),
             );
 
             if (!$index->validate($rules)->create($user)){
@@ -150,19 +154,21 @@ class UserController extends BaseController {
             }else{
                 //验证通过
             if (!$index->modify($userId,$user)) {
-                $this->error('完善资料失败，请重新填写','../User/completion');
+                 $msg = array(
+                'statu' => 'no',
+                'info' => '完成个人信息失败，请重试'
+                );
+                $this->ajaxReturn($msg);
             }
             $name = 'name';
             $userInfo = $index->getUserField($userId,$name);
             SESSION("user_name",$userInfo['name']);
             $this->assign('name',$userInfo['name']);
-            $this->display("Index/index");
+             $msg = array(
+            'statu' => 'ok',
+            'callback' => U('Index/index')
+            );
+            $this->ajaxReturn($msg);
             }
-    }
-    /**
-     * 修改密码
-     */
-    public function changePwd(){
-        
     }
 }

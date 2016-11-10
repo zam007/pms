@@ -68,10 +68,6 @@
             data : data,
             url : url,
             success:function(msg){
-                alert(msg.info);
-                alert(msg.password);
-                alert(msg.repassword);
-                return false;
                 if (msg.info == 'ok') {
                     //密码设置成功
                     // window.location.href = msg.callback;

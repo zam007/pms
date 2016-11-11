@@ -29,7 +29,7 @@ class UserModel extends Model {
     }
     /**
      * 修改密码
-     * @param type $info 用户id
+     * @param type $info 用户account
      * @param array $password 修改参数
      * @return type
      */

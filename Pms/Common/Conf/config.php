@@ -3,7 +3,7 @@ return array(
 	//设定默认访问目录
 	'DEFAULT_MODULE' => 'Home',
 	//URL不区分大小写
-	'URL_CASE_INSENSITIVE'  =>  true,
+	'URL_CASE_INSENSITIVE'  =>  false,
 	// 开启路由
 	'URL_ROUTER_ON'         => true,
 	//(REWRITE  模式)

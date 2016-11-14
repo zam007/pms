@@ -118,52 +118,64 @@ class UserController extends BaseController {
      * 个人补全资料
      */
     public function completion(){
-        // print_r($_POST);exit;
-            $userId = $this->userId;
-            $user["name"] = I("name");
-            $user["sex"] = I("sex");
-            $user["birth"] = date("Y-m-d", strtotime(I("datetimepicker")));
-            $user["work_id"] = I("work_id");
-            $user["company_id"] = I("company_id");
-            $user["team_id"] = I("team_id");
-            $user["from_add"] = I("from_add");
-            $user["weixin"] = I("weixin");
-            $user["qq"] = I("qq");
-            $user["status"] = 1;
-            $user["update_time"] = date('Y-m-d H:i:s',time());
 
-            //资料完善合法验证
-            $index = D("user");
-            $rules = array(
-                 array('name','require','请输出姓名'),
-                 array('sex','require','请选择性别'),
-                 array('birth','require','请补充生日信息'),
-                 array('work_id','require','请补充职业信息'),
-                 array('from_add','require','请补充出生地信息'),
-            );
+        $userId = $this->userId;
+        $user["name"] = I("name");
+        $user["sex"] = I("sex");
+        $user["birth"] = date("Y-m-d", strtotime(I("datetimepicker")));
+        $user["work_id"] = I("work_id");
+        $user["from_add"] = I("from_add");
+        $user["weixin"] = I("weixin");
+        $user["qq"] = I("qq");
+        $user["status"] = 1;
+        $user["update_time"] = date('Y-m-d H:i:s',time());
 
-            if (!$index->validate($rules)->create($user)){
-                //验证失败
-                $this->ajaxReturn($index->getError());
-            }else{
-                //验证通过
-            if (!$index->modify($userId,$user)) {
+        //资料完善合法验证
+        $index = D("user");
+        $rules = array(
+             array('name','require','请输出姓名'),
+             array('sex','require','请选择性别'),
+             array('birth','require','请补充生日信息'),
+             array('work_id','require','请补充职业信息'),
+             array('from_add','require','请补充出生地信息'),
+        );
+
+        if (!$index->validate($rules)->create($user)){
+            //验证失败
+            $this->ajaxReturn($index->getError());
+        }
+
+        //如果存在团队邀请码，验证邀请码是否存在
+        if (I("team_invitecode")) {
+            $info['code'] = "code";
+            $teamInfo = $index->getteam($info);
+            if (!$teamInfo) {
                  $msg = array(
                 'statu' => 'no',
-                'info' => '完成个人信息失败，请重试'
+                'info' => '团队邀请码不存在，请输入正确的邀请码'
                 );
                 $this->ajaxReturn($msg);
             }
-            $name = 'name';
-            $userInfo = $index->getUserField($userId,$name);
-            SESSION("user_name",$userInfo['name']);
-            $this->assign('name',$userInfo['name']);
+            $user["code"] = I("team_invitecode");
+        }
+
+        //验证通过
+        if (!$index->modify($userId,$user)) {
              $msg = array(
-            'statu' => 'ok',
-            'callback' => U('Index/index')
+            'statu' => 'no',
+            'info' => '完成个人信息失败，请重试'
             );
             $this->ajaxReturn($msg);
-            }
+        }
+        $name = 'name';
+        $userInfo = $index->getUserField($userId,$name);
+        SESSION("user_name",$userInfo['name']);
+        $this->assign('name',$userInfo['name']);
+         $msg = array(
+        'statu' => 'ok',
+        'callback' => U('Index/index')
+        );
+        $this->ajaxReturn($msg);
     }
     /**
      * 团队补全资料

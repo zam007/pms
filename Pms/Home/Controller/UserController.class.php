@@ -118,7 +118,6 @@ class UserController extends BaseController {
      * 个人补全资料
      */
     public function completion(){
-
         $userId = $this->userId;
         $user["name"] = I("name");
         $user["sex"] = I("sex");
@@ -147,8 +146,10 @@ class UserController extends BaseController {
 
         //如果存在团队邀请码，验证邀请码是否存在
         if (I("team_invitecode")) {
+            $team = D('team');
             $info['code'] = "code";
-            $teamInfo = $index->getteam($info);
+            $teamInfo = $team->getTeam($info);
+            $this->ajaxReturn($teamInfo);die;
             if (!$teamInfo) {
                  $msg = array(
                 'statu' => 'no',

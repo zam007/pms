@@ -39,23 +39,23 @@
 						</div>
 						<div>
 							<span class="item">性别：</span>
-                                                        <if condition="$user.sex neq 1">
-                                                        <label><input type="radio" checked name="sex" class="pr10"><span class="pl5">男</span></label>
-							<label class="pl30"><input type="radio" name="sex" class="pr10"><span class="pl5">女</span></label>
-                                                        <else/>
-                                                        <label><input type="radio"  name="sex" class="pr10"><span class="pl5">男</span></label>
-							<label class="pl30"><input type="radio" checked name="sex" class="pr10"><span class="pl5">女</span></label>
-                                                        </if>
+                            <if condition="$user.sex neq 1">
+	                            <label><input type="radio" name="sex" class="pr10"><span class="pl5">男</span></label>
+								<label class="pl30"><input type="radio" checked name="sex" class="pr10"><span class="pl5">女</span></label>
+                            <else/>
+	                            <label><input type="radio"  name="sex" checked class="pr10"><span class="pl5">男</span></label>
+								<label class="pl30"><input type="radio" name="sex" class="pr10"><span class="pl5">女</span></label>
+                            </if>
 						</div>
 						<div>
 							<span class="item">生日：</span>
-							<input  value="2012-05-15" id="datetimepicker" data-date-format="yyyy-mm-dd" />
+							<input  value="{$user.birth}" id="datetimepicker" data-date-format="yyyy-mm-dd" />
 							<!-- value="{$user.birth} -->
 							<p class="grey tip-grey">为了准确测试，请如实填写</p>
 						</div>
 						<div>
 							<span class="item">职业：</span>
-							<select class="pl5 pr5" style="width:425px;">
+							<select class="pl5 pr5" style="width:425px;" value="{$user.work_id}">
 								<option value="1">医生</option>
 								<option value="2">程序员</option>
 								<option value="3">教师</option>

@@ -461,10 +461,10 @@ class IndexController extends Controller {
         $password = md5(I("password").C("PWD_KEY"));
 
         // 打印测试SQL
-        $msg['info'] = 'ok';
-        $msg['sqlinfo'] = $index->updatePwd($accountinfo,$password);
-        $this->ajaxReturn($msg);
-        die;
+        // $msg['info'] = 'ok';
+        // $msg['sqlinfo'] = $index->updatePwd($accountinfo,$password);
+        // $this->ajaxReturn($msg);
+        // die;
 
         if ($index->updatePwd($accountinfo,$password)) {
             $msg['info'] = 'ok';

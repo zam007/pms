@@ -35,7 +35,7 @@ class ExamController extends BaseController {
         }
         $this->assign('team',$team);
         $this->assign('user',$user);
-        $this->display('exam/info_confirm');
+        $this->display('Exam/info_confirm');
     	die();
     }
     /**

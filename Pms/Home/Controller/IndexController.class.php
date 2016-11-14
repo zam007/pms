@@ -422,7 +422,6 @@ class IndexController extends Controller {
                 $this->ajaxReturn($msg);
             }
             //验证通过
-            $userId = $index->addUser($user);
             SESSION("user_account",$account);
             $this->assign('value',$value);
             $msg = array(
@@ -464,7 +463,6 @@ class IndexController extends Controller {
         // $msg['info'] = 'ok';
         // $msg['sqlinfo'] = $index->updatePwd($accountinfo,$password);
         // $this->ajaxReturn($msg);
-        // die;
 
         if ($index->updatePwd($accountinfo,$password)) {
             $msg['info'] = 'ok';

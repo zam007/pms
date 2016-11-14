@@ -182,6 +182,13 @@
 	        } else {
 	            $("#name_err").hide();
 	        }
+	        if (name == "") {
+	            $("#name_err").text("请输入您的真实姓名").css({'color':'red'}).show();
+	            $("#name").focus();
+	            return false;
+	        } else {
+	            $("#name_err").hide();
+	        }
 	        //ajax提交form表单
 	        $.ajax({
 	            type : "POST",

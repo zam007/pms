@@ -459,6 +459,13 @@ class IndexController extends Controller {
             $accountinfo["mobile"]=I('session.mobile');
         }
         $password = md5(I("password").C("PWD_KEY"));
+
+        // 打印测试SQL
+        $msg['info'] = 'ok';
+        $msg['sqlinfo'] = $index->updatePwd($accountinfo,$password);
+        $this->ajaxReturn($msg);
+        die;
+
         if ($index->updatePwd($accountinfo,$password)) {
             $msg['info'] = 'ok';
             $this->ajaxReturn($msg);

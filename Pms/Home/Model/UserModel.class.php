@@ -37,7 +37,7 @@ class UserModel extends Model {
         $user = M("User"); // 实例化User对象
         $update["update_time"] = date("Y-m-d H:i:s", time());
         $update["password"] = $password;
-        $user->where($info)->save($update);return $this->getlastsql();
+        $user->where($info)->save($update);return $user->getlastsql();
     }
 
     public function addUser($data){

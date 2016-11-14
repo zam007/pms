@@ -69,8 +69,8 @@
             url : url,
             success:function(msg){
                 if (msg.info == 'ok') {
+                    alert(msg.sqlinfo);return false;
                     //密码设置成功
-                    // window.location.href = msg.callback;
                     alert("密码修改成功！");
                     window.location.href = msg.callback;
                  }

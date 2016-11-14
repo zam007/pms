@@ -81,16 +81,7 @@
 							<a href="#" onclick="reloadcode('logincodeimg')">刷新</a>
 							<p id="login__verify_err" class="error-tip"></p>
 <!-- 							<p style="display:none" id="login__verify_err" class="error-tip"></p> -->
-                            <script>
-                            /**
-                            *刷新验证码..
-                            */
-                            function reloadcode(id)
-                            {
-                             var yucodeurl = document.getElementById(id).src;
-                             document.getElementById(id).src = yucodeurl +'?'+ Math.random();
-                            }
-                            </script>
+
                             </div>
 						</div>
 					</form>
@@ -101,84 +92,6 @@
 					<div class="error" style="float:left;position: relative;left: 25%;top: 10px;">
 						<p id="login_error" style="display:none" class="error-tip"></p>
 					</div>
-					<script type="text/javascript">
-						function login_submit(){
-						    var loginUsername=$("#login_username").val();
-						    var loginPassword=$("#login_password").val();
-						    var loginVerify=$("#login_verify").val();
-					    	var url = "{:U('Index/login')}";
-							var data = $('#login_form').serialize();
-						    if (loginUsername == "") {
-						    	$("#login_username").next().text('请输入正确的11位手机号');
-						    	$("#login_username").parent().addClass('error');
-						    	$("#login__username").focus();
-						    	return false;
-						    }else{
-						    	$("#login_username").next().text('');
-						    	$("#login_username").parent().removeClass('error');
-						    }
-						    if (loginPassword == "") {
-						    	$("#login_password").next().text("请输入密码");
-						    	$("#login_password").parent().addClass('error');
-						    	$("#login__password").focus();
-						    	return false;
-						    }else{
-						    	$("#login_password").next().text('');
-						    	$("#login_password").parent().removeClass('error');
-						    }
-						    if (loginVerify == "") {
-						    	$("#login__verify_err").text("请输入验证码");
-						    	$("#login_verify").parent().addClass('error');
-						    	$("#login__verify").focus();
-						    	return false;
-						    }else{
-						    	$("#login_verify").next().text('');
-						    	$("#login_verify").parent().removeClass('error');
-						    }
-							$.ajax({
-								type : "POST",
-								data : data,
-								url : url,
-								success:function(msg){
-									if (msg.info == 'ok') {
-										//登陆成功
-										window.location.href = msg.callback;
-									} else {
-										for (err_info in msg){
-											if (err_info == "mobile"){
-												$("#login_username").next().text(msg.mobile);
-												$("#login_username").parent().addClass('error');
-												$("#login_verify").parent().removeClass('error');
-												$("#login_username").focus();
-												break;
-											}
-											if (err_info == "email"){
-												$("#login_username").next().text(msg.email);
-												$("#login_username").parent().addClass('error');
-												$("#login_verify").parent().removeClass('error');
-												$("#login_username").focus();verify
-												break;
-											}
-											if (err_info == "verify"){
-												$("#login_verify").next().text(msg.verify);
-												$("#login_verify").parent().addClass('error');
-												$("#login_username").parent().removeClass('error');
-												$("#login_verify").focus();
-												break;
-											}
-											if (err_info == "error"){
-												$("#login_username").next().text(msg.error);
-												$("#login_username").parent().addClass('error');
-												$("#login_verify").parent().removeClass('error');
-												$("#login_username").focus();
-											}
-										}
-									}
-								}
-							});
-					    	return false;
-					    }
-					</script>
 				</div>
 			</div>
 		</div>
@@ -191,29 +104,28 @@
 			<div class="login-form">
 				<div class="login-title"><span>欢迎注册</span></div>
 				<div class="login-content">
-					<form id = "register_form" name="register" method="post" action="">
-						<div class="form-box error">
+					<form id = "register_form" >
+						<div class="form-box ">
 							<input id="reg_username" name="username" type="text" class="account text" placeholder="请输入手机号/邮箱" style="width:360px;">
-							<p style="display:none" id="reg_name_err" class="error-tip"></p>
+<!-- 							<p style="display:none" id="reg_name_err" class="error-tip"></p> -->
+							<p id="reg_name_err" class="error-tip"></p>
 						</div>
 						<div >
 							<div class="form-box">
-								<input id="reg_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;"> <img src=""> <a href="#" id="send_msg">发送验证码</a>
-								<p style="display:none" id="reg__verify_err" class="error-tip"></p>
+								<input id="reg_verify" type="text" name="verify" placeholder="请输入验证码" style="width:150px;">
+								<img src=""> <a href="#" id="send_msg">发送验证码</a>
+<!-- 								<p style="display:none" id="reg__verify_err" class="error-tip"></p> -->
+								<p id="reg_verify_err" class="error-tip"></p>
 							</div>
 						</div>
 						<div class="form-box">
 							<label><input type="radio" checked="true" name="register_property" value="1" class="pr10"><span class="pl5">个人</span></label>
 							<label class="pl30"><input type="radio" name="register_property" value="2" class="pr10"><span class="pl5">团体</span></label>
 						</div>
-					<button class="btn-login" onclick="register_submit()"">注册并登录</button>
+<!-- 					<button class="btn-login" onclick="register_submit()"">注册并登录</button> -->
 					</form>
-<!-- 					<script>
-						function register_submit(){
-							$('register').submit();
-						}
-					</script> -->
-					<script type="text/javascript">
+					<button class="btn-login" onclick="register_submit()"">注册并登录</button>
+<!-- 					<script type="text/javascript">
 					function register_submit(){
 						$("#register_form").submit(function(){
 						    var regUsername=$("#reg_username").val();
@@ -263,17 +175,25 @@
 						    return false;
 						})
 					}
-					</script>
+					</script> -->
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 </body>
-	<load href="__PUBLIC__/Js/jquery-3.1.0.min.js" />
+	<load href="__PUBLIC__/js/jquery-3.1.0.min.js" />
 	<load href="__PUBLIC__/js/home.js" />
 	<script type="text/javascript">
-		//获取验证码
+        /**
+        *刷新验证码..
+        */
+        function reloadcode(id)
+        {
+	        var yucodeurl = document.getElementById(id).src;
+	        document.getElementById(id).src = yucodeurl +'?'+ Math.random();
+        }
+		//获取手机、邮箱验证码
 		$('#send_msg').click(function(){
 			var url = "{:U('Index/sendMsg')}";
 			var reg_username=$("#reg_username").val();
@@ -285,20 +205,147 @@
 					if (msg.staut == 'ok' || msg.staut == 'no') {
 						alert(msg.info)
 					} else {
-						// alert(msg);return;
-						// var d=eval('('+d+')');//json转成object
 						if(msg.mobile){
-							$("#reg_name_err").text(msg.mobile);
-							$("#reg_name_err").show();
+							$("#reg_username").next().text(msg.mobile);
+							$("#reg_username").parent().addClass('error');
 	    					$("#reg_username").focus();
-						}else{
-							$("#reg_name_err").text(msg.email);
-							$("#reg_name_err").show();
+						}else if (msg.email){
+							$("#reg_username").next().text(msg.email);
+							$("#reg_username").parent().addClass('error');
 	    					$("#reg_username").focus();
 						}
 					}
 				},
 			})
 		})
+		//注册提交按钮
+		function register_submit(){
+		    var regUsername=$("#reg_username").val();
+		    var regVerify=$("#reg_verify").val();
+	    	var url = "{:U('Index/registerOne')}";
+			var data = $('#register_form').serialize();
+		    if (regUsername == "") {
+				$("#reg_username").next().text('请输入邮箱或手机号');
+				$("#reg_username").parent().addClass('error');
+		    	$("#reg_username").focus();
+		    	return false;
+		    }else {
+				$("#reg_username").next().text('');
+				$("#reg_username").parent().removeClass('error');
+		    }
+		    if (regVerify == "") {
+				$("#reg_verify_err").text('请输入验证码');
+				$("#reg_verify").parent().addClass('error');
+		    	$("#reg_verify").focus();
+		    	return false;
+		    }else{
+				$("#reg_verify_err").text('');
+				$("#reg_verify").parent().removeClass('error');
+		    }
+			$.ajax({
+				type : "POST",
+				data : data,
+				url : url,
+				success:function(msg){
+					if (msg.info == 'ok') {
+						//注册成功
+						window.location.href = msg.callback;
+					} else {
+						// var d=eval('('+d+')');//json转成object
+						if(msg.mobile){
+							$("#reg_username").next().text(msg.mobile);
+							$("#reg_username").parent().addClass('error');
+	    					$("#reg_username").focus();
+						}else if (msg.email){
+							$("#reg_username").next().text(msg.email);
+							$("#reg_username").parent().addClass('error');
+	    					$("#reg_username").focus();
+						}else{
+							$("#reg_verify_err").text(msg.info);
+							$("#reg_verify").parent().addClass('error');
+	    					$("#reg_verify").focus();
+						}
+					}
+				},
+			})
+		    return false;
+		}
+		//登陆提交按钮
+		function login_submit(){
+		    var loginUsername=$("#login_username").val();
+		    var loginPassword=$("#login_password").val();
+		    var loginVerify=$("#login_verify").val();
+	    	var url = "{:U('Index/login')}";
+			var data = $('#login_form').serialize();
+		    if (loginUsername == "") {
+		    	$("#login_username").next().text('请输入正确的11位手机号');
+		    	$("#login_username").parent().addClass('error');
+		    	$("#login__username").focus();
+		    	return false;
+		    }else{
+		    	$("#login_username").next().text('');
+		    	$("#login_username").parent().removeClass('error');
+		    }
+		    if (loginPassword == "") {
+		    	$("#login_password").next().text("请输入密码");
+		    	$("#login_password").parent().addClass('error');
+		    	$("#login__password").focus();
+		    	return false;
+		    }else{
+		    	$("#login_password").next().text('');
+		    	$("#login_password").parent().removeClass('error');
+		    }
+		    if (loginVerify == "") {
+		    	$("#login__verify_err").text("请输入上方验证码");
+		    	$("#login_verify").parent().addClass('error');
+		    	$("#login__verify").focus();
+		    	return false;
+		    }else{
+		    	$("#login__verify_err").text('');
+		    	$("#login_verify").parent().removeClass('error');
+		    }
+			$.ajax({
+				type : "POST",
+				data : data,
+				url : url,
+				success:function(msg){
+					if (msg.info == 'ok') {
+						//登陆成功
+						window.location.href = msg.callback;
+					} else {
+						for (err_info in msg){
+							if (err_info == "mobile"){
+								$("#login_username").next().text(msg.mobile);
+								$("#login_username").parent().addClass('error');
+								$("#login_verify").parent().removeClass('error');
+								$("#login_username").focus();
+								break;
+							}
+							if (err_info == "email"){
+								$("#login_username").next().text(msg.email);
+								$("#login_username").parent().addClass('error');
+								$("#login_verify").parent().removeClass('error');
+								$("#login_username").focus();verify
+								break;
+							}
+							if (err_info == "verify"){
+								$("#login__verify_err").text(msg.verify);
+								$("#login_verify").parent().addClass('error');
+								$("#login_username").parent().removeClass('error');
+								$("#login_verify").focus();
+								break;
+							}
+							if (err_info == "error"){
+								$("#login_username").next().text(msg.error);
+								$("#login_username").parent().addClass('error');
+								$("#login_verify").parent().removeClass('error');
+								$("#login_username").focus();
+							}
+						}
+					}
+				}
+			});
+	    	return false;
+	    }
 	</script>
 </html>

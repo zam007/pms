@@ -178,6 +178,7 @@ class IndexController extends Controller {
                     $this->ajaxReturn($msg);
                 }
             }else {
+                //个人注册
                 $index = D("user");
                 if (!$index->validate($rules)->create($user)){
                     //验证失败
@@ -421,7 +422,6 @@ class IndexController extends Controller {
                 $this->ajaxReturn($msg);
             }
             //验证通过
-            $userId = $index->addUser($user);
             SESSION("user_account",$account);
             $this->assign('value',$value);
             $msg = array(
@@ -431,7 +431,47 @@ class IndexController extends Controller {
             $this->ajaxReturn($msg);
         }
     }
+    /**
+     * 短信找回密码后修改
+     */
+    public function findPwd(){
+        //修改成功后ajax返回信息
+        $msg = array(
+            'info' => 'default',
+            'callback' => U('Index/index')
+            );
+        //新密码合法验证
+        $index = D("user");
+        $newinfo['password'] = I("password");
+        $newinfo['repassword'] = I("repassword");
+        $rules = array(
+            array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
+            array('repassword','password','两次输入的密码不一致',0,'confirm'),
+        );
+        if (!$index->validate($rules)->create($newinfo)) {
+            //密码检验不通过，输出错误信息
+            $this->ajaxReturn($index->getError());
+        }
+        if (I('session.email')) {
+            $accountinfo["email"]=I('session.email');
+        }else{
+            $accountinfo["mobile"]=I('session.mobile');
+        }
+        $password = md5(I("password").C("PWD_KEY"));
 
+        // 打印测试SQL
+        // $msg['info'] = 'ok';
+        // $msg['sqlinfo'] = $index->updatePwd($accountinfo,$password);
+        // $this->ajaxReturn($msg);
+
+        if ($index->updatePwd($accountinfo,$password)) {
+            $msg['info'] = 'ok';
+            $this->ajaxReturn($msg);
+        }else{
+            $msg['info'] = 'no';
+            $this->ajaxReturn($msg);
+        }
+    }
 
     /**
      * 发送手机验证码

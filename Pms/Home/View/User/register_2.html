@@ -4,11 +4,11 @@
 	<meta charset="UTF-8">
 	<title>注册</title>
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/info.css">
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/login.css">
-    <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js">
-    </script>
 </head>
 <body>
 	<div class="wrap">
@@ -25,46 +25,28 @@
 			</div>
 			<div class="register-form-2" style="border-bottom: none;">
 				<div class="register-title-2"><span>个人信息</span><p>为了更好为您服务，请如是填写以下。个人信息仅做测试使用，我们承诺保证您的信息安全</p></div>
-				<form id="form1" class="content-main-form" method="post" action="{:U('User/completion')}">
+				<form id="regCompleteform" class="content-main-form" >
 					<div class="content-main-form-info">
-						<div>
+						<div class="form-box">
 							<span class="item">姓名：</span>
-							<input type="text" name="name" placeholder="请输入你的真实姓名" style="width:350px;">
+							<input type="text" name="name" id="name" placeholder="请输入你的真实姓名" style="width:350px;">
+<!-- 							<p id="name_err" class="grey tip-grey"></p> -->
 							<p class="tip-green">仅生成报告试用，请放心填写</p>
 						</div>
 						<div>
 							<span class="item">性别：</span>
-							<label><input type="radio" checked="true" name="sex" value="1" class="pr10"><span class="pl5">男</span></label>
-							<label class="pl30"><input type="radio" name="sex" value="0" class="pr10"><span class="pl5">女</span></label>
+							<label><input type="radio" checked="true" name="sex" id="sex1" value="1" class="pr10"><span class="pl5">男</span></label>
+							<label class="pl30"><input type="radio" name="sex" id="sex2" value="0" class="pr10"><span class="pl5">女</span></label>
 						</div>
 						<div>
 							<span class="item">生日：</span>
-							<select class="pl5 pr5">
-								<option>---</option>
-								<option>1990</option>
-								<option>1991</option>
-								<option>1992</option>
-							</select>
-							<span class="pl5 pr5">年</span>
-							<select class="pl5 pr5">
-								<option>---</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-							</select>
-							<span class="pl5 pr5">月</span>
-							<select class="pl5 pr5">
-								<option>---</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-							</select>
-							<span class="pl5 pr5">日</span>
+							<input   id="datetimepicker" name="datetimepicker" data-date-format="yyyy-mm-dd" />
 							<p class="grey tip-grey">为了准确测试，请如实填写</p>
 						</div>
 						<div>
 							<span class="item">职业：</span>
-							<select name="work_id" class="pl5 pr5" style="width:425px;">
+							<select name="work_id" id="work_id" class="pl5 pr5" style="width:425px;">
+								<option value="0">--</option>
 								<option value="1">医生</option>
 								<option value="2">程序员</option>
 								<option value="3">教师</option>
@@ -73,25 +55,27 @@
 						</div>
 						<div>
 							<span class="item">团体：</span>
-							<input type="text" name=""  style="width:200px;border-bottom:1px solid #eaefee;"><input type="text" name="code" placeholder="请输入邀请码" class="invitation-code">
-							<p class="tip-spec">为了准确测试，请如实填写 <span class="tip-inline">请向管理员询问</span></p>
+						<!--<input type="text" id="teamname" name="teamname"  style="width:200px;border-bottom:1px solid #eaefee;"> -->
+							<input type="text" name="team_invitecode" id="team_invitecode" placeholder="请输入团体邀请码" class="invitation-code">
+							<p class="tip-green">请向管理员询问</p>
 						</div>
 						<div>
 							<span class="item" name="from_add">来源地：</span>
-							<select name="from_add" class="pl5 pr5" style="width:425px;">
+							<select name="from_add" id="from_add" class="pl5 pr5" style="width:425px;">
+								<option value="0">--</option>
 								<option value="1">城镇</option>
 								<option value="2">乡村</option>
 							</select>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
 						<div>
-							<span name="weixin" class="item">微信号：</span>
-							<input type="text" name="" placeholder="请输入微信号" style="width:425px;">
+							<span  name="" class="item">微信号：</span>
+							<input type="text" name="weixin" placeholder="请输入微信号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
 						<div>
-							<span name="qq" class="item">QQ：</span>
-							<input type="text" name="" placeholder="请输入QQ号" style="width:425px;">
+							<span name="" class="item">QQ：</span>
+							<input type="text" name="qq" placeholder="请输入QQ号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
 					</div>
@@ -104,35 +88,94 @@
 					<div class="content-main-form-info">
 						<div>
 							<span class="item bind-phone">手机号：</span>
-                                                        <if condition="$Think.session.mobile neq null">
-							<span><span>{$Think.session.mobile}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
-                                                        <else/>
-                                                        <span><span></span><span class="pl20 pr20 grey">未绑定</span><a href="#" class="unbind">绑定</a></span>
-                                                        </if>
+                            <if condition="$Think.session.mobile neq null">
+								<span><span>{$Think.session.mobile}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind"></a></span>
+                            <else/>
+                            	<span><span></span><span class="pl20 pr20 grey">未绑定</span><a href="#" class="unbind"></a></span>
+                            </if>
 						</div>
 						<div>
 							<span class="item bind-email">邮箱：</span>
-                                                        <if condition="$Think.session.email neq null">
-							<span><span>{$Think.session.email}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
-                                                        <else/>
-                                                        <span><span></span><span class="pl20 pr20 grey">未绑定</span><a href="#" class="unbind">绑定</a></span>
-                                                        </if>
+                            <if condition="$Think.session.email neq null">
+								<span><span>{$Think.session.email}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind"></a></span>
+	                        <else/>
+	                        	<span><span></span><span class="pl20 pr20 grey">未绑定</span><a href="#" class="unbind"></a></span>
+	                        </if>
 						</div>
 						<div>
-							<p id="submit_button" class="submit">完成</p>
+<!-- 							<p id="submit_button" class="submit" onclick="chgpwd_submit()"">完成</p> -->
+							<button class="submit" onclick="regComplete()">完成</button>
 						</div>
 						<p class="step">
 							<img src="__PUBLIC__/img/step_2.png" alt="" />
 						</p>
 					</div>
 				</form>
-				<script>
-					$('#submit_button').on('click',function(){
-						$('#form1').submit()
-					});
-				</script>
 			</div>
 		</div>
 	</div>
 </body>
+    <load href="__PUBLIC__/js/jquery/jquery-1.9.1.min.js" />
+	<load href="__PUBLIC__/bootstrap/js/bootstrap.min.js" />
+	<load href="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.min.js" />
+	<load href="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" />
+	<script type="text/javascript">
+		//时间控件.
+		$('#datetimepicker').datetimepicker({
+			language: "zh-CN",
+			minView: '2',
+			bootcssVer: 3
+		});
+		//regComplete按钮响应
+	    function regComplete(){
+	    	//前端检查变量
+	        var name=$("#name").val();
+	        var sex=$('input:radio[name="sex"]:checked').val();
+	        var birth=$("#datetimepicker").val();
+	        var work_id=$("#work_id").val();
+	        var from_add=$("#from_add").val();
+	        //ajax变量
+	        var data=$('#regCompleteform').serialize();
+	        var url="{:U('User/completion')}";
+	        //前端数据检查
+	        if (name == "") {
+	            $("#name_err").text("请输入您的真实姓名").css({'color':'red'}).show();
+	            $("#name").focus();
+	            return false;
+	        } else {
+	            $("#name_err").hide();
+	        }
+	        //ajax提交form表单
+	        $.ajax({
+	            type : "POST",
+	            data : data,
+	            url : url,
+	            success:function(msg){
+	            	alert(msg.length);return false;
+	                if (msg.statu == 'ok') {
+	                    window.location.href = msg.callback;
+	                 }
+	                if (msg.statu == 'no') {
+	                    alert(msg.info);
+	                 }
+	                for (err_info in msg){
+	                    switch(err_info){
+	                        case "password":
+	                            $("#password_err").text(msg.password).css({'color':'red'}).show();
+	                            $("#password").focus();
+	                            break;
+	                        case "repassword":
+	                            $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
+	                            $("#repassword_err").show();
+	                            $("#password").focus();
+	                            break;
+	                        default:
+	                            break
+	                    }
+	                }
+	            }
+	        });
+	        return false;
+	    }
+	</script>
 </html>

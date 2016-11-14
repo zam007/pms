@@ -68,10 +68,10 @@ class ExamController extends BaseController {
         );
         $order->addOrder($orderDate);
         //生成答卷,开始答题
-         $examMode = D("exam");
+         $examMode = D("Exam");
          $sheet_id = $examMode->addSheet($level,$userId);
          if($sheet_id){
-            SESSION('sheet_id',$sheet_id);echo  $sheet_id;
+            SESSION('sheet_id',$sheet_id);
             $this->answerQuestion();
             die();
          }else{
@@ -102,7 +102,7 @@ class ExamController extends BaseController {
         );
         $answerSheet = $answerSheetMode->getAnswerSheet($where,$field);
         if(!$answerSheet){
-            $this->success('未测试','../index/index',3);
+            $this->success('未测试','../Index/index',3);
             die();
         }
         //查询用户分类试卷，满足条件 答题数量不等于规定答题数量
@@ -146,7 +146,7 @@ class ExamController extends BaseController {
         $update =array(
                 'question' => $questionIds,
         );
-        echo $classifySheetMode->modify($classifySheet['classify_sheet_id'], $update);exit;
+        
         
         $queNow['is_answer'] = 1;
         $queNow['answers'] = $classifySheet['answers']+1;
@@ -181,7 +181,7 @@ class ExamController extends BaseController {
         $this->assign('selected',$selected);
         $this->assign('question',$question);
         $this->assign('answer',$answer);
-        $this->display('exam/answer');
+        $this->display('Exam/answer');
         die();
     }
     

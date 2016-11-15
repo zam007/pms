@@ -128,30 +128,28 @@
 		});
 		//regComplete按钮响应
 	    function regComplete(){
-	    	//前端检查变量
-	        var name=$("#name").val();
+	    	//前端检查变量检查
 	        var sex=$('input:radio[name="sex"]:checked').val();
 	        var birth=$("#datetimepicker").val();
 	        var work_id=$("#work_id").val();
-	        var from_add=$("#from_add").val();
 	        //ajax变量
 	        var data=$('#regCompleteform').serialize();
 	        var url="{:U('User/completion')}";
 	        //前端数据检查
-	        if (name == "") {
-	            $("#name_err").text("请输入您的真实姓名").css({'color':'red'}).show();
-	            $("#name").focus();
-	            return false;
-	        } else {
-	            $("#name_err").hide();
-	        }
+	        // if (sex == "") {
+	        //     $("#").text("请输入您的真实姓名").css({'color':'red'}).show();
+	        //     $("#name").focus();
+	        //     return false;
+	        // } else {
+	        //     $("#name_err").hide();
+	        // }
+
 	        //ajax提交form表单
 	        $.ajax({
 	            type : "POST",
 	            data : data,
 	            url : url,
 	            success:function(msg){
-	            	alert(msg.length);return false;
 	                if (msg.statu == 'ok') {
 	                    window.location.href = msg.callback;
 	                 }

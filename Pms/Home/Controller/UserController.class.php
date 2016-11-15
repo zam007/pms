@@ -7,13 +7,20 @@ class UserController extends BaseController {
         $this->display("register_1");
     }
     /**
-     * 跳转
+     * 左边动作菜单跳转
      */
     public function personal_info(){
         $userId = $this->userId;
+        $teamId = I('session.team_id');
+        //将用户信息传到前端页面
         $userMode = D('user');
         $user = $userMode->getUserField($userId);
         $this->assign('user',$user);
+        //将团体信息传到前端页面
+        $teamMode = D('team');
+        $team = $teamMode->getTeamField($teamId);
+        $this->assign('team',$team);
+        //页面跳转
         $this->display("personal_info");
     }
     public function account_bind(){
@@ -132,25 +139,21 @@ class UserController extends BaseController {
         //资料完善合法验证
         $index = D("user");
         $rules = array(
-             array('name','require','请输出姓名'),
              array('sex','require','请选择性别'),
              array('birth','require','请补充生日信息'),
              array('work_id','require','请补充职业信息'),
-             array('from_add','require','请补充出生地信息'),
+             array('qq', '/^\d{6,10}$/', '请输入正确的QQ号码', 0),
         );
-
         if (!$index->validate($rules)->create($user)){
             //验证失败
             $this->ajaxReturn($index->getError());
         }
-
         //如果存在团队邀请码，验证邀请码是否存在
         if (I("team_invitecode")) {
-            $team = D('team');
-            $info['code'] = "code";
-            $teamInfo = $team->getTeam($info);
-            $this->ajaxReturn($teamInfo);die;
-            if (!$teamInfo) {
+            $team = D('Team');
+            $teamInfo['code'] = "code";
+            $teaminfo = $team->getTeam($teamInfo);
+            if (!$teaminfo) {
                  $msg = array(
                 'statu' => 'no',
                 'info' => '团队邀请码不存在，请输入正确的邀请码'
@@ -159,8 +162,7 @@ class UserController extends BaseController {
             }
             $user["code"] = I("team_invitecode");
         }
-
-        //验证通过
+        //添加个人信息到数据库
         if (!$index->modify($userId,$user)) {
              $msg = array(
             'statu' => 'no',
@@ -168,10 +170,11 @@ class UserController extends BaseController {
             );
             $this->ajaxReturn($msg);
         }
-        $name = 'name';
-        $userInfo = $index->getUserField($userId,$name);
-        SESSION("user_name",$userInfo['name']);
-        $this->assign('name',$userInfo['name']);
+        //如果用户输入了姓名，将姓名存入SESSION
+        if (I("name")) {
+            SESSION("user_name",I("name"));
+        }
+        //ajax 正确返回
          $msg = array(
         'statu' => 'ok',
         'callback' => U('Index/index')
@@ -189,7 +192,6 @@ class UserController extends BaseController {
         $user["sex"] = I("sex");
         $user["birth"] = date("Y-m-d", strtotime(I("datetimepicker")));
         $user["work_id"] = I("work_id");
-        $user["team_id"] = I("team_id");
         $user["from_add"] = I("from_add");
         $user["weixin"] = I("weixin");
         $user["qq"] = I("qq");
@@ -199,15 +201,13 @@ class UserController extends BaseController {
         $teaminfo["team_name"] = I("team_name");
         $teaminfo["nature"] = I("team_nature");
         $teaminfo["attribute"] = I("team_attribute");
-        $teaminfo["team_user"] = $userId ;
+        $teaminfo["team_user"] = I("name") ;
         //个人资料完善合法验证
         $index = D("user");
         $rules = array(
-             array('name','require','请输出姓名'),
              array('sex','require','请选择性别'),
              array('birth','require','请补充生日信息'),
              array('work_id','require','请补充职业信息'),
-             array('from_add','require','请补充出生地信息'),
         );
         if (!$index->validate($rules)->create($user)){
             $this->ajaxReturn($index->getError());
@@ -222,7 +222,7 @@ class UserController extends BaseController {
         if (!$team->validate($teamrules)->create($teaminfo)){
             $this->ajaxReturn($index->getError());
         }
-        //用户数据插入
+        //用户详细信息添加到数据库
         if (!$index->modify($userId,$user)) {
              $msg = array(
             'statu' => 'no',
@@ -230,7 +230,7 @@ class UserController extends BaseController {
             );
             $this->ajaxReturn($msg);
         }
-        //团队信息插入
+        //团队信息添加到数据库
         if (!$team->modify($teamId,$teaminfo)) {
              $msg = array(
             'statu' => 'no',
@@ -238,20 +238,14 @@ class UserController extends BaseController {
             );
             $this->ajaxReturn($msg);
         }
-        //获取用户信息，存入session前端展示
-        $name = 'name';
-        $userInfo = $index->getUserField($userId,$name);
-        SESSION("user_name",$userInfo['name']);
-        $this->assign('name',$userInfo['name']);
-        //获取团队信息，存入session前端展示
-        $teamdisplay = 'team_name';
-        $team_Info = $team->getTeamField($teamId,$teamdisplay);
-        SESSION("team_name",$team_Info['team_name']);
-        $this->assign('team_name',$team_Info['team_name']);
+        //如果用户输入了姓名，将姓名存入SESSION
+        if (I("name")) {
+            SESSION("user_name",I("name"));
+        }
         //ajax正确返回
          $msg = array(
         'statu' => 'ok',
-        'callback' => U('Index/index')
+        'callback' => U('User/personal_info')
         );
         $this->ajaxReturn($msg);
     }

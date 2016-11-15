@@ -49,7 +49,7 @@
 						</div>
 						<div>
 							<span class="item">生日：</span>
-							<input  value="{$user.birth}" id="datetimepicker" data-date-format="yyyy-mm-dd" />
+							<input  id="datetimepicker" name="datetimepicker" value="{$user.birth}" data-date-format="yyyy-mm-dd" />
 							<!-- value="{$user.birth} -->
 							<p class="grey tip-grey">为了准确测试，请如实填写</p>
 						</div>
@@ -69,50 +69,57 @@
 						</div>
 						<div>
 							<span class="item">来源地：</span>
-                                                            <if condition="$user.work eq 1">
-                                                            <select class="pl5 pr5" style="width:425px;">
-								<option value="1">城镇</option>
-								<option value="2">乡村</option>
-                                                            </select>
-                                                            <else/>
-                                                            <select class="pl5 pr5" style="width:425px;">
-								<option value="2">乡村</option>
-								<option value="1">城镇</option>
-                                                            </select>
-                                                            <if>
+                                <if condition="$user.work eq 1">
+	                                <select class="pl5 pr5" style="width:425px;">
+										<option value="1">城镇</option>
+										<option value="2">乡村</option>
+                                    </select>
+                                <else/>
+                                    <select class="pl5 pr5" style="width:425px;">
+										<option value="2">乡村</option>
+										<option value="1">城镇</option>
+                                	</select>
+                                <if>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
 						<div>
 							<span class="item">微信号：</span>
-							<input type="text" name="" placeholder="请输入微信号" style="width:425px;">
+							<input type="text" id="weixin" name="weixin" value="{$user.weixin}" placeholder="请输入微信号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
 						<div>
 							<span class="item">QQ：</span>
-							<input type="text" name="" placeholder="请输入QQ号" style="width:425px;">
+							<input type="text" id="qq" name="qq" value="{$user.qq}" placeholder="请输入QQ号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
-                        <if condition="$Think.session.team_id neq 0 ">
-                        <div>
-                            <span class="item">团体名称：</span>
-							<input type="text" name="team_name" placeholder="" style="width:425px;">
-							<p class="grey tip-grey">公司名，组织名</p>
-                        </div>
-                        <div>
-                            <span class="item">公司性质：</span>
-							<input type="text" name="nature" placeholder="" style="width:425px;">
-							<p class="grey tip-grey">公司的性质</p>
-                        </div>
-                        <div>
-                            <span class="item">行业属性：</span>
-							<input type="text" name="attribute" placeholder="" style="width:425px;">
-							<p class="grey tip-grey">行业的属性</p>
-                        </div>
-                        <div>
-                            <span class="item">团体邀请码：</span>
-							<input type="text" name="code" placeholder="" style="width:425px;">
-							<p class="grey tip-grey">可以分享给团队，加入</p>
-                        </div>
+
+						<div>
+							<span class="item">teamid：</span>
+							<input type="text" id="qq" name="qq" value="{$Think.session.team_id}" placeholder="请输入QQ号" style="width:425px;">
+							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
+						</div>
+
+                        <if condition="$Think.session.team_id neq 0 and $Think.session.team_id neq null">
+	                        <div>
+	                            <span class="item">团体名称：</span>
+								<input type="text" id="team_name" name="team_name" value="{$team.team_name}" placeholder="" style="width:425px;">
+								<p class="grey tip-grey">公司名，组织名</p>
+	                        </div>
+	                        <div>
+	                            <span class="item">公司性质：</span>
+								<input type="text" id="team_nature" name="team_nature" value="{$team.nature}" placeholder="" style="width:425px;">
+								<p class="grey tip-grey">公司的性质</p>
+	                        </div>
+	                        <div>
+	                            <span class="item">行业属性：</span>
+								<input type="text" id="team_attribute" name="team_attribute" value="{$team.attribute}" placeholder="" style="width:425px;">
+								<p class="grey tip-grey">行业的属性</p>
+	                        </div>
+	                        <div>
+	                            <span class="item">团体邀请码：</span>
+								<input type="text" name="team_code" name="team_code" value="{$team.code}" placeholder="" style="width:425px;">
+								<p class="grey tip-grey">可以分享给团队，加入</p>
+	                        </div>
                         </if>
 						<div>
 							<p class="submit">完成</p>

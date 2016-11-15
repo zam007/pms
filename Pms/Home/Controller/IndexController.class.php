@@ -15,83 +15,91 @@ class IndexController extends Controller {
 	 *登陆
 	 */
 	public function login(){
-        if (IS_POST) {
-            if(strstr(I("username"), '@')){
-                $user['email'] = I("username");
-                $value = '手机号';
-                $info["email"] = I("username");
-            }else {
-                $user['mobile'] = I("username");
-                $value = '邮箱';
-                $info["mobile"] = I("username");
+        if(strstr(I("username"), '@')){
+            $user['email'] = I("username");
+            $value = '手机号';
+            $info["email"] = I("username");
+        }else {
+            $user['mobile'] = I("username");
+            $value = '邮箱';
+            $info["mobile"] = I("username");
+        }
+        //验证用户登录名是否合法、是否填写了验证码
+        $user['verify'] = I("verify");
+        $rules = array(
+             array('mobile', '/^1[34578]\d{9}$/', '请输入正确的11位数手机号码', 0),
+             array('email', 'email', '请输入正确的邮箱号'),
+             array('verify','require','验证码必须！'),
+        );
+        $index = D("user");
+        if (!$index->validate($rules)->create($user)){
+            //验证失败
+            $this->ajaxReturn($index->getError());
+        }
+        //判断用户登录错误次数
+        $info["flag"] = 1;
+        //判断用户账号是否存在
+        if (!$userInfo = $index->getUser($info)) {
+            $this->ajaxReturn(array('info' => 'no',
+                                    'error'=> '用户名不存在，请先注册账号'
+             ));
+        }
+        //判断验证码是否正确
+        $verify = I("verify");
+        if(!check_verify($user['verify'])){
+            $this->ajaxReturn(array('info' => 'no',
+                                    'verify'=> '请输入正确的验证码'
+             ));
+        }
+        //判断密码是否正确
+        if(md5(I("password").C("PWD_KEY")) === $userInfo["password"]){
+            $update["login_err"] = 0;
+            //清空登录错误次数
+            $index->modify($userInfo["user_id"],$update);
+            SESSION("user_id",$userInfo["user_id"]);
+            //如果用户真实姓名存在，保存到session
+            if($userInfo['name']){
+                $userNmae = $userInfo['name'];
+                SESSION("user_name",$userNmae);
             }
-            //用户登陆合法验证
-            $user['verify'] = I("verify");
-            $rules = array(
-                 array('mobile', '/^1[34578]\d{9}$/', '请输入正确的11位数手机号码', 0),
-                 array('email', 'email', '请输入正确的邮箱号'),
-                 array('verify','require','验证码必须！'),
+            //获取teamID并保存到session。
+            $teamuserInfo["user_id"] = $userInfo["user_id"];
+            $teamuser = D("TeamUser");
+            $teamUser = $teamuser->getteam($teamuserInfo);
+            if ($teamUser) {
+                SESSION("team_id",$teamUser["team_id"]);
+            }
+            //登陆成功，跳转首页
+            $msg = array(
+            'info' => 'ok',
+            'callback' => U('Index/index')
             );
-
-            $index = D("user");
-            if (!$index->validate($rules)->create($user)){
-                //验证失败
-                $this->ajaxReturn($index->getError());
-            }else{
-                //判断用户登录错误次数
-                $info["flag"] = 1;
-                $userInfo = $index->getUser($info);
-            //     if($error['login_err'] >= 3){
-            //        $code = I("verify");
-            //        if(!check_verify($code)){
-            //           $this->error('验证码错误'.$code,'index');
-            //    }
-            // }
-                $verify = I("verify");
-                if(!check_verify($user['verify'])){
-                    $this->ajaxReturn(array('info' => 'no',
-                                            'verify'=> '请输入正确的验证码'
-                     ));
-                }
-                if(md5(I("password").C("PWD_KEY")) === $userInfo["password"]){
-                    $update["login_err"] = 0;
-                    $index->modify($userInfo["user_id"],$update);//清空登录错误次数
-                    SESSION("user_id",$userInfo["user_id"]);
-                    if($userInfo['name']){
-                        $userNmae = $userInfo['name'];
-                    }
-                    SESSION("user_name",$userNmae);
-                    $msg = array(
-                    'info' => 'ok',
-                    'callback' => U('Index/index')
-                    );
-                    if($userInfo['status'] == 0){
-                        $msg = array(
-                        'callback' => U('User/completion')
-                        );
-                    }
-                    if($userInfo['status'] == 9){
-                        $msg = array(
-                            'info' => 'no',
-                            'error'=> '账户被禁用,请联系管理员接触禁用',
-                        'callback' => U('Index/index')
-                        );
-                    }
-                    $this->ajaxReturn($msg);
-                }else{
-                    if($userInfo){
-                        $update["login_err"] = $userInfo['login_err']+1;
-                        $index->modify($userInfo['user_id'],$update);
-                    }
-                    // $this->error('用户名或密码错误','index');
-                        $msg = array(
-                            'info' => 'no',
-                            'error'=> '用户名或密码错误',
-                        'callback' => U('Index/index')
-                        );
-                        $this->ajaxReturn($msg);
-                 }
+            //如果用户没有补充个人信息，跳转到信息补充页面
+            if($userInfo['status'] == 0){
+                $msg = array(
+                'callback' => U('User/completion')
+                );
             }
+            if($userInfo['status'] == 9){
+                $msg = array(
+                    'info' => 'no',
+                    'error'=> '账户被禁用,请联系管理员接触禁用',
+                'callback' => U('Index/index')
+                );
+            }
+            $this->ajaxReturn($msg);
+        }else{
+            //密码错误
+            if($userInfo){
+                $update["login_err"] = $userInfo['login_err']+1;
+                $index->modify($userInfo['user_id'],$update);
+            }
+            $msg = array(
+                'info' => 'no',
+                'pwderror'=> '密码错误,请输入正确的密码',
+            'callback' => U('Index/index')
+            );
+            $this->ajaxReturn($msg);
         }
     }
     /**
@@ -159,7 +167,7 @@ class IndexController extends Controller {
                     $user["reg_time"] = date('Y-m-d H:i:s',time());
                     $user["team_id"] = $teamId;
                     $userId = $index_user->addUser($user);
-                    //
+                    //团队信息
                     $team_user["team_id"] = $teamId;
                     $team_user["user_id"] = $userId;
                     $team_user["created"] = $user["reg_time"];
@@ -371,6 +379,7 @@ class IndexController extends Controller {
             SESSION("user_id",0);
             SESSION("team_id",0);
             SESSION("user_accout",0);
+            SESSION("user_name",0);
             $this->success('成功退出','index');
     }
     /**

@@ -66,7 +66,6 @@
 						<div class="form-box">
 							<div class="form-box ">
 							<input id="login_password" type="password" name="password" class="pwd text" placeholder="请输入密码">
-<!-- 							<p style="display:none" id="login__password_err" class="error-tip"></p> -->
 							<p id="login__password_err" class="error-tip"></p>
 							</div>
 						</div>
@@ -332,6 +331,7 @@
 								$("#login__verify_err").text(msg.verify);
 								$("#login_verify").parent().addClass('error');
 								$("#login_username").parent().removeClass('error');
+								$("#login_password").parent().removeClass('error');
 								$("#login_verify").focus();
 								break;
 							}
@@ -340,6 +340,13 @@
 								$("#login_username").parent().addClass('error');
 								$("#login_verify").parent().removeClass('error');
 								$("#login_username").focus();
+							}
+							if (err_info == "pwderror"){
+								$("#login_password").next().text(msg.pwderror);
+								$("#login_password").parent().addClass('error');
+								$("#login_verify").parent().removeClass('error');
+								$("#login_username").parent().removeClass('error');
+								$("#login_password").focus();
 							}
 						}
 					}

@@ -8,6 +8,7 @@ class TeamUserModel extends Model {
         $team = M("Team_user"); // 实例化team对象
         $teamInfo = $team->field($filed)->where($info)->find();
         return $teamInfo;
+        // return $teamInfo->getlastsql();
     }
 
     public function getteamField($teamId,$filed = '*'){

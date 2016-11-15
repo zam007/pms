@@ -63,11 +63,14 @@ class IndexController extends Controller {
                 SESSION("user_name",$userNmae);
             }
             //获取teamID并保存到session。
-            $teamuserid["user_id"] = $userInfo["user_id"];
+            $teamuserinfo['user_id'] = $userInfo["user_id"];
             $teamuser = D("teamuser");
-            if ($teamuserinfo = $teamuser->getteam($teamuserid)) {
-                SESSION("team_id",$teamuserinfo["team_id"]);
-            }
+            $sql=$teamuser->getteam($teamuserinfo);
+            $msg = array('info' => $sql);
+            $this->ajaxReturn($msg);die;
+            // if ($teamuserinfo = $teamuser->getteam($teamuserid)) {
+            //     SESSION("team_id",$teamuserinfo["team_id"]);
+            // }
             //登陆成功，跳转首页
             $msg = array(
             'info' => 'ok',

@@ -308,6 +308,7 @@
 				data : data,
 				url : url,
 				success:function(msg){
+					alert(msg.info);return false;
 					if (msg.info == 'ok') {
 						//登陆成功
 						window.location.href = msg.callback;

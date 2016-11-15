@@ -142,21 +142,18 @@ class UserController extends BaseController {
              array('sex','require','请选择性别'),
              array('birth','require','请补充生日信息'),
              array('work_id','require','请补充职业信息'),
-             array('qq', '/^\d{6,10}$/', '请输入正确的11位数手机号码', 0),
+             array('qq', '/^\d{6,10}$/', '请输入正确的QQ号码', 0),
         );
-
         if (!$index->validate($rules)->create($user)){
             //验证失败
             $this->ajaxReturn($index->getError());
         }
-
         //如果存在团队邀请码，验证邀请码是否存在
         if (I("team_invitecode")) {
-            $team = D('team');
-            $info['code'] = "code";
-            $teamInfo = $team->getTeam($info);
-            $this->ajaxReturn($teamInfo);die;
-            if (!$teamInfo) {
+            $team = D('Team');
+            $teamInfo['code'] = "code";
+            $teaminfo = $team->getTeam($teamInfo);
+            if (!$teaminfo) {
                  $msg = array(
                 'statu' => 'no',
                 'info' => '团队邀请码不存在，请输入正确的邀请码'
@@ -165,7 +162,6 @@ class UserController extends BaseController {
             }
             $user["code"] = I("team_invitecode");
         }
-
         //添加个人信息到数据库
         if (!$index->modify($userId,$user)) {
              $msg = array(

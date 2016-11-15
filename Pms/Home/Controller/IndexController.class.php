@@ -62,7 +62,7 @@ class IndexController extends Controller {
                 $userNmae = $userInfo['name'];
                 SESSION("user_name",$userNmae);
             }
-            //获取teamID并保存到session
+            //获取teamID并保存到session。
             $teamuserid["user_id"] = $userInfo["user_id"];
             $teamuser = D("teamuser");
             if ($teamuserinfo = $teamuser->getteam($teamuserid)) {

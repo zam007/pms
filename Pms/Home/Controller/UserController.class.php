@@ -245,7 +245,7 @@ class UserController extends BaseController {
         //ajax正确返回
          $msg = array(
         'statu' => 'ok',
-        'callback' => U('Index/index')
+        'callback' => U('User/personal_info')
         );
         $this->ajaxReturn($msg);
     }

@@ -30,13 +30,13 @@
 					<div class="content-main-form-info">
 						<div>
 							<span class="item">姓名：</span>
-							<input type="text" name="name" placeholder="请输入你的真实姓名" style="width:350px;">
+							<input type="text" id="name" name="name" placeholder="请输入你的真实姓名" style="width:350px;">
 							<p class="tip-green">仅生成报告试用，请放心填写</p>
 						</div>
 						<div>
 							<span class="item">性别：</span>
-							<label><input type="radio" name="sex" class="pr10" value="1"><span class="pl5">男</span></label>
-							<label class="pl30"><input type="radio" name="sex" class="pr10" value="0"><span class="pl5">女</span></label>
+							<label><input type="radio" checked="true" name="sex" id="sex1" value="1" class="pr10"><span class="pl5">男</span></label>
+							<label class="pl30"><input type="radio" name="sex" id="sex2" value="0" class="pr10"><span class="pl5">女</span></label>
 						</div>
 						<div>
 							<span class="item">生日：</span>
@@ -45,35 +45,31 @@
 						</div>
 						<div>
 							<span class="item">职业：</span>
-							<select class="pl5 pr5" style="width:425px;">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+							<select name="work_id" id="work_id" class="pl5 pr5" style="width:425px;">
+								<option value="0">--</option>
+								<option value="1">医生</option>
+								<option value="2">程序员</option>
+								<option value="3">教师</option>
 							</select>
 							<p class="grey tip-grey">&nbsp;</p>
 						</div>
 						<div>
-							<span class="item">团体：</span>
-							<input type="text" name=""  style="width:200px;border-bottom:1px solid #eaefee;"><input type="text" name="ivitcode" placeholder="请输入邀请码" class="invitation-code">
-							<p class="tip-spec">为了准确测试，请如实填写 <span class="tip-inline">请向管理员询问</span></p>
-						</div>
-						<div>
 							<span class="item">来源地：</span>
-							<select class="pl5 pr5" style="width:425px;">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+							<select name="from_add" id="from_add" class="pl5 pr5" style="width:425px;">
+								<option value="0">--</option>
+								<option value="1">城镇</option>
+								<option value="2">乡村</option>
 							</select>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
 						<div>
-							<span class="item">微信号：</span>
-							<input type="text" name="" placeholder="请输入微信号" style="width:425px;">
+							<span  name="" class="item">微信号：</span>
+							<input type="text" name="weixin" placeholder="请输入微信号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
 						<div>
-							<span class="item">QQ：</span>
-							<input type="text" name="" placeholder="请输入QQ号" style="width:425px;">
+							<span name="" class="item">QQ：</span>
+							<input type="text" name="qq" placeholder="请输入QQ号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
 					</div>
@@ -86,22 +82,24 @@
 					<div class="content-main-form-info">
 						<div>
 							<span class="item">团体名称：</span>
-							<input type="text" name="trim" placeholder="请输入团体名称" style="width:425px;">
+							<input type="text" id="team_name" name="team_name" placeholder="请输入团体名称" style="width:425px;">
 						</div>
 						<div>
 							<span class="item">团体性质：</span>
-							<select class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+							<select id="team_nature" name="team_nature" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+								<option value="0">--</option>
+								<option value="1">公司</option>
+								<option value="2">学校</option>
+								<option value="3">社团</option>
 							</select>
 						</div>
 						<div>
 							<span class="item">团体属性：</span>
-							<select class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+							<select id="team_attribute" name="team_attribute" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+								<option value="0">--</option>
+								<option value="1">金融</option>
+								<option value="2">IT</option>
+								<option value="3">建筑</option>
 							</select>
 						</div>
 					</div>
@@ -129,19 +127,8 @@
                         	<span><span></span><span class="pl20 pr20 grey">未绑定</span><a href="#" class="unbind"></a></span>
                         </if>
 					</div>
-<!-- 					<div class="content-main-form-info">
-						<div>
-							<span class="item bind-phone">手机号：</span>
-							<span><span>13512345678</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
-						</div>
-						<div>
-							<span class="item bind-email">邮箱：</span>
-							<span><span>abc@163.com</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
-						</div>
-					</div> -->
 				</form>
 				<div>
-<!-- 					<p id="group_button" class="submit">完成</p> -->
 					<button id="group_button" class="submit" onclick="groupComplete()">完成</button>
 				</div>
 				<p class="step">
@@ -174,21 +161,6 @@
 	        //ajax变量
 	        var data=$('#groupCompleteform').serialize();
 	        var url="{:U('User/groupCompletion')}";
-	        alert(data);return false;
-	        if (name == "") {
-	            $("#name_err").text("请输入您的真实姓名").css({'color':'red'}).show();
-	            $("#name").focus();
-	            return false;
-	        } else {
-	            $("#name_err").hide();
-	        }
-	        if (name == "") {
-	            $("#name_err").text("请输入您的真实姓名").css({'color':'red'}).show();
-	            $("#name").focus();
-	            return false;
-	        } else {
-	            $("#name_err").hide();
-	        }
 	        //ajax提交form表单
 	        $.ajax({
 	            type : "POST",

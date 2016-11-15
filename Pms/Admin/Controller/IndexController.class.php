@@ -1,5 +1,5 @@
 <?php
-namespace PmsFIQ\Controller;
+namespace Admin\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
@@ -10,10 +10,6 @@ class IndexController extends Controller {
         $memberName = I("memberName");
         $pwd = I("pwd");
         $code = I("code");
-        
-        if(empty($memberName) or empty($pwd)){
-            echo "用户名或密码不能为空";exit;
-        }
         
         if(empty($code) ){
             echo "验证码不能为空";exit;
@@ -33,7 +29,7 @@ class IndexController extends Controller {
         if(empty($memberInfo)){
             echo "用户名货密码错误";exit;
         }else{
-            SESSION("id",$memberInfo["id"]);
+            SESSION("member_id",$memberInfo["member_id"]);
             $this->display("User/userList");
         }
     }

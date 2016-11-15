@@ -28,4 +28,15 @@ class UserModel extends Model {
         return $user->where('user_id='.$userId)->save($update);
     }
 
+    public function userList($info, $page = 1, $size = 20){
+        $User = M('User'); // 实例化User对象
+        // 进行分页数据查询 
+        $list = $User->where($info)->page($page.','.$size)->select();
+        $this->assign('list',$list);// 赋值数据集
+        $count      = $User->where($info)->count();// 查询满足要求的总记录数
+        $ThinkPage       = new \Think\Page($count,$size);// 实例化分页类 传入总记录数和每页显示的记录数
+        $show       = $ThinkPage->show();// 分页显示输出
+        return $show;
+    }
+
 }

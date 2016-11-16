@@ -9,8 +9,11 @@ class IndexController extends Controller {
     public function log(){
             $this->display("login");
 
-    }public function test(){echo 3;exit;}
+    }
+    public function index(){
+            $this->display("index");
 
+    }
 	/**
 	 *登陆
 	 */
@@ -380,6 +383,8 @@ class IndexController extends Controller {
             SESSION("team_id",0);
             SESSION("user_accout",0);
             SESSION("user_name",0);
+            SESSION("email",0);
+            SESSION("mobile",0);
             $this->success('成功退出','index');
     }
     /**

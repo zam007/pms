@@ -62,11 +62,13 @@
 							</select>
 							<p class="grey tip-grey">&nbsp;</p>
 						</div>
+                        <if condition="$team eq null">
 						<div>
 							<span class="item">团体：</span>
 							<input type="text" name=""  style="width:200px;border-bottom:1px solid #eaefee;"><input type="text" name="name" placeholder="请输入邀请码" class="invitation-code">
 							<p class="tip-spec">为了准确测试，请如实填写 <span class="tip-inline">请向管理员询问</span></p>
 						</div>
+						</if>
 						<div>
 							<span class="item">来源地：</span>
                                 <if condition="$user.work eq 1">
@@ -79,7 +81,7 @@
 										<option value="2">乡村</option>
 										<option value="1">城镇</option>
                                 	</select>
-                                <if>
+                                </if>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
 						<div>
@@ -92,14 +94,7 @@
 							<input type="text" id="qq" name="qq" value="{$user.qq}" placeholder="请输入QQ号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
-
-						<div>
-							<span class="item">teamid：</span>
-							<input type="text" id="qq" name="qq" value="{$Think.session.team_id}" placeholder="请输入QQ号" style="width:425px;">
-							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
-						</div>
-
-                        <if condition="$Think.session.team_id neq 0 and $Think.session.team_id neq null">
+                        <if condition="$team neq null">
 	                        <div>
 	                            <span class="item">团体名称：</span>
 								<input type="text" id="team_name" name="team_name" value="{$team.team_name}" placeholder="" style="width:425px;">

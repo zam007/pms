@@ -22,10 +22,14 @@ class IndexController extends Controller {
             $user['email'] = I("username");
             $value = '手机号';
             $info["email"] = I("username");
+            $account = I("username");
+            SESSION("email",$account);
         }else {
             $user['mobile'] = I("username");
             $value = '邮箱';
             $info["mobile"] = I("username");
+            $account = I("username");
+            SESSION("mobile",$account);
         }
         //验证用户登录名是否合法、是否填写了验证码
         $user['verify'] = I("verify");
@@ -80,7 +84,8 @@ class IndexController extends Controller {
             //如果用户没有补充个人信息，跳转到信息补充页面
             if($userInfo['status'] == 0){
                 $msg = array(
-                'callback' => U('User/completion')
+                'info' => 'ok',
+                'callback' => U('User/register_2')
                 );
             }
             if($userInfo['status'] == 9){

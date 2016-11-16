@@ -60,6 +60,15 @@ class IndexController extends Controller {
         }
         //判断密码是否正确
         if(md5(I("password").C("PWD_KEY")) === $userInfo["password"]){
+            //用户是否被禁用
+            if($userInfo['status'] == 9){
+                $msg = array(
+                    'info' => 'no',
+                    'error'=> '账户被禁用,请联系管理员接触禁用',
+                'callback' => U('Index/index')
+                );
+                $this->ajaxReturn($msg);
+            }
             $update["login_err"] = 0;
             //清空登录错误次数
             $index->modify($userInfo["user_id"],$update);
@@ -83,17 +92,19 @@ class IndexController extends Controller {
             );
             //如果用户没有补充个人信息，跳转到信息补充页面
             if($userInfo['status'] == 0){
+                //如果注册的是团队先跳转团队补全页面
+                if ($teamUser["team_id"]) {
+                    $msg = array(
+                    'info' => 'ok',
+                    'callback' => U('User/register_group')
+                    );
+                    $this->ajaxReturn($msg);
+                }
                 $msg = array(
                 'info' => 'ok',
                 'callback' => U('User/register_2')
                 );
-            }
-            if($userInfo['status'] == 9){
-                $msg = array(
-                    'info' => 'no',
-                    'error'=> '账户被禁用,请联系管理员接触禁用',
-                'callback' => U('Index/index')
-                );
+                $this->ajaxReturn($msg);
             }
             $this->ajaxReturn($msg);
         }else{

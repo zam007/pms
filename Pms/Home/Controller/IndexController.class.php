@@ -64,7 +64,7 @@ class IndexController extends Controller {
             if($userInfo['status'] == 9){
                 $msg = array(
                     'info' => 'no',
-                    'error'=> '账户被禁用,请联系管理员接触禁用',
+                    'error'=> '账户被禁用,请联系管理员',
                 'callback' => U('Index/index')
                 );
                 $this->ajaxReturn($msg);

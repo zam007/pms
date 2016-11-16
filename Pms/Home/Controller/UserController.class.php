@@ -123,7 +123,10 @@ class UserController extends BaseController {
         }
         $user["password"] = md5(I("password").C("PWD_KEY"));
         $index->modify($userId,$user);
-        $msg['info'] = 'ok';
+        $msg = array(
+        'info' => 'ok',
+        'callback' => U('Index/logout')
+        );
         $this->ajaxReturn($msg);
     }
 

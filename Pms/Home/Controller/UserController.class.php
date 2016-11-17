@@ -17,15 +17,15 @@ class UserController extends BaseController {
         $teamuserinfo = $teamuser->getteam($teamuserInfo);
         if ($teamuserinfo) {
             $teamId = $teamuserinfo['team_id'];
+            //将团体信息传到前端页面
+            $teamMode = D('team');
+            $team = $teamMode->getTeamField($teamId);
+            $this->assign('team',$team);
         }
         //将用户信息传到前端页面
         $userMode = D('user');
         $user = $userMode->getUserField($userId);
         $this->assign('user',$user);
-        //将团体信息传到前端页面
-        $teamMode = D('team');
-        $team = $teamMode->getTeamField($teamId);
-        $this->assign('team',$team);
         //页面跳转
         $this->display("personal_info");
     }
@@ -168,18 +168,18 @@ class UserController extends BaseController {
                 );
                 $this->ajaxReturn($msg);
             }
-        }
-        //对应插入数据到team_user
-        $teamuser = D('TeamUser');
-        $teamuserInfo['team_id'] = $teaminfo['team_id'];
-        $teamuserInfo['user_id'] = $userId;
-        $teamuserInfo['created'] = date('Y-m-d H:i:s',time());
-        if (!$teamuser->addteam($teamuserInfo)) {
-             $msg = array(
-            'statu' => 'no',
-            'info' => '加入团队失败,请重试！'
-            );
-            $this->ajaxReturn($msg);
+            //对应插入数据到team_user
+            $teamuser = D('TeamUser');
+            $teamuserInfo['team_id'] = $teaminfo['team_id'];
+            $teamuserInfo['user_id'] = $userId;
+            $teamuserInfo['created'] = date('Y-m-d H:i:s',time());
+            if (!$teamuser->addteam($teamuserInfo)) {
+                 $msg = array(
+                'statu' => 'no',
+                'info' => '加入团队失败,请重试！'
+                );
+                $this->ajaxReturn($msg);
+            }
         }
         //添加个人信息到数据库
         $user["company_id"] = I("team_invitecode");

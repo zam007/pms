@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/info.css">
-    <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -35,23 +34,25 @@
 							<!-- 存在判断 -->
                        		<if condition="$user.mobile eq null">
 								<span>
-									<input type="text" name="name" value="" class="ver-info" placeholder="请输入手机号码">
-									<a href="#" class="unbind">手机绑定</a>
+									<input type="text" name="bindMobile" value="bindMobile" class="ver-info" placeholder="请输入手机号码">
+									<p class="grey tip-grey">&nbsp;</p>
+									<a href="#" id="bindMobileMsg" class="unbind" >手机绑定</a>
 								</span>
 							<else/>
 								<span>
 									<span>{$user.mobile}</span>
 									<span class="pl20 pr20 grey"></span>
-									<a href="#" class="unbind">解除绑定</a>
+									<a href="#" id="unbindMobileMsg" class="unbind">解除绑定</a>
 								</span>
 							</if>
 						</div>
 						<div class="show">
 							<div class="ver-info-box">
 								<span class="item">短信验证：</span>
-								<input type="text" name="name" value="" class="ver-info" placeholder="请输入短信验证码">
+								<input type="text" id="bindMobileVerify" name="bindMobileVerify" value="" class="ver-info" placeholder="请输入短信验证码">
 							</div>
-							<p class="confirm-bind">确认绑定</p>
+<!-- 							<p class="confirm-bind">确认绑定</p> -->
+							<button onclick="bindMobileSubmit()" class="confirm-bind">确认绑定</button>
 						</div>
 						<!-- 手机号码绑定、解绑 -->
 						<!-- 邮箱绑定、解绑 -->
@@ -62,23 +63,24 @@
 								<span>
 <!-- 									<span class="pl20 pr20 grey"></span> -->
 									<span></span>
-									<input type="text" name="name" value="" class="ver-info" placeholder="请输入您的邮箱">
-									<a href="#" class="unbind">邮箱绑定</a>
+									<input type="text" id="bindEmail" name="bindEmail" value="" class="ver-info" placeholder="请输入您的邮箱">
+									<a href="#" id="bindEmailMsg" name="bindEmailMsg" class="unbind">邮箱绑定</a>
 								</span>
 							<else/>
 								<span>
 									<span>{$user.email}</span>
 									<span class="pl20 pr20 grey"></span>
-									<a href="#" class="unbind">解除绑定</a>
+									<a href="#" class="unbindEmailMsg">解除绑定</a>
 								</span>
 							</if>
 						</div>
 						<div class="show">
 							<div class="ver-info-box">
 								<span class="item">邮箱验证：</span>
-								<input type="text" name="name" value="" class="ver-info" placeholder="请输入邮件验证码">
+								<input type="text" id="bindEmailVerify" name="bindEmailVerify" value="" class="ver-info" placeholder="请输入邮件验证码">
 							</div>
-							<p class="confirm-bind">确认绑定</p>
+<!-- 							<p class="confirm-bind">确认绑定</p> -->
+							<button onclick="bindEmailSubmit()" class="confirm-bind">确认绑定</button>
 						</div>
 						<!-- 邮箱绑定、解绑 -->
 					</div>
@@ -88,33 +90,8 @@
 		<include file="Public:footer" />
 	</div>
 </body>
+<script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
-//获取验证码
-$('#send_msg').click(function(){
-        var url = "{:U('Index/sendMsg')}";
-        var reg_username=$("#mobile").val();
-        $.ajax({
-                type : "POST",
-                data : {username:reg_username},
-                url : url,
-                success:function(msg){
-                        if (msg.staut == 'ok' || msg.staut == 'no') {
-                                alert(msg.info)
-                        } else {
-//                                 alert(msg);return
-//                                 var d=eval('('+d+')');//json转成object
-                                if(msg.mobile){
-                                        $("#reg_name_err").text(msg.mobile);
-                                        $("#reg_name_err").show();
-                                $("#reg_username").focus();
-                                }else{
-                                        $("#reg_name_err").text(msg.email);
-                                        $("#reg_name_err").show();
-                                $("#reg_username").focus();
-                                }
-                        }
-                },
-        })
-})
+	
 </script>
 </html>

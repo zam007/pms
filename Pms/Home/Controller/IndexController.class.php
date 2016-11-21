@@ -9,8 +9,11 @@ class IndexController extends Controller {
     public function log(){
             $this->display("login");
 
-    }public function test(){echo 3;exit;}
+    }
+    public function index(){
+            $this->display("index");
 
+    }
 	/**
 	 *登陆
 	 */
@@ -19,10 +22,14 @@ class IndexController extends Controller {
             $user['email'] = I("username");
             $value = '手机号';
             $info["email"] = I("username");
+            $account = I("username");
+            SESSION("email",$account);
         }else {
             $user['mobile'] = I("username");
             $value = '邮箱';
             $info["mobile"] = I("username");
+            $account = I("username");
+            SESSION("mobile",$account);
         }
         //验证用户登录名是否合法、是否填写了验证码
         $user['verify'] = I("verify");
@@ -53,6 +60,15 @@ class IndexController extends Controller {
         }
         //判断密码是否正确
         if(md5(I("password").C("PWD_KEY")) === $userInfo["password"]){
+            //用户是否被禁用
+            if($userInfo['status'] == 9){
+                $msg = array(
+                    'info' => 'no',
+                    'error'=> '账户被禁用,请联系管理员',
+                'callback' => U('Index/index')
+                );
+                $this->ajaxReturn($msg);
+            }
             $update["login_err"] = 0;
             //清空登录错误次数
             $index->modify($userInfo["user_id"],$update);
@@ -76,16 +92,19 @@ class IndexController extends Controller {
             );
             //如果用户没有补充个人信息，跳转到信息补充页面
             if($userInfo['status'] == 0){
+                //如果注册的是团队先跳转团队补全页面
+                if ($teamUser["team_id"]) {
+                    $msg = array(
+                    'info' => 'ok',
+                    'callback' => U('User/register_group')
+                    );
+                    $this->ajaxReturn($msg);
+                }
                 $msg = array(
-                'callback' => U('User/completion')
+                'info' => 'ok',
+                'callback' => U('User/register_2')
                 );
-            }
-            if($userInfo['status'] == 9){
-                $msg = array(
-                    'info' => 'no',
-                    'error'=> '账户被禁用,请联系管理员接触禁用',
-                'callback' => U('Index/index')
-                );
+                $this->ajaxReturn($msg);
             }
             $this->ajaxReturn($msg);
         }else{
@@ -380,6 +399,8 @@ class IndexController extends Controller {
             SESSION("team_id",0);
             SESSION("user_accout",0);
             SESSION("user_name",0);
+            SESSION("email",0);
+            SESSION("mobile",0);
             $this->success('成功退出','index');
     }
     /**
@@ -467,12 +488,6 @@ class IndexController extends Controller {
             $accountinfo["mobile"]=I('session.mobile');
         }
         $password = md5(I("password").C("PWD_KEY"));
-
-        // 打印测试SQL
-        // $msg['info'] = 'ok';
-        // $msg['sqlinfo'] = $index->updatePwd($accountinfo,$password);
-        // $this->ajaxReturn($msg);
-
         if ($index->updatePwd($accountinfo,$password)) {
             $msg['info'] = 'ok';
             $this->ajaxReturn($msg);

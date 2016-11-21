@@ -53,20 +53,44 @@
 							<!-- value="{$user.birth} -->
 							<p class="grey tip-grey">为了准确测试，请如实填写</p>
 						</div>
+						<!-- ///////////职业////////// -->
 						<div>
 							<span class="item">职业：</span>
-							<select class="pl5 pr5" style="width:425px;" value="{$user.work_id}">
-								<option value="1">医生</option>
-								<option value="2">程序员</option>
-								<option value="3">教师</option>
-							</select>
-							<p class="grey tip-grey">&nbsp;</p>
+							<switch name="user.work_id">
+							    <case value="1">
+									<select id="work_id1" name="work_id1" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;" >
+										<option value="1" selected = "selected">医生</option>
+										<option value="2">程序员</option>
+										<option value="3">教师</option>
+									</select>
+							    </case>
+							    <case value="2">
+							    	<select id="work_id2" name="work_id2" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;" >
+										<option value="1">医生</option>
+										<option value="2" selected = "selected">程序员</option>
+										<option value="3">教师</option>
+									</select>
+							    </case>
+							    <case value="3">
+							    	<select id="work_id3" name="work_id3" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;" >
+										<option value="1">医生</option>
+										<option value="2">程序员</option>
+										<option value="3" selected = "selected">教师</option>
+									</select>
+							    </case>
+							    <default />--
+							</switch>
+							<p class="grey tip-grey">个人职业信息</p>
 						</div>
+						<!-- ///////////职业////////// -->
+                        <if condition="$team eq null">
 						<div>
 							<span class="item">团体：</span>
 							<input type="text" name=""  style="width:200px;border-bottom:1px solid #eaefee;"><input type="text" name="name" placeholder="请输入邀请码" class="invitation-code">
 							<p class="tip-spec">为了准确测试，请如实填写 <span class="tip-inline">请向管理员询问</span></p>
 						</div>
+						</if>
+						<!-- ///////////来源地////////// -->
 						<div>
 							<span class="item">来源地：</span>
                                 <if condition="$user.work eq 1">
@@ -79,9 +103,10 @@
 										<option value="2">乡村</option>
 										<option value="1">城镇</option>
                                 	</select>
-                                <if>
+                                </if>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
+						<!-- ///////////来源地////////// -->
 						<div>
 							<span class="item">微信号：</span>
 							<input type="text" id="weixin" name="weixin" value="{$user.weixin}" placeholder="请输入微信号" style="width:425px;">
@@ -92,32 +117,98 @@
 							<input type="text" id="qq" name="qq" value="{$user.qq}" placeholder="请输入QQ号" style="width:425px;">
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
-
-						<div>
-							<span class="item">teamid：</span>
-							<input type="text" id="qq" name="qq" value="{$Think.session.team_id}" placeholder="请输入QQ号" style="width:425px;">
-							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
-						</div>
-
-                        <if condition="$Think.session.team_id neq 0 and $Think.session.team_id neq null">
+                        <if condition="$team neq null">
 	                        <div>
 	                            <span class="item">团体名称：</span>
 								<input type="text" id="team_name" name="team_name" value="{$team.team_name}" placeholder="" style="width:425px;">
 								<p class="grey tip-grey">公司名，组织名</p>
 	                        </div>
+	                        <!-- ///////////团体性质////////// -->
 	                        <div>
-	                            <span class="item">公司性质：</span>
-								<input type="text" id="team_nature" name="team_nature" value="{$team.nature}" placeholder="" style="width:425px;">
-								<p class="grey tip-grey">公司的性质</p>
+		                        <span class="item">团体性质：</span>
+									<switch name="team.nature" >
+									<case value="0">--</case>
+										<select id="team_nature0" name="team_nature0" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+											<option value="0" selected = "selected">--</option>
+											<option value="1">公司</option>
+											<option value="2">学校</option>
+											<option value="3">社团</option>
+										</select>
+									<case value="1">
+										<select id="team_nature1" name="team_nature1" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+											<option value="0">--</option>
+											<option value="1" selected = "selected">公司</option>
+											<option value="2">学校</option>
+											<option value="3">社团</option>
+										</select>
+									</case>
+									<case value="2">
+										<select id="team_nature2" name="team_nature2" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+											<option value="0">--</option>
+											<option value="1">公司</option>
+											<option value="2" selected = "selected">学校</option>
+											<option value="3">社团</option>
+										</select>
+									</case>
+									<case value="3">
+										<select id="team_nature3" name="team_nature3" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+											<option value="0">--</option>
+											<option value="1">公司</option>
+											<option value="2">学校</option>
+											<option value="3" selected = "selected">社团</option>
+										</select>
+									</case>
+									<default />--
+									</switch>
+									<p class="grey tip-grey">所在行业行政</p>
 	                        </div>
+	                        <!-- ///////////团体性质////////// -->
+	                        <!-- ///////////行业属性：////////// -->
 	                        <div>
 	                            <span class="item">行业属性：</span>
-								<input type="text" id="team_attribute" name="team_attribute" value="{$team.attribute}" placeholder="" style="width:425px;">
-								<p class="grey tip-grey">行业的属性</p>
+	                            <switch name="team.attribute">
+	                            <case value="0">
+									<select id="team_attribute0" name="team_attribute0" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+										<option value="0" selected = "selected">--</option>
+										<option value="1">金融</option>
+										<option value="2">IT</option>
+										<option value="3">建筑</option>
+									</select>
+	                            </case>
+	                            <case value="1">
+									<select id="team_attribute1" name="team_attribute1" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+										<option value="0" >--</option>
+										<option value="1" selected = "selected">金融</option>
+										<option value="2">IT</option>
+										<option value="3">建筑</option>
+									</select>
+	                            </case>
+	                            <case value="2">
+									<select id="team_attribute2" name="team_attribute2" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+										<option value="0" >--</option>
+										<option value="1" >金融</option>
+										<option value="2" selected = "selected">IT</option>
+										<option value="3">建筑</option>
+									</select>
+	                            </case>
+	                            <case value="3">
+									<select id="team_attribute3" name="team_attribute3" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
+										<option value="0" >--</option>
+										<option value="1" >金融</option>
+										<option value="2" >IT</option>
+										<option value="3" selected = "selected">建筑</option>
+									</select>
+	                            </case>
+	                            <default />--
+	                            </switch>
+	                            <p class="grey tip-grey">所在行业属性</p>
 	                        </div>
+	                        <!-- ///////////行业属性：////////// -->
+	                        <!-- ///////////行业属性测试：////////// -->
+	                        <!-- ///////////行业属性测试：////////// -->
 	                        <div>
 	                            <span class="item">团体邀请码：</span>
-								<input type="text" name="team_code" name="team_code" value="{$team.code}" placeholder="" style="width:425px;">
+								<input readonly="readonly" type="text" name="team_code" name="team_code" value="{$team.code}" placeholder="" style="width:425px;">
 								<p class="grey tip-grey">可以分享给团队，加入</p>
 	                        </div>
                         </if>

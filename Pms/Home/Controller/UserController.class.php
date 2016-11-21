@@ -11,15 +11,21 @@ class UserController extends BaseController {
      */
     public function personal_info(){
         $userId = $this->userId;
-        $teamId = I('session.team_id');
+        //判断是否在团队，如果在，获取teamId
+        $teamuser = D('TeamUser');
+        $teamuserInfo['user_id'] = $userId;
+        $teamuserinfo = $teamuser->getteam($teamuserInfo);
+        if ($teamuserinfo) {
+            $teamId = $teamuserinfo['team_id'];
+            //将团体信息传到前端页面
+            $teamMode = D('team');
+            $team = $teamMode->getTeamField($teamId);
+            $this->assign('team',$team);
+        }
         //将用户信息传到前端页面
         $userMode = D('user');
         $user = $userMode->getUserField($userId);
         $this->assign('user',$user);
-        //将团体信息传到前端页面
-        $teamMode = D('team');
-        $team = $teamMode->getTeamField($teamId);
-        $this->assign('team',$team);
         //页面跳转
         $this->display("personal_info");
     }
@@ -117,7 +123,10 @@ class UserController extends BaseController {
         }
         $user["password"] = md5(I("password").C("PWD_KEY"));
         $index->modify($userId,$user);
-        $msg['info'] = 'ok';
+        $msg = array(
+        'info' => 'ok',
+        'callback' => U('Index/logout')
+        );
         $this->ajaxReturn($msg);
     }
 
@@ -135,7 +144,6 @@ class UserController extends BaseController {
         $user["qq"] = I("qq");
         $user["status"] = 1;
         $user["update_time"] = date('Y-m-d H:i:s',time());
-
         //资料完善合法验证
         $index = D("user");
         $rules = array(
@@ -151,7 +159,7 @@ class UserController extends BaseController {
         //如果存在团队邀请码，验证邀请码是否存在
         if (I("team_invitecode")) {
             $team = D('Team');
-            $teamInfo['code'] = "code";
+            $teamInfo['code'] = I("team_invitecode");
             $teaminfo = $team->getTeam($teamInfo);
             if (!$teaminfo) {
                  $msg = array(
@@ -160,9 +168,21 @@ class UserController extends BaseController {
                 );
                 $this->ajaxReturn($msg);
             }
-            $user["code"] = I("team_invitecode");
+            //对应插入数据到team_user
+            $teamuser = D('TeamUser');
+            $teamuserInfo['team_id'] = $teaminfo['team_id'];
+            $teamuserInfo['user_id'] = $userId;
+            $teamuserInfo['created'] = date('Y-m-d H:i:s',time());
+            if (!$teamuser->addteam($teamuserInfo)) {
+                 $msg = array(
+                'statu' => 'no',
+                'info' => '加入团队失败,请重试！'
+                );
+                $this->ajaxReturn($msg);
+            }
         }
         //添加个人信息到数据库
+        $user["company_id"] = I("team_invitecode");
         if (!$index->modify($userId,$user)) {
              $msg = array(
             'statu' => 'no',
@@ -245,8 +265,15 @@ class UserController extends BaseController {
         //ajax正确返回
          $msg = array(
         'statu' => 'ok',
-        'callback' => U('User/personal_info')
+        'callback' => U('Index/index')
         );
         $this->ajaxReturn($msg);
+    }
+    /**
+    * 账号绑定
+    * 发送短信验证码
+    */
+    public function sendMobileMsg(){
+        
     }
 }

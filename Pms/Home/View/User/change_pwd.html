@@ -95,8 +95,9 @@
                 success:function(msg){
                     if (msg.info == 'ok') {
                         //密码设置成功
-                        // window.location.href = msg.callback;
-                        alert("密码修改成功！");
+                        if(confirm("密码修改成功,点击确定后用新密码重新登陆")){
+                             window.location.href = msg.callback;
+                        }
                      }
                     else {
                         for (err_info in msg){

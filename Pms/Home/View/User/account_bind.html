@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/info.css">
-    <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -29,34 +28,58 @@
 						<p class="fz20">绑定账号</p>
 					</div>
 					<div class="content-main-form-info">
+						<!-- 手机号码绑定、解绑 -->
 						<div>
 							<span class="item bind-phone">手机号：</span>
-							<span><span>{$user.mobile}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
+							<!-- 存在判断 -->
+                       		<if condition="$user.mobile eq null">
+								<span>
+									<input type="text" id="bindMobile" name="bindMobile" class="ver-info" placeholder="请输入手机号码">
+									<a href="#" id="sendMobileMsg" class="unbind" >手机绑定</a>
+								</span>
+							<else/>
+								<span>
+									<span id="mobile" name="mobile" value="{$user.mobile}">{$user.mobile}</span>
+									<span class="pl20 pr20 grey"></span>
+									<a href="#" id="unbindMobile" class="unbind">解除绑定</a>
+								</span>
+							</if>
 						</div>
 						<div class="show">
-							<div class="ver-info-box" style="display: none;">
-								<span class="item">手机号：</span>
-								<input type="text" name="mobile" value="" class="ver-info" placeholder="请输入手机号">
-								<a href="#" class="send-ver-code" id="send_msg">发送验证码</a>
-							</div>
-                                                    <p style="display:none" id="reg__verify_err" class="error-tip"></p>
 							<div class="ver-info-box">
-								<span class="item"></span>
-								<input type="text" name="name" value="" class="ver-info" placeholder="请输入短信验证码">
+								<span class="item">短信验证：</span>
+								<input type="text" id="bindMobileVerify" name="bindMobileVerify" value="" class="ver-info" placeholder="请输入短信验证码">
 							</div>
-							<p class="confirm-bind">确认绑定</p>
+							<button onclick="bindMobileSubmit()" class="confirm-bind">确认绑定</button>
 						</div>
+						<!-- 手机号码绑定、解绑 -->
+						<!-- 邮箱绑定、解绑 -->
 						<div>
 							<span class="item bind-email">邮箱：</span>
-							<span><span>{$user.email}</span><span class="pl20 pr20 grey">已绑定</span><a href="#" class="unbind">解除绑定</a></span>
+							<!-- 存在判断 -->
+                       		<if condition="$user.email eq null">
+								<span>
+<!-- 									<span class="pl20 pr20 grey"></span> -->
+									<span></span>
+									<input type="text" id="bindEmail" name="bindEmail" value="" class="ver-info" placeholder="请输入您的邮箱">
+									<a href="#" id="bindEmailMsg" class="unbind">邮箱绑定</a>
+								</span>
+							<else/>
+								<span>
+									<span id="email" name="email" value="{$user.email}" >{$user.email}</span>
+									<span class="pl20 pr20 grey"></span>
+									<a href="#" id="unbindEmail" class="unbind">解除绑定</a>
+								</span>
+							</if>
 						</div>
 						<div class="show">
 							<div class="ver-info-box">
-								<span class="item">邮箱：</span>
-								<input type="text" name="name" value="" class="ver-info" placeholder="请输入邮箱">
+								<span class="item">邮箱验证：</span>
+								<input type="text" id="bindEmailVerify" name="bindEmailVerify" value="" class="ver-info" placeholder="请输入邮件验证码">
 							</div>
-							<p class="confirm-bind">确认绑定</p>
+							<button onclick="bindEmailSubmit()" class="confirm-bind">确认绑定</button>
 						</div>
+						<!-- 邮箱绑定、解绑 -->
 					</div>
 				</div>
 			</div>
@@ -64,33 +87,53 @@
 		<include file="Public:footer" />
 	</div>
 </body>
+<script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
-//获取验证码
-$('#send_msg').click(function(){
-        var url = "{:U('Index/sendMsg')}";
-        var reg_username=$("#mobile").val();
-        $.ajax({
-                type : "POST",
-                data : {username:reg_username},
-                url : url,
-                success:function(msg){
-                        if (msg.staut == 'ok' || msg.staut == 'no') {
-                                alert(msg.info)
-                        } else {
-//                                 alert(msg);return
-//                                 var d=eval('('+d+')');//json转成object
-                                if(msg.mobile){
-                                        $("#reg_name_err").text(msg.mobile);
-                                        $("#reg_name_err").show();
-                                $("#reg_username").focus();
-                                }else{
-                                        $("#reg_name_err").text(msg.email);
-                                        $("#reg_name_err").show();
-                                $("#reg_username").focus();
-                                }
-                        }
-                },
-        })
-})
+	//手机解绑
+	$('#unbindMobile').click(function(){
+		email = $("#email").html();
+		mobile = $("#mobile").html();
+		if (!email) {
+			alert("至少要绑定一个手机 或 邮箱账户！");
+		}
+		alert("xxxx");
+	})
+	//获取验短信证码
+	$('#sendMobileMsg').click(function(){
+		var url = "{:U('User/sendMobileMsg')}";
+		var bindMobile=$("#bindMobile").val();
+        if (username == ""){
+            $("#username").next().text("请输入手机/邮箱号").css({'color':'red'}).show();
+            $("#username").focus();
+            return false;
+        }else{
+            $("#username").next().hide();
+        }
+        if (findpwd_verify == ""){
+            $("#findpwd_verify_err").text("请输入图中的验证码").css({'color':'red'}).show();
+            $("#findpwd_verify").focus();
+            return false;
+        }else{
+            $("#findpwd_verify_err").hide();
+        }
+		$.ajax({
+			type : "POST",
+			data : {username:username,verify:findpwd_verify},
+			url : url,
+			success:function(msg){
+				if (msg.staut == 'ok' || msg.staut == 'no') {
+					alert(msg.info);
+				} else {
+					if(msg.mobile){
+			            $("#username").next().text(msg.mobile).css({'color':'red'}).show();
+			            $("#username").focus();
+					}else{
+			            $("#username").next().text(msg.email).css({'color':'red'}).show();
+			            $("#username").focus();
+					}
+				}
+			},
+		})
+	})
 </script>
 </html>

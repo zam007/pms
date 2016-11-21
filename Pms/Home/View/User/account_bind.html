@@ -39,9 +39,9 @@
 								</span>
 							<else/>
 								<span>
-									<span>{$user.mobile}</span>
+									<span id="mobile" name="mobile" value="{$user.mobile}">{$user.mobile}</span>
 									<span class="pl20 pr20 grey"></span>
-									<a href="#" id="sendMobileMsg" class="unbind">解除绑定</a>
+									<a href="#" id="unbindMobile" class="unbind">解除绑定</a>
 								</span>
 							</if>
 						</div>
@@ -66,9 +66,9 @@
 								</span>
 							<else/>
 								<span>
-									<span>{$user.email}</span>
+									<span id="email" name="email" value="{$user.email}" >{$user.email}</span>
 									<span class="pl20 pr20 grey"></span>
-									<a href="#" id="unbindEmailMsg" class="unbind">解除绑定</a>
+									<a href="#" id="unbindEmail" class="unbind">解除绑定</a>
 								</span>
 							</if>
 						</div>
@@ -89,6 +89,15 @@
 </body>
 <script type="text/javascript" language="javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
+	//手机解绑
+	$('#unbindMobile').click(function(){
+		email = $("#email").html();
+		mobile = $("#mobile").html();
+		if (!email) {
+			alert("至少要绑定一个手机 或 邮箱账户！");
+		}
+		alert("xxxx");
+	})
 	//获取验短信证码
 	$('#sendMobileMsg').click(function(){
 		var url = "{:U('User/sendMobileMsg')}";

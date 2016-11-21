@@ -269,4 +269,11 @@ class UserController extends BaseController {
         );
         $this->ajaxReturn($msg);
     }
+    /**
+    * 账号绑定
+    * 发送短信验证码
+    */
+    public function sendMobileMsg(){
+        
+    }
 }

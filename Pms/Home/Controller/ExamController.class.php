@@ -89,7 +89,7 @@ class ExamController extends BaseController {
      * 5、剔除已回答问题
      * 6、返回问题
      */
-    public function answer1Question(){
+    public function answerQuestion(){
         $userId = $this->userId;
         $answerSheetMode = D('answerSheet');
         $answerSheetId = I('session.sheet_id',0);
@@ -195,7 +195,7 @@ class ExamController extends BaseController {
      * 5、剔除已回答问题
      * 6、返回问题
      */
-    public function answerQuestion(){
+    public function answer1Question(){
     	$userId = $this->userId;
         
     	$answerSheetMode = D('answerSheet');
@@ -308,7 +308,7 @@ class ExamController extends BaseController {
      * 2、根据提交答案计算得分
      * 3、保存数据
      */
-    public function answers(){
+    public function answers1(){
     	$userId = $this->userId;
     	$question_id = I('session.question_id',0);
     	$answerSheetId = I('session.answer_sheet_id',0);
@@ -485,6 +485,191 @@ class ExamController extends BaseController {
     	$this->answerQuestion();
     	die();
     }
+
+    /**
+     * 答题
+     * 
+     * 1、从session获取问题id
+     * 2、根据提交答案计算得分
+     * 3、保存数据
+     */
+    public function answers(){
+        $userId = $this->userId;
+        $question_id = I('session.question_id',0);
+        $answerSheetId = I('session.answer_sheet_id',0);
+        $classifySheetId = I('session.classify_sheet_id',0);
+        (int)$answerId = I('selected',0);
+        
+        $now = C('NOW');
+        $date = date('Y-m-d H:i:s',$now);
+        
+        if($question_id == 0){
+            return "没有答题1";
+        }
+        $userModel = D("User");
+        $user = $userModel->getUserField($userId,'birth,answer');
+        if($user['answer'] != 1){
+            echo '没有答题';
+            die();
+        }
+        $questionMode = D('Question');
+        $answerMode = D('Answer');
+        $classifySheetMode = D('ClassifySheet');
+        $answerSheetMode = D('AnswerSheet');
+        $levelMode = D('Level');
+        
+        //获取问题
+        $where['question_id'] = $question_id;
+        $question = $questionMode->getQuestionOne($where,'question_id,level_id,play_time,difficulty');
+        
+        //获取试卷
+        
+        $answerInfo['answer_sheet_id'] = $answerSheetId;
+        $answerSheet = $answerSheetMode->getAnswerSheet($answerInfo);
+        
+        if($answerId == 0){
+            $t = C('NOW');
+            $answerTime = C('ANSWER_TIME');
+            $time =  $answerTime + strtotime($answerSheet['last_time']) + $question['play_time'] - $t;
+            //如果用户未填写答案且答题时间超过10s，择让用户继续作答
+            if($time >= 10){
+                $this->answerGo($time);
+            }
+        }
+        
+        //获取答案
+        
+        $where = array('answer_id' => $answerId);
+        $answer = $answerMode->getAnswer($where,'answer_id,score,inclination_id');
+        $answer = $answer[0];
+        
+        //获取分类试卷
+        
+        $info['classify_sheet_id'] = $classifySheetId;
+        $classifySheet = $classifySheetMode->getClassifySheet($info);
+        $correct = $classifySheet['correct'];
+        
+        // //获取答卷
+        // $sheetMode = D('Sheet');
+        // $info['sheet_id'] = $sheetId;
+        // $sheet = $sheetMode->getSheet($info);
+        
+        //计算得分
+        
+        $leaveInfo['level_id'] = $question['level_id'];
+        $leaveQuestion = $levelMode->getLevel($leaveInfo,'sort');
+        $answerScore = (int)$answer['score'];
+        
+        $leaveInfo['level_id'] = $answerSheet['level_id'];
+        $leaveBase = $levelMode->getLevel($leaveInfo,'sort');
+        
+        //得分计算公式-未完成
+        if($leaveQuestion){
+            $score = (($leaveQuestion['sort']-1)*5+$question['difficulty']) - (($leaveBase['sort']-1)*5);
+            $score1 = $answerScore*$score/3;
+        }else{
+            $score = 0;
+            $score1 = 0;
+        }
+        
+        //答题难度曲线
+        if($answerScore>3){
+            if($correct<=0){
+                $correct = 1;
+            }else{
+                $correct ++;
+            }
+        }else if($answerScore<3){
+            if($correct>=0){
+                $correct = -1;
+            }else{
+                $correct --;
+            }
+        }else{
+            $correct = 0;
+        }
+        //用户答题难度改变
+        $levelId = $classifySheet['level_id'];
+        if($correct>=2){
+            $difficulty = $classifySheet['difficulty']+1;
+            if($difficulty>=6){
+                $sort = $leaveQuestion['sort']+1;
+                $level = $levelMode->getLevel(array('sort'=>$sort));
+                if(empty($level)){
+                    $difficulty = 1;
+                    $levelId = $level['level_id'];
+                }else{
+                    $difficulty = 5;
+                }
+            }
+        }else if($correct<=-2){
+            $difficulty = $classifySheet['difficulty']-1;
+            if($difficulty<=1){
+                $sort = $leaveQuestion['sort']-1;
+                $level = $levelMode->getLevel(array('sort'=>$sort));
+                if(empty($level)){
+                    $difficulty = 5;
+                    $levelId = $level['level_id'];
+                }else{
+                    $difficulty = 1;
+                }
+            }
+        }else{
+            $difficulty = $classifySheet['difficulty'];
+        }
+        //修改答卷
+        $update = array(
+            'question_id' => $question_id,
+            'answer_id' => $answerId,
+            'score' => $score1,
+            'inclination_id' => $answerId,
+            'updatetime' => $date,
+        );
+        $sheetMode->saveSheet($sheetId,$update);
+        //修改分类答卷
+        $update = array(
+            'correct' => $correct,
+            'level_id' => $levelId,
+            'difficulty' => $difficulty,
+            'updated' => $date,
+        );
+        if($classifySheetMode->modify($classifySheetId,$update)){
+            //修改答卷
+            $answerTime = $answerSheet['answer_time'];
+            $time = $now - strtotime($answerSheet['last_time']);
+            if($time > 90){
+                    $time = 90;
+            }else if($time < 0){
+                    $time = 0;
+            }
+            $res['last_time'] = $date;
+            $res['answer_time'] = $answerTime+$time;
+            $answerSheetMode->modify($answerSheetId,$res);
+        }
+        
+        $where = array(
+            'answer_sheet_id' => array('eq',$answerSheet['answer_sheet_id'])
+        );
+        $answerNum = $classifySheetMode->sum($where,'answers');
+        $count = $classifySheetMode->count($where);
+        //用户是否答完所有题目，如答完则计算总分，并保存到答卷
+        
+        if($answerSheet['answers'] * $count == $answerNum['answers']){
+            $score2 = $classifySheetMode->count($where,'score');
+            $info = array(
+                'status'=>2,
+                'score'=>$score2
+            );
+            $answerSheetMode->modify($answerSheetId,$info);
+            $userModel->modify($userId,array('answer'=>0));
+//          $this->report($answerSheetId);
+                $this->success('操作完成','report_htm?answer_sheet_id='.$answerSheetId);
+            die();
+        }
+        $this->answerQuestion();
+        die();
+    }
+
     /**
      * 查询答题报告
      */

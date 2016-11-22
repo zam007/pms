@@ -182,5 +182,35 @@
 			},
 		})
 	}
+	//邮箱绑定
+	function bindEmailSubmit(){
+		var url = "{:U('User/bindEmail')}";
+		var bindEmail=$("#bindEmail").val();
+		var bindEmailVerify=$("#bindEmailVerify").val();
+        if (bindEmail == ""){
+        	alert("请输入您要绑定的邮箱");
+            return false;
+        }
+        if (bindEmailVerify == ""){
+        	alert("请输入您收到的邮箱验证码");
+            return false;
+        }
+		$.ajax({
+			type : "POST",
+			data : {bindEmail:bindEmail,bindEmailVerify:bindEmailVerify},
+			url : url,
+			success:function(msg){
+				if (msg.staut == 'ok') {
+					if (confirm("邮箱绑定成功，可以通过新的邮箱登陆")) {
+						window.location.href = msg.callback;
+					}
+				} else if (msg.staut == 'no') {
+					alert(msg.info);
+				} else {
+					alert(msg.mobile);
+				}
+			},
+		})
+	}
 </script>
 </html>

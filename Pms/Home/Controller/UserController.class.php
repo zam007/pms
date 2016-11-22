@@ -381,42 +381,43 @@ class UserController extends BaseController {
         }
     }
 
-    /**
+     /**
     * 账号绑定
-    * 手机号码解绑
+    * 邮箱绑定
     */
-    public function unBindMobile(){
+    public function bindEmail(){
         $user = D("user");
-        $unbindUser['mobile'] = Null;
-        $bindMobileVerify = I("bindMobileVerify");
+        $bindUser['email'] = I("bindEmail");
+        $bindEmailVerify = I("bindEmailVerify");
         //短信验证码验证
-        if (!verifyCode(I("bindMobile"),$bindMobileVerify)) {
+        if (!verifyCode(I("bindEmail"),$bindEmailVerify)) {
            $msg = array(
             'staut' => 'no',
             'info' => '验证码错误，请输入正确的验证码');
             $this->ajaxReturn($msg);
         }
-        //手机号格式验证
+        //邮箱格式验证
         $rules = array(
-             array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+            array('email', 'email', '邮箱格式不正确'),
         );
         if (!$user->validate($rules)->create($bindUser)){
             $this->ajaxReturn($user->getError());
         }
-        //手机号码唯一验证
+        //邮箱唯一验证
         if ($user->getUser($bindUser)) {
             $this->ajaxReturn(array('staut' => 'no',
-                                    'info'=> '该手机号码已经被绑定，请输入其他的号码'));
+                                    'info'=> '该邮箱已经被绑定，请输入其他的邮箱'));
         }
         //添加数据到数据库
         $userId = $this->userId;
         if ($user->modify($userId,$bindUser)) {
            $msg = array(
             'staut' => 'ok',
-            'info' => '手机号码绑定成功',
+            'info' => '邮箱绑定成功',
             'callback' => U('User/personal_info')
             );
             $this->ajaxReturn($msg);
         }
     }
+
 }

@@ -10,27 +10,24 @@ class IndexController extends Controller {
         $memberName = I("memberName");
         $pwd = I("pwd");
         $code = I("code");
-        
+        header("Content-type:text/html;charset=utf-8");
         if(empty($code) ){
             echo "验证码不能为空";exit;
         }
         
-        if(!check_verify($code)){
-               echo "验证码错误";
-            }else{
-                echo "验证码正确"; 
-            }
-        $member = D("member");
+        // if(!check_verify($code)){
+        //    echo "验证码错误";exit;
+        // }
+        $member = D("Member");
         $info["member_name"] = $memberName;
-        $info["pwd"] = md5(PWD_KEY.$pwd);
+        $info["password"] = md5(PWD_KEY.$pwd);
         $info["flag"] = 1;
         $memberInfo = $member->getMember($info);
-        
-        if(empty($memberInfo)){
-            echo "用户名货密码错误";exit;
-        }else{
+        if($memberInfo){
             SESSION("member_id",$memberInfo["member_id"]);
             $this->display("User/userList");
+        }else{
+            echo "用户名或密码错误";exit;
         }
     }
     

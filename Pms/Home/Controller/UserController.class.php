@@ -269,11 +269,155 @@ class UserController extends BaseController {
         );
         $this->ajaxReturn($msg);
     }
+
     /**
     * 账号绑定
     * 发送短信验证码
     */
     public function sendMobileMsg(){
-        
+        $user = D("user");
+        //手机号格式验证
+        $rules = array(
+             array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+        );
+        $bindUser['mobile'] = I("bindMobile");
+        if (!$user->validate($rules)->create($bindUser)){
+            $this->ajaxReturn($user->getError());
+        }
+        //手机号码唯一验证
+        if ($user->getUser($bindUser)) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'error'=> '该手机号码已经被绑定，请输入其他的号码'));
+        }
+        //发送短信验证码
+        $bindMobile = I("bindMobile");
+        if(mobileCode($bindMobile)){
+            $msg = array(
+            'staut' => 'ok',
+            'info' => '短信发送成功，请注意查看手机短信'
+            );
+            $this->ajaxReturn($msg);
+        }else{
+            $msg = array(
+            'staut' => 'no',
+            'info' => '短信发送失败，请稍后重试'
+            );
+            $this->ajaxReturn($msg);
+        }
     }
+
+    /**
+    * 账号绑定
+    * 发送邮箱验证码
+    */
+    public function sendEmailMsg(){
+        $user = D("user");
+        //邮箱号格式验证
+        $rules = array(
+            array('email', 'email', '邮箱格式不正确'),
+        );
+        $bindUser['email'] = I("bindEmail");
+        if (!$user->validate($rules)->create($bindUser)){
+            $this->ajaxReturn($user->getError());
+        }
+        //邮箱号码唯一验证
+        if ($user->getUser($bindUser)) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'error'=> '该邮箱已经被绑定，请输入其他的邮箱'));
+        }
+        //发送短信验证码
+        $bindEmail = I("bindEmail");
+        if(mailCode($bindEmail)){
+            $msg = array(
+            'staut' => 'ok',
+            'info' => '验证码发送成功，请注意查看邮件'
+            );
+            $this->ajaxReturn($msg);
+        }else{
+            $msg = array(
+            'staut' => 'no',
+            'info' => '邮件发送失败，请稍后重试'
+            );
+            $this->ajaxReturn($msg);
+        }
+    }
+
+    /**
+    * 账号绑定
+    * 手机号码绑定
+    */
+    public function bindMobile(){
+        $user = D("user");
+        $bindUser['mobile'] = I("bindMobile");
+        $bindMobileVerify = I("bindMobileVerify");
+        //短信验证码验证
+        if (!verifyCode(I("bindMobile"),$bindMobileVerify)) {
+           $msg = array(
+            'staut' => 'no',
+            'info' => '验证码错误，请输入正确的验证码');
+            $this->ajaxReturn($msg);
+        }
+        //手机号格式验证
+        $rules = array(
+             array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+        );
+        if (!$user->validate($rules)->create($bindUser)){
+            $this->ajaxReturn($user->getError());
+        }
+        //手机号码唯一验证
+        if ($user->getUser($bindUser)) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'info'=> '该手机号码已经被绑定，请输入其他的号码'));
+        }
+        //添加数据到数据库
+        $userId = $this->userId;
+        if ($user->modify($userId,$bindUser)) {
+           $msg = array(
+            'staut' => 'ok',
+            'info' => '手机号码绑定成功',
+            'callback' => U('User/personal_info')
+            );
+            $this->ajaxReturn($msg);
+        }
+    }
+
+     /**
+    * 账号绑定
+    * 邮箱绑定
+    */
+    public function bindEmail(){
+        $user = D("user");
+        $bindUser['email'] = I("bindEmail");
+        $bindEmailVerify = I("bindEmailVerify");
+        //短信验证码验证
+        if (!verifyCode(I("bindEmail"),$bindEmailVerify)) {
+           $msg = array(
+            'staut' => 'no',
+            'info' => '验证码错误，请输入正确的验证码');
+            $this->ajaxReturn($msg);
+        }
+        //邮箱格式验证
+        $rules = array(
+            array('email', 'email', '邮箱格式不正确'),
+        );
+        if (!$user->validate($rules)->create($bindUser)){
+            $this->ajaxReturn($user->getError());
+        }
+        //邮箱唯一验证
+        if ($user->getUser($bindUser)) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'info'=> '该邮箱已经被绑定，请输入其他的邮箱'));
+        }
+        //添加数据到数据库
+        $userId = $this->userId;
+        if ($user->modify($userId,$bindUser)) {
+           $msg = array(
+            'staut' => 'ok',
+            'info' => '邮箱绑定成功',
+            'callback' => U('User/personal_info')
+            );
+            $this->ajaxReturn($msg);
+        }
+    }
+
 }

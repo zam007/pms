@@ -35,7 +35,8 @@
                        		<if condition="$user.mobile eq null">
 								<span>
 									<input type="text" id="bindMobile" name="bindMobile" class="ver-info" placeholder="请输入手机号码">
-									<a href="#" id="sendMobileMsg" class="unbind" >手机绑定</a>
+									<a href="#" id="sendMobileMsg" class="unbind" >发送手机短信</a>
+<!-- 									<p class="grey tip-grey">&nbsp;</p> -->
 								</span>
 							<else/>
 								<span>
@@ -48,7 +49,7 @@
 						<div class="show">
 							<div class="ver-info-box">
 								<span class="item">短信验证：</span>
-								<input type="text" id="bindMobileVerify" name="bindMobileVerify" value="" class="ver-info" placeholder="请输入短信验证码">
+								<input type="text" id="bindMobileVerify" name="bindMobileVerify" class="ver-info" placeholder="请输入短信验证码">
 							</div>
 							<button onclick="bindMobileSubmit()" class="confirm-bind">确认绑定</button>
 						</div>
@@ -61,8 +62,8 @@
 								<span>
 <!-- 									<span class="pl20 pr20 grey"></span> -->
 									<span></span>
-									<input type="text" id="bindEmail" name="bindEmail" value="" class="ver-info" placeholder="请输入您的邮箱">
-									<a href="#" id="bindEmailMsg" class="unbind">邮箱绑定</a>
+									<input type="text" id="bindEmail" name="bindEmail" class="ver-info" placeholder="请输入您的邮箱">
+									<a href="#" id="sendEmailMsg" class="unbind">邮箱绑定</a>
 								</span>
 							<else/>
 								<span>
@@ -75,7 +76,7 @@
 						<div class="show">
 							<div class="ver-info-box">
 								<span class="item">邮箱验证：</span>
-								<input type="text" id="bindEmailVerify" name="bindEmailVerify" value="" class="ver-info" placeholder="请输入邮件验证码">
+								<input type="text" id="bindEmailVerify" name="bindEmailVerify" class="ver-info" placeholder="请输入邮件验证码">
 							</div>
 							<button onclick="bindEmailSubmit()" class="confirm-bind">确认绑定</button>
 						</div>
@@ -91,49 +92,95 @@
 <script type="text/javascript">
 	//手机解绑
 	$('#unbindMobile').click(function(){
-		email = $("#email").html();
-		mobile = $("#mobile").html();
+		var email = $("#email").html();
+		var mobile = $("#mobile").html();
 		if (!email) {
-			alert("至少要绑定一个手机 或 邮箱账户！");
+			alert("至少要绑定一个 手机 或 邮箱 账户！");
 		}
-		alert("xxxx");
 	})
-	//获取验短信证码
+	//邮箱解绑
+	$('#unbindEmail').click(function(){
+		var email = $("#email").html();
+		var mobile = $("#mobile").html();
+		if (!mobile) {
+			alert("至少要绑定一个 手机 或 邮箱 账户！");
+		}
+	})
+	//获取验短信验证码
 	$('#sendMobileMsg').click(function(){
 		var url = "{:U('User/sendMobileMsg')}";
 		var bindMobile=$("#bindMobile").val();
-        if (username == ""){
-            $("#username").next().text("请输入手机/邮箱号").css({'color':'red'}).show();
-            $("#username").focus();
+        if (bindMobile == ""){
+        	alert("请输入您要绑定的手机号码");
             return false;
-        }else{
-            $("#username").next().hide();
-        }
-        if (findpwd_verify == ""){
-            $("#findpwd_verify_err").text("请输入图中的验证码").css({'color':'red'}).show();
-            $("#findpwd_verify").focus();
-            return false;
-        }else{
-            $("#findpwd_verify_err").hide();
         }
 		$.ajax({
 			type : "POST",
-			data : {username:username,verify:findpwd_verify},
+			data : {bindMobile:bindMobile},
 			url : url,
 			success:function(msg){
-				if (msg.staut == 'ok' || msg.staut == 'no') {
+				if (msg.staut == 'ok') {
 					alert(msg.info);
+				} else if (msg.staut == 'no') {
+					alert(msg.error);
 				} else {
-					if(msg.mobile){
-			            $("#username").next().text(msg.mobile).css({'color':'red'}).show();
-			            $("#username").focus();
-					}else{
-			            $("#username").next().text(msg.email).css({'color':'red'}).show();
-			            $("#username").focus();
-					}
+					alert(msg.mobile);
 				}
 			},
 		})
 	})
+	//获取邮箱验证证码
+	$('#sendEmailMsg').click(function(){
+		var url = "{:U('User/sendEmailMsg')}";
+		var bindEmail=$("#bindEmail").val();
+        if (bindEmail == ""){
+        	alert("请输入您要绑定的邮箱");
+            return false;
+        }
+		$.ajax({
+			type : "POST",
+			data : {bindEmail:bindEmail},
+			url : url,
+			success:function(msg){
+				if (msg.staut == 'ok') {
+					alert(msg.info);
+				} else if (msg.staut == 'no') {
+					alert(msg.error);
+				} else {
+					alert(msg.email);
+				}
+			},
+		})
+	})
+	//手机号码绑定
+	function bindMobileSubmit(){
+		var url = "{:U('User/bindMobile')}";
+		var bindMobile=$("#bindMobile").val();
+		var bindMobileVerify=$("#bindMobileVerify").val();
+        if (bindMobile == ""){
+        	alert("请输入您要绑定的手机号码");
+            return false;
+        }
+        if (bindMobileVerify == ""){
+        	alert("请输入您收到的短信验证码");
+            return false;
+        }
+		$.ajax({
+			type : "POST",
+			data : {bindMobile:bindMobile,bindMobileVerify:bindMobileVerify},
+			url : url,
+			success:function(msg){
+				if (msg.staut == 'ok') {
+					if (confirm("手机号码绑定成功，可以通过新的手机号码登陆")) {
+						window.location.href = msg.callback;
+					}
+				} else if (msg.staut == 'no') {
+					alert(msg.info);
+				} else {
+					alert(msg.mobile);
+				}
+			},
+		})
+	}
 </script>
 </html>

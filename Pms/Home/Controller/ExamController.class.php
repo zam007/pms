@@ -51,7 +51,7 @@ class ExamController extends BaseController {
         }
         $brith = $user['birth'];
         //计算年龄
-        $age = Date('Y',time())-substr($brith,0,4);
+        $age = $this->age($user['birth']);
         //获取基础难度
         $levelMode = D("Level");
         $where['min_age'] = array('elt',$age);
@@ -431,6 +431,9 @@ class ExamController extends BaseController {
     private function report($examId){
         
     	$userId = $this->userId;
+        $userModel = D("User");
+        $user = $userModel->getUserField($userId,"name,sex,birth,from_add");
+        $user['age'] = $this->age($user["birth"]);
     	$where = array(
             'exam_id' => $examId,
             'user_id' => $userId
@@ -492,6 +495,7 @@ class ExamController extends BaseController {
     	$sheet = $sheetMode->getSheets($where);
     	foreach($sheet as $key=>$res){
                 if($classifys[$res['father_id']]['classify_id'] == $res['father_id']){
+                    $val['classify_name'] = $res['classify_name'];
                     //总答题数
                     $val['answer_num'] = $data['answer_num'];
                     $classifys[$res['father_id']]['count_answer'] += $data['answer_num'];
@@ -502,8 +506,8 @@ class ExamController extends BaseController {
                     $val['total_score'] = $res['score'];
                     $classifys[$res['father_id']]['total_score'] += $res['score'];
                     //得分率
-                    $val['probability_score'] = round($val['total_score'] / $data['answer_num'] * 5, 2)*100;
-                    $classifys[$res['father_id']]['probability_score'] = round($classifys[$res['father_id']]['total_score']/($data['answer_num']*5))*100;
+                    $val['probability_score'] = round($val['total_score'] / $data['answer_num'] / 3, 2)*100;
+                    $classifys[$res['father_id']]['probability_score'] = round($classifys[$res['father_id']]['total_score']/($data['basic_score']*5))*100;
                     //年龄组平均得分
                     $where = array(
                         'classify_id' => $res['classify_id'],
@@ -543,6 +547,7 @@ class ExamController extends BaseController {
         $data['analysis'] = "总体分析";
         //结果说明
         $data['result'] = "结果说明";
+        $this->assign('user',$user);
         $this->assign('classifys',$classifys);
         $this->assign('data',$data); 
         $this->display("Exam/report");

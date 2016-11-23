@@ -18,5 +18,17 @@ class BaseController extends Controller {
          // }
          $this->userId = $userId;
          $this->teamId = I('session.team_id',0);
+         $this->assign('config',C('constant')); 
      }
+
+     //根据出生日期获取年龄
+    public function age($birthday){
+        list($year,$month,$day) = explode("-",$birthday);
+        $year_diff = date("Y") - $year;
+        $month_diff = date("m") - $month;
+        $day_diff  = date("d") - $day;
+        if ($day_diff < 0 || $month_diff < 0)
+            $year_diff--;
+        return $year_diff;
+    }
 }

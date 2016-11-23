@@ -381,7 +381,7 @@ class UserController extends BaseController {
         }
     }
 
-     /**
+    /**
     * 账号绑定
     * 邮箱绑定
     */
@@ -419,5 +419,10 @@ class UserController extends BaseController {
             $this->ajaxReturn($msg);
         }
     }
+
+    /**
+    * 账号绑定
+    * 邮箱绑定
+    */
 
 }

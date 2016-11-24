@@ -93,17 +93,15 @@
 						<!-- ///////////来源地////////// -->
 						<div>
 							<span class="item">来源地：</span>
-                                <if condition="$user.work eq 1">
-	                                <select class="pl5 pr5" style="width:425px;">
-										<option value="1">城镇</option>
-										<option value="2">乡村</option>
-                                    </select>
-                                <else/>
-                                    <select class="pl5 pr5" style="width:425px;">
-										<option value="2">乡村</option>
-										<option value="1">城镇</option>
-                                	</select>
-                                </if>
+                                <select class="pl5 pr5" style="width:425px;">
+                                	<volist name="config.from" id="vo">
+									<if condition="$user['from_add'] eq $vo['key']">
+										<option value="{$vo.key}" selected="true">{$vo.value}</option>
+									<else/>
+										<option value="{$vo.key}">{$vo.value}</option>
+									</if>
+									</volist>
+                            	</select>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
 						<!-- ///////////来源地////////// -->

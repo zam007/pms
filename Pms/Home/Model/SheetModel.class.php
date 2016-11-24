@@ -1,53 +1,53 @@
 <?php
 namespace Home\Model;
 use Think\Model;
-class SheetModel extends Model {
+class sheetModel extends Model {
 //    protected $tablePrefix = '';
 //    protected $patchValidate = true;
     
-    
-	public function getSheet($info,$field = '*') {
-        $sheet = M("sheet"); 
-        return $sheet->field($field)->where($info)->find();
+    private function getM(){
+        return M("sheet"); 
     }
     
-    public function saveSheet($data){
-        $sheet = M("sheet"); 
-        return $sheet->add($data);
+    public function generateSheet($where,$field = '*'){
+    	$sheet = $this->getM(); 
+    	$where['flag'] = array('eq',1); 
+    	$classify = $sheet->field($field)->where($where)->select();
+    	return $classify[array_rand($classify)];//随机数组
+    }
+
+    public function getSheet($info,$field = '*') {
+        $sheet = $this->getM(); 
+    	$info['flag'] = array('eq',1); 
+        return $sheet->field($field)->where($info)->find();
+    }
+
+    public function getSheets($info,$field = '*') {
+        $sheet = $this->getM(); 
+    	$info['flag'] = array('eq',1); 
+        return $sheet->alias('a')->field($field)->join('left join classify as b on b.classify_id = a.classify_id')->where($info)->select();
     }
     
     public function modify( $sheetId,$update){
-        $sheet = M("sheet"); 
+        $sheet = $this->getM(); 
         return $sheet->where('sheet_id='.$sheetId)->save($update); 
-//        $sheet->where('sheet_id='.$sheetId)->save($update); 
-//        echo $sheet->getlastsql();exit;
     }
     
-    public function sum($where,$field = '*'){
-    	$sheet = M('sheet');
-    	return $sheet->where($where)->sum($field);
+    public function sum($examId,$field = '*'){
+    	$sheet = $this->getM();
+    	return $sheet->where('exam_id = '.$examId)->sum($field);
     }
     
-    public function count($where,$field = '*'){
-    	$sheet = M('sheet');
+    public function count($where){
+    	$sheet = $this->getM(); 
+    	$where['flag'] = array('eq',1); 
     	return $sheet->where($where)->count();
     }
-    /**
-     * 获取试卷全部答题
-     * return array 
-     */
-    public function getSheetAll($answerSheetId,$field = '*'){
-    	$sheet = M("sheet"); 
-        return $sheet->field($field)->where('answer_sheet_id='.$answerSheetId)->select();
-    }
     
-    public function getInclination($answerSheetId,$field = '*'){
-        $sheet = M("sheet"); 
-        return $sheet->field($field)->join('inclination on inclination.inclination_id = sheet.inclination_id')->where('answer_sheet_id='.$answerSheetId)->select();
+    public function avgScore($where){
+        $sheet = $this->getM(); 
+        return $sheet->join('exam on exam.exam_id = sheet.exam_id')->where($where)->avg('sheet.score');
     }
+
+    
 }
-
-
-
-
-

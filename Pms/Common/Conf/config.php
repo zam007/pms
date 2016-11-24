@@ -13,7 +13,8 @@ return array(
 	    'new/:name' => 'Home/Index/hello',
 	),
 	//加密字符
-	'PWD_KEY'=>'wuxingcaishang',
+    'PWD_KEY'=>'wuxingcaishang',
+
 //        'LOG_RECORD'=>true, // 进行日志记录 
 //        'LOG_RECORD_LEVEL' => array('EMERG','ALERT','CRIT','ERR','WARN','NOTIC','INFO','DEBUG','SQL'), // 允许记录的日志级别 
 //        'DB_FIELDS_CACHE'=> false, //数据库字段缓存 
@@ -25,24 +26,31 @@ return array(
 //        'SHOW_PAGE_TRACE'=>true, // 显示页面Trace信息 由Trace文件定义和Action操作赋值 
 //        'APP_FILE_CASE' => true, // 是否检查文件的大小写 对Windows平台有效 );
     
+    'constant' => array(
+        //来源地
+        'from' => array(
+            1 => array( 'key' => 1, 'value' =>'城镇' ),
+            2 => array( 'key' => 2, 'value' =>'乡村' ),
+        ),
+        //性别
+        'sex' => array(
+            0 => array( 'key' => 0, 'value' =>'男' ),
+            1 => array( 'key' => 1, 'value' =>'女' ),
+        ),
+        //团体性质
+        'nature' => array(
+            0 => '公司性质1',
+            1 => '公司性质2',
+            2 => '公司性质3',
+            3 => '公司性质4',
+        ),
+        //行业属性
+        'attribute' => array(
+            0 => '行业属性1',
+            1 => '行业属性2',
+            2 => '行业属性3',
+            3 => '行业属性4',
+        ),
+    ),
     
-    //来源地
-    'from' => array(
-        0 => '城镇',
-        1 => '乡村',
-    ),
-    //团体性质
-    'nature' => array(
-        0 => '公司性质1',
-        1 => '公司性质2',
-        2 => '公司性质3',
-        3 => '公司性质4',
-    ),
-    //行业属性
-    'attribute' => array(
-        0 => '行业属性1',
-        1 => '行业属性2',
-        2 => '行业属性3',
-        3 => '行业属性4',
-    ),
 );

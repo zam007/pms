@@ -18,7 +18,7 @@
 					<p class="fz48">五行财商研究中心</p>
 					<p class="fz18">专业/便捷/可靠</p>
 					<ul class="home-list">
-						<li>
+						<li id="test">
 							<div class="home-list-img"><img src="__PUBLIC__/img/img_wc.png"></div>
 							<div class="home-list-option">
 								<p class="fz20">网络自测</p>
@@ -184,6 +184,9 @@
 	<load href="__PUBLIC__/js/jquery-3.1.0.min.js" />
 	<load href="__PUBLIC__/js/home.js" />
 	<script type="text/javascript">
+		$('#test').click(function(){
+			window.location.href = "{:U('Exam/confirm')}";
+		})
         /**
         *刷新验证码..
         */

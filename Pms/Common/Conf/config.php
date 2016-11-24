@@ -29,8 +29,13 @@ return array(
     'constant' => array(
         //来源地
         'from' => array(
-            0 => '城镇',
-            1 => '乡村',
+            1 => array( 'key' => 1, 'value' =>'城镇' ),
+            2 => array( 'key' => 2, 'value' =>'乡村' ),
+        ),
+        //性别
+        'sex' => array(
+            0 => array( 'key' => 0, 'value' =>'男' ),
+            1 => array( 'key' => 1, 'value' =>'女' ),
         ),
         //团体性质
         'nature' => array(

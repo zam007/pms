@@ -18,7 +18,6 @@ class BaseController extends Controller {
          // }
          $this->userId = $userId;
          $this->teamId = I('session.team_id',0);
-         $this->assign('config',C('constant')); 
      }
 
      //根据出生日期获取年龄

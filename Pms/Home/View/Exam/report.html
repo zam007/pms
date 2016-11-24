@@ -21,11 +21,11 @@
 					<div class="info">
 						<span>
 							<span>姓名：</span><span>{$user.name}</span>
-							<span>性别：</span><span>{$user['from_add']}</span>
+							<span>性别：</span><span>{$config['sex'][$user['sex']]['value']}</span>
 							<span>年龄：</span><span>{$user.age}</span>
 						</span>
 						<span>
-                        <span>来源地：</span><span>{$config['from'][$user['from_add']]}</span>
+                        <span>来源地：</span><span>{$config['from'][$user['from_add']]['value']}</span>
 						</span>
 					</div>
 				</div>

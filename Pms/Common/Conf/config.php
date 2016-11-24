@@ -39,17 +39,17 @@ return array(
         ),
         //团体性质
         'nature' => array(
-            0 => '公司性质1',
-            1 => '公司性质2',
-            2 => '公司性质3',
-            3 => '公司性质4',
+            0 => array( 'key' => 0, 'value' =>'爱好' ),
+            1 => array( 'key' => 1, 'value' =>'公司' ),
+            2 => array( 'key' => 2, 'value' =>'学校' ),
+            3 => array( 'key' => 3, 'value' =>'社团' ),
         ),
         //行业属性
         'attribute' => array(
-            0 => '行业属性1',
-            1 => '行业属性2',
-            2 => '行业属性3',
-            3 => '行业属性4',
+            0 => array( 'key' => 0, 'value' =>'餐饮' ),
+            1 => array( 'key' => 1, 'value' =>'金融' ),
+            2 => array( 'key' => 2, 'value' =>'IT' ),
+            3 => array( 'key' => 3, 'value' =>'建筑' ),
         ),
     ),
     

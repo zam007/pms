@@ -124,86 +124,33 @@
 	                        <!-- ///////////团体性质////////// -->
 	                        <div>
 		                        <span class="item">团体性质：</span>
-									<switch name="team.nature" >
-									<case value="0">--</case>
-										<select id="team_nature0" name="team_nature0" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-											<option value="0" selected = "selected">--</option>
-											<option value="1">公司</option>
-											<option value="2">学校</option>
-											<option value="3">社团</option>
-										</select>
-									<case value="1">
-										<select id="team_nature1" name="team_nature1" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-											<option value="0">--</option>
-											<option value="1" selected = "selected">公司</option>
-											<option value="2">学校</option>
-											<option value="3">社团</option>
-										</select>
-									</case>
-									<case value="2">
-										<select id="team_nature2" name="team_nature2" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-											<option value="0">--</option>
-											<option value="1">公司</option>
-											<option value="2" selected = "selected">学校</option>
-											<option value="3">社团</option>
-										</select>
-									</case>
-									<case value="3">
-										<select id="team_nature3" name="team_nature3" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-											<option value="0">--</option>
-											<option value="1">公司</option>
-											<option value="2">学校</option>
-											<option value="3" selected = "selected">社团</option>
-										</select>
-									</case>
-									<default />--
-									</switch>
-									<p class="grey tip-grey">所在行业行政</p>
+                                <select class="pl5 pr5" style="width:425px;">
+                                <volist name="config.nature" id="vo">
+									<if condition="$team['nature'] eq $vo['key']">
+										<option value="{$vo.key}" selected="true">{$vo.value}</option>
+									<else/>
+										<option value="{$vo.key}">{$vo.value}</option>
+									</if>
+								</volist>
+                            	</select>
+								<p class="grey tip-grey">所在行业</p>
 	                        </div>
 	                        <!-- ///////////团体性质////////// -->
 	                        <!-- ///////////行业属性：////////// -->
 	                        <div>
 	                            <span class="item">行业属性：</span>
-	                            <switch name="team.attribute">
-	                            <case value="0">
-									<select id="team_attribute0" name="team_attribute0" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-										<option value="0" selected = "selected">--</option>
-										<option value="1">金融</option>
-										<option value="2">IT</option>
-										<option value="3">建筑</option>
-									</select>
-	                            </case>
-	                            <case value="1">
-									<select id="team_attribute1" name="team_attribute1" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-										<option value="0" >--</option>
-										<option value="1" selected = "selected">金融</option>
-										<option value="2">IT</option>
-										<option value="3">建筑</option>
-									</select>
-	                            </case>
-	                            <case value="2">
-									<select id="team_attribute2" name="team_attribute2" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-										<option value="0" >--</option>
-										<option value="1" >金融</option>
-										<option value="2" selected = "selected">IT</option>
-										<option value="3">建筑</option>
-									</select>
-	                            </case>
-	                            <case value="3">
-									<select id="team_attribute3" name="team_attribute3" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;">
-										<option value="0" >--</option>
-										<option value="1" >金融</option>
-										<option value="2" >IT</option>
-										<option value="3" selected = "selected">建筑</option>
-									</select>
-	                            </case>
-	                            <default />--
-	                            </switch>
+                                <select class="pl5 pr5" style="width:425px;">
+                                <volist name="config.attribute" id="vo">
+									<if condition="$team['attribute'] eq $vo['key']">
+										<option value="{$vo.key}" selected="true">{$vo.value}</option>
+									<else/>
+										<option value="{$vo.key}">{$vo.value}</option>
+									</if>
+								</volist>
+                            	</select>
 	                            <p class="grey tip-grey">所在行业属性</p>
 	                        </div>
 	                        <!-- ///////////行业属性：////////// -->
-	                        <!-- ///////////行业属性测试：////////// -->
-	                        <!-- ///////////行业属性测试：////////// -->
 	                        <div>
 	                            <span class="item">团体邀请码：</span>
 								<input readonly="readonly" type="text" name="team_code" name="team_code" value="{$team.code}" placeholder="" style="width:425px;">

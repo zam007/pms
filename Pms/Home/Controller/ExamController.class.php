@@ -524,25 +524,19 @@ class ExamController extends BaseController {
                     $classifys[$res['father_id']]['classify'][] = $val;
                     //数组重新排序
                     $classifys[$res['father_id']]['classify'] = $this->my_sort($classifys[$res['father_id']]['classify'],'probability_score',SORT_DESC,SORT_NUMERIC);
+                    $data['classify'][] = $val;
 
                 }
     	}
+
+        $data['classify'] = $this->my_sort($data['classify'],'probability_score',SORT_DESC,SORT_NUMERIC);
         //基础得分
     	$data['basic_score'] = count($sheet) * $data['answer_num'] * 5;
         //得分率
         $data['probability_score'] = round($data['total_score'] / $data['basic_score'], 2)."%";
        
     	
-    	$sheetLogMode = D('sheetLog');
-    	$field = "inclination,inclination.inclination_id";
-    	$sheetLog = $sheetLogMode->getInclination($examId,$field);
-        $inclination = array();
-    	foreach($sheetLog as $res){
-            if($inclination[$res['inclination_id']]['inclination_id'] != $res['inclination_id']){
-                $inclination[$res['inclination_id']]['count'] ++;
-                $inclination[$res['inclination_id']]['inclination'] = $res['inclination'];
-            }
-    	}
+    	
         //总体分析
         $data['analysis'] = "总体分析";
         //结果说明
@@ -621,6 +615,17 @@ class ExamController extends BaseController {
                     
                 }
     	}
+        $sheetLogMode = D('sheetLog');
+        $field = "inclination,inclination.inclination_id";
+        $sheetLog = $sheetLogMode->getInclination($examId,$field);
+        $inclination = array();
+        foreach($sheetLog as $res){
+            if($inclination[$res['inclination_id']]['inclination_id'] != $res['inclination_id']){
+                $inclination[$res['inclination_id']]['count'] ++;
+                $inclination[$res['inclination_id']]['inclination'] = $res['inclination'];
+            }
+        }
+        $data['inclination'] = $inclination;
         $data['classifys'] = $classifys;
         $data['relative'] = $relative;
         echo json_encode($data);

@@ -1,8 +1,9 @@
 $(function () {
+    var examId = window.location.href.substr(51); 
     $.ajax({
          url: "/Home/Exam/ajaxExam",  
          type: "POST",
-         data:{answer_sheet_id:113},
+         data:{exam_id:examId},
          //dataType: "json",
          error: function(){  
              alert('Error loading XML document');  
@@ -12,17 +13,18 @@ $(function () {
             var data = json['classifys'];
             var relative = json['relative'];
             var inclination = json['inclination'];
-            var totle;
-            var avg;
+            var totle = new Array();
+            var avg = new Array();                       
+            var incl = new Array();
             /*总体*/
-            for(var i = 1; i <= data.length;i++){
-                if(i == 1){
-                    totle = new Array(data[i]['total_score']);
-                    avg = new Array(data[i]['avg_score']);
-                }else{
-                    totle.concact(data[i]['total_score']);
-                    avg.concact(data[i]['avg_score']);
-                }
+            for (x in data){
+                i = x - 1;
+                totle[i] = data[x]['total_score'];
+                avg[i] = data[x]['avg_score'];
+            }
+            for(x in inclination){
+                i = x - 1;
+                incl[i] = ["'"+inclination[x]['inclination']+"'",inclination[x]['count']];
             }
             $('#zongti_graph').highcharts({
                 credits:{
@@ -141,8 +143,6 @@ $(function () {
                 });
             });
 
-            
-
             /*偏向性统计*/
             $('#pianxiangxing').highcharts({
                 credits:{
@@ -172,24 +172,7 @@ $(function () {
                 },
                 series: [{
                     name: '得分',
-                    data: [
-                        ['观察力强', 23.7],
-                        ['善良', 16.1],
-                        ['目标明确', 14.2],
-                        ['自我中心', 14.0],
-                        ['正直', 12.5],
-                        ['太理想化', 12.1],
-                        ['自私自利', 11.8],
-                        ['表达能力好', 11.7],
-                        ['勤奋', 11.1],
-                        ['自我主义', 11.1],
-                        ['亲和力强', 10.5],
-                        ['反应敏捷', 10.4],
-                        ['有魄力', 10.0],
-                        ['有创意', 9.3],
-                        ['思考能力强', 9.3],
-                        ['莽撞草率', 9.0]
-                    ],
+                    data: incl,
                     dataLabels: {
                         enabled: true,
                         rotation: -90,

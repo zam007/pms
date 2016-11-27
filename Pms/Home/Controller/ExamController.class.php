@@ -558,7 +558,6 @@ class ExamController extends BaseController {
         $levelModel = D('level');
         
         
-        $answerNum = $level['answer_num'];
         $where = array(
             'exam_id' => $examId
     	);
@@ -570,6 +569,7 @@ class ExamController extends BaseController {
         );
         $filed = "answer_num";
         $level = $levelModel->getLevel($where, $filed);
+        $answerNum = $level['answer_num'];
         
         //获取大类
     	$where = array(
@@ -600,7 +600,7 @@ class ExamController extends BaseController {
                     $classifys[$res['father_id']]['total_score'] += $res['score'];
                     
                     //得分率
-                    $val['probability_score'] = round($val['total_score'] / $answerNum * 5, 2)*100;
+                    $val['probability_score'] = round($val['total_score'] / $answerNum / 3, 2)*100;
                     $classifys[$res['father_id']]['probability_score'] = round($classifys[$res['father_id']]['total_score']/($answerNum*5) )*100;
                     
                     $val['name'] = $res['classify_name'];

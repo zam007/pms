@@ -94,12 +94,13 @@
 	$('#unbindMobile').click(function(){
 		var email = $("#email").html();
 		var mobile = $("#mobile").html();
+		var url = "{:U('User/sendMobileMsg')}";
 		if (!email) {
 			alert("至少要绑定一个 手机 或 邮箱 账户！");
 		}
 		$.ajax({
 			type : "POST",
-			data : {bindMobile:bindMobile,bindMobileVerify:bindMobileVerify},
+			data : {email:email,bindMobileVerify:bindMobileVerify},
 			url : url,
 			success:function(msg){
 				if (msg.staut == 'ok') {

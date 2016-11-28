@@ -439,6 +439,12 @@ class UserController extends BaseController {
             $this->ajaxReturn(array('staut' => 'no',
                                     'info'=> '手机号码信息错误，请联系管理员解绑'));
         }
+        //验证邮箱账户是否存在
+        $getUserInfo = $user->getUser($userInfo);
+        if (!$getUserInfo['email']) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'info'=> '至少存在一个手机号码或邮箱号码'));
+        }
         //数据库操作
         $userId = $this->userId;
         $userInfo['mobile'] = null;
@@ -470,6 +476,12 @@ class UserController extends BaseController {
         if (!$user->getUser($userInfo)) {
             $this->ajaxReturn(array('staut' => 'no',
                                     'info'=> '邮箱信息错误，请联系管理员解绑'));
+        }
+        //验证手机账户是否存在
+        $getUserInfo = $user->getUser($userInfo);
+        if (!$getUserInfo['mobile']) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'info'=> '至少存在一个手机号码或邮箱号码'));
         }
         //数据库操作
         $userId = $this->userId;

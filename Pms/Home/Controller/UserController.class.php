@@ -422,7 +422,66 @@ class UserController extends BaseController {
 
     /**
     * 账号绑定
-    * 邮箱绑定
+    * 手机解绑
     */
+    public function unbindMobile(){
+        $user = D("user");
+        $userInfo['mobile'] = I("mobile");
+        //手机号格式验证
+        $rules = array(
+             array('mobile', '/^1[34578]\d{9}$/', '手机号码格式不正确', 0),
+        );
+        if (!$user->validate($rules)->create($userInfo)){
+            $this->ajaxReturn($user->getError());
+        }
+        //手机号码存在验证
+        if (!$user->getUser($userInfo)) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'info'=> '手机号码信息错误，请联系管理员解绑'));
+        }
+        //数据库操作
+        $userId = $this->userId;
+        $userInfo['mobile'] = null;
+        if ($user->modify($userId,$userInfo)) {
+           $msg = array(
+            'staut' => 'ok',
+            'info' => '手机号码解绑成功!',
+            'callback' => U('User/personal_info')
+            );
+            $this->ajaxReturn($msg);
+        }
+    }
+
+    /**
+    * 账号绑定
+    * 邮箱解绑
+    */
+    public function unbindEmail(){
+        $user = D("user");
+        $userInfo['email'] = I("email");
+        //邮箱格式验证
+        $rules = array(
+            array('email', 'email', '邮箱格式不正确'),
+        );
+        if (!$user->validate($rules)->create($userInfo)){
+            $this->ajaxReturn($user->getError());
+        }
+        //邮箱存在验证
+        if (!$user->getUser($userInfo)) {
+            $this->ajaxReturn(array('staut' => 'no',
+                                    'info'=> '邮箱信息错误，请联系管理员解绑'));
+        }
+        //数据库操作
+        $userId = $this->userId;
+        $userInfo['email'] = null;
+        if ($user->modify($userId,$userInfo)) {
+           $msg = array(
+            'staut' => 'ok',
+            'info' => '邮箱解绑成功!',
+            'callback' => U('User/personal_info')
+            );
+            $this->ajaxReturn($msg);
+        }
+    }
 
 }

@@ -94,17 +94,17 @@
 	$('#unbindMobile').click(function(){
 		var email = $("#email").html();
 		var mobile = $("#mobile").html();
-		var url = "{:U('User/sendMobileMsg')}";
+		var url = "{:U('User/unbindMobile')}";
 		if (!email) {
 			alert("至少要绑定一个 手机 或 邮箱 账户！");
 		}
 		$.ajax({
 			type : "POST",
-			data : {email:email,bindMobileVerify:bindMobileVerify},
+			data : {mobile:mobile},
 			url : url,
 			success:function(msg){
 				if (msg.staut == 'ok') {
-					if (confirm("手机号码绑定成功，可以通过新的手机号码登陆")) {
+					if (confirm("手机号码解绑成功，请通过邮箱号码登陆")) {
 						window.location.href = msg.callback;
 					}
 				} else if (msg.staut == 'no') {
@@ -119,9 +119,26 @@
 	$('#unbindEmail').click(function(){
 		var email = $("#email").html();
 		var mobile = $("#mobile").html();
+		var url = "{:U('User/unbindEmail')}";
 		if (!mobile) {
 			alert("至少要绑定一个 手机 或 邮箱 账户！");
 		}
+		$.ajax({
+			type : "POST",
+			data : {email:email},
+			url : url,
+			success:function(msg){
+				if (msg.staut == 'ok') {
+					if (confirm("邮箱解绑成功，请通过邮箱号码登陆")) {
+						window.location.href = msg.callback;
+					}
+				} else if (msg.staut == 'no') {
+					alert(msg.info);
+				} else {
+					alert(msg.email);
+				}
+			},
+		})
 	})
 	//获取验短信验证码
 	$('#sendMobileMsg').click(function(){

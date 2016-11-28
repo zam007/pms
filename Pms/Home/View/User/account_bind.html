@@ -97,6 +97,7 @@
 		var url = "{:U('User/unbindMobile')}";
 		if (!email) {
 			alert("至少要绑定一个 手机 或 邮箱 账户！");
+			return false;
 		}
 		$.ajax({
 			type : "POST",
@@ -122,6 +123,7 @@
 		var url = "{:U('User/unbindEmail')}";
 		if (!mobile) {
 			alert("至少要绑定一个 手机 或 邮箱 账户！");
+			return false;
 		}
 		$.ajax({
 			type : "POST",

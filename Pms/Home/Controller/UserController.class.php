@@ -67,7 +67,8 @@ class UserController extends BaseController {
         $index = D("user");
         $userId = $this->userId;
         $rules = array(
-            array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
+            #array('password','/^[a-z]\w{6,20}$/i','8位以上，同时包含字母和数字'),
+            array('password','checkPwd','8位以上，同时包含字母和数字',0,'function'),
             array('repassword','password','两次输入的密码不一致',0,'confirm'),
         );
         if (!$index->validate($rules)->create()) {
@@ -114,7 +115,8 @@ class UserController extends BaseController {
         $newinfo['password'] = I("password");
         $newinfo['repassword'] = I("repassword");
         $rules = array(
-            array('password','/^[a-z]\w{6,20}$/i','请输入8位带大小写字母组合的密码'),
+            // array('password','/^[a-z]\w{6,20}$/i','8位以上，同时包含字母和数字'),
+            array('password','checkPwd','8位以上，同时包含字母和数字',0,'function'),
             array('repassword','password','两次输入的密码不一致',0,'confirm'),
         );
         if (!$index->validate($rules)->create($newinfo)) {

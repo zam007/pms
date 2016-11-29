@@ -104,3 +104,13 @@
         }
         return false;
     }
+    /**
+     * 密码格式验证
+     */
+    function checkPwd($password){
+        if(!preg_match('/^(?=.*?[a-zA-Z])(?=.*?[0-9])[a-zA-Z0-9]{7,17}$/', $password)){
+            return false;
+        }else{
+            return true;
+        }
+    }

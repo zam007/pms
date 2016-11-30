@@ -197,6 +197,10 @@
         }
 		//获取手机、邮箱验证码
 		$('#send_msg').click(function(){
+			$("#reg_username").next().text('');
+			$("#reg_verify_err").text('');
+			$("#reg_username").parent().removeClass('error');
+			$("#reg_verify").parent().removeClass('error');
 			var url = "{:U('Index/sendMsg')}";
 			var reg_username=$("#reg_username").val();
 			$.ajax({
@@ -222,6 +226,10 @@
 		})
 		//注册提交按钮
 		function register_submit(){
+			$("#reg_username").next().text('');
+			$("#reg_verify_err").text('');
+			$("#reg_username").parent().removeClass('error');
+			$("#reg_verify").parent().removeClass('error');
 		    var regUsername=$("#reg_username").val();
 		    var regVerify=$("#reg_verify").val();
 	    	var url = "{:U('Index/registerOne')}";

@@ -168,7 +168,7 @@
 	            url : url,
 	            success:function(msg){
 	                if (msg.statu == 'ok') {
-	                    window.location.href = msg.callback;
+	                    window.location.assign(msg.callback);
 	                 }
 	                if (msg.statu == 'no') {
 	                    alert("密码修改失败！");

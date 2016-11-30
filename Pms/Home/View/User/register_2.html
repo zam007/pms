@@ -135,16 +135,6 @@
 	        //ajax变量
 	        var data=$('#regCompleteform').serialize();
 	        var url="{:U('User/completion')}";
-	        //前端数据检查
-	        // if (sex == "") {
-	        //     $("#").text("请输入您的真实姓名").css({'color':'red'}).show();
-	        //     $("#name").focus();
-	        //     return false;
-	        // } else {
-	        //     $("#name_err").hide();
-	        // }
-
-	        //ajax提交form表单
 	        $.ajax({
 	            type : "POST",
 	            data : data,
@@ -152,6 +142,7 @@
 	            success:function(msg){
 	                if (msg.statu == 'ok') {
 	                    window.location.href = msg.callback;
+	                    return false;
 	                 }
 	                if (msg.statu == 'no') {
 	                    alert(msg.info);

@@ -149,15 +149,15 @@ class UserController extends BaseController {
         //资料完善合法验证
         $index = D("user");
         $rules = array(
-             array('sex','require','请选择性别'),
              array('birth','require','请补充生日信息'),
              array('work_id','require','请补充职业信息'),
-             array('qq', '/^\d{6,10}$/', '请输入正确的QQ号码', 0),
+             // array('qq', '/^\d{6,10}$/', '请输入正确的QQ号码', 0),
         );
         if (!$index->validate($rules)->create($user)){
             //验证失败
             $this->ajaxReturn($index->getError());
         }
+
         //如果存在团队邀请码，验证邀请码是否存在
         if (I("team_invitecode")) {
             $team = D('Team');
@@ -183,6 +183,7 @@ class UserController extends BaseController {
                 $this->ajaxReturn($msg);
             }
         }
+
         //添加个人信息到数据库
         $user["company_id"] = I("team_invitecode");
         if (!$index->modify($userId,$user)) {
@@ -197,7 +198,7 @@ class UserController extends BaseController {
             SESSION("user_name",I("name"));
         }
         //ajax 正确返回
-         $msg = array(
+        $msg = array(
         'statu' => 'ok',
         'callback' => U('Index/index')
         );

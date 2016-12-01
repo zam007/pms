@@ -224,7 +224,7 @@ class UserController extends BaseController {
         $teaminfo["team_name"] = I("team_name");
         $teaminfo["nature"] = I("team_nature");
         $teaminfo["attribute"] = I("team_attribute");
-        $teaminfo["team_user"] = I("name") ;
+        $teaminfo["team_user"] = $userId ;
         //个人资料完善合法验证
         $index = D("user");
         $rules = array(
@@ -254,13 +254,7 @@ class UserController extends BaseController {
             $this->ajaxReturn($msg);
         }
         //团队信息添加到数据库
-        if (!$team->modify($teamId,$teaminfo)) {
-             $msg = array(
-            'statu' => 'no',
-            'info' => '完善团退信息失败，请重试'
-            );
-            $this->ajaxReturn($msg);
-        }
+        $team->modify($teamId,$teaminfo);
         //如果用户输入了姓名，将姓名存入SESSION
         if (I("name")) {
             SESSION("user_name",I("name"));
@@ -540,7 +534,7 @@ class UserController extends BaseController {
                  array('attribute','require','请输入团体属性'),
             );
             if (!$team->validate($teamrules)->create($teaminfo)){
-                $this->ajaxReturn($index->getError());
+                $this->ajaxReturn($team->getError());
             }
         }
         //用户详细信息添加到数据库
@@ -551,18 +545,12 @@ class UserController extends BaseController {
             );
             $this->ajaxReturn($msg);
         }
-        //团队信息添加到数据库
-        if (!$team->modify($teamId,$teaminfo)) {
-             $msg = array(
-            'statu' => 'no',
-            'info' => '完善团队信息失败，请重试'
-            );
-            $this->ajaxReturn($msg);
-        }
         //如果用户输入了姓名，将姓名存入SESSION
         if (I("name")) {
             SESSION("user_name",I("name"));
         }
+        //团队信息添加到数据库
+        $team->modify($teamId,$teaminfo);
         //ajax正确返回
          $msg = array(
         'statu' => 'ok',

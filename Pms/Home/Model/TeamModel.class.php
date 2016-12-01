@@ -25,7 +25,6 @@ class TeamModel extends Model {
      */
     public function modify( $teamId,$update){
         $team = M("Team"); // 实例化team对象
-        #$update["update_time"] = date("Y-m-d H:i:s", time());
         return $team->where('team_id='.$teamId)->save($update);
     }
 

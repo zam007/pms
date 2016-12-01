@@ -499,4 +499,76 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+    * 个人信息页面
+    * 进入后信息修改
+    */
+    public function updatePersonalInfo(){
+        //个人信息获取
+        $userId = $this->userId;
+        $teamId = I('session.team_id');
+        $user["name"] = I("name");
+        $user["sex"] = I("sex");
+        $user["birth"] = date("Y-m-d", strtotime(I("datetimepicker")));
+        $user["work_id"] = I("work_id");
+        $user["from_add"] = I("from_add");
+        $user["weixin"] = I("weixin");
+        $user["qq"] = I("qq");
+        $user["status"] = 1;
+        $user["update_time"] = date('Y-m-d H:i:s',time());
+        //团体信息获取
+        $teaminfo["team_name"] = I("team_name");
+        $teaminfo["nature"] = I("team_nature");
+        $teaminfo["attribute"] = I("team_attribute");
+        $teaminfo["team_user"] = I("name") ;
+        //个人资料完善合法验证
+        $index = D("user");
+        $rules = array(
+             array('sex','require','请选择性别'),
+             array('birth','require','请补充生日信息'),
+             array('work_id','require','请补充职业信息'),
+        );
+        if (!$index->validate($rules)->create($user)){
+            $this->ajaxReturn($index->getError());
+        }
+        //团队资料合法验证
+        if ($teamId) {
+            $team = D("team");
+            $teamrules = array(
+                 array('team_name','require','请输入团体名称'),
+                 array('nature','require','请输入团体性质'),
+                 array('attribute','require','请输入团体属性'),
+            );
+            if (!$team->validate($teamrules)->create($teaminfo)){
+                $this->ajaxReturn($index->getError());
+            }
+        }
+        //用户详细信息添加到数据库
+        if (!$index->modify($userId,$user)) {
+             $msg = array(
+            'statu' => 'no',
+            'info' => '完善个人信息失败，请重试'
+            );
+            $this->ajaxReturn($msg);
+        }
+        //团队信息添加到数据库
+        if (!$team->modify($teamId,$teaminfo)) {
+             $msg = array(
+            'statu' => 'no',
+            'info' => '完善团队信息失败，请重试'
+            );
+            $this->ajaxReturn($msg);
+        }
+        //如果用户输入了姓名，将姓名存入SESSION
+        if (I("name")) {
+            SESSION("user_name",I("name"));
+        }
+        //ajax正确返回
+         $msg = array(
+        'statu' => 'ok',
+        'callback' => U('User/personal_info')
+        );
+        $this->ajaxReturn($msg);
+    }
+
 }

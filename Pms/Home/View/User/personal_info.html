@@ -34,17 +34,17 @@
 					<div class="content-main-form-info">
 						<div>
 							<span class="item">姓名：</span>
-							<input type="text" name="name" value="{$user.name}" style="width:350px;">
+							<input type="text" name="name" id="name" value="{$user.name}" style="width:350px;">
 							<p class="tip-green">仅生成报告试用，请放心填写</p>
 						</div>
 						<div>
 							<span class="item">性别：</span>
                             <if condition="$user.sex neq 1">
-	                            <label><input type="radio" name="sex" class="pr10"><span class="pl5">男</span></label>
-								<label class="pl30"><input type="radio" checked name="sex" class="pr10"><span class="pl5">女</span></label>
+	                            <label><input type="radio" name="sex" id="sex1" value="1" class="pr10"><span class="pl5">男</span></label>
+								<label class="pl30"><input type="radio" checked name="sex" id="sex2" value="0" class="pr10"><span class="pl5">女</span></label>
                             <else/>
-	                            <label><input type="radio"  name="sex" checked class="pr10"><span class="pl5">男</span></label>
-								<label class="pl30"><input type="radio" name="sex" class="pr10"><span class="pl5">女</span></label>
+	                            <label><input type="radio"  name="sex" id="sex3" value="1" checked class="pr10"><span class="pl5">男</span></label>
+								<label class="pl30"><input type="radio" name="sex" id="sex4" value="0" class="pr10"><span class="pl5">女</span></label>
                             </if>
 						</div>
 						<div>
@@ -56,44 +56,26 @@
 						<!-- ///////////职业////////// -->
 						<div>
 							<span class="item">职业：</span>
-							<switch name="user.work_id">
-							    <case value="1">
-									<select id="work_id1" name="work_id1" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;" >
-										<option value="1" selected = "selected">医生</option>
-										<option value="2">程序员</option>
-										<option value="3">教师</option>
-									</select>
-							    </case>
-							    <case value="2">
-							    	<select id="work_id2" name="work_id2" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;" >
-										<option value="1">医生</option>
-										<option value="2" selected = "selected">程序员</option>
-										<option value="3">教师</option>
-									</select>
-							    </case>
-							    <case value="3">
-							    	<select id="work_id3" name="work_id3" class="pl5 pr5" style="width:425px;border-bottom:1px solid #eee;" >
-										<option value="1">医生</option>
-										<option value="2">程序员</option>
-										<option value="3" selected = "selected">教师</option>
-									</select>
-							    </case>
-							    <default />--
-							</switch>
-							<p class="grey tip-grey">个人职业信息</p>
+							<select name="work_id" id="work_id" class="pl5 pr5" style="width:425px;">
+								<option value="1">医生</option>
+								<option value="2">程序员</option>
+								<option value="3">教师</option>
+							</select>
+							<p class="grey tip-grey">&nbsp;</p>
 						</div>
 						<!-- ///////////职业////////// -->
                         <if condition="$team eq null">
 						<div>
 							<span class="item">团体：</span>
-							<input type="text" name=""  style="width:200px;border-bottom:1px solid #eaefee;"><input type="text" name="name" placeholder="请输入邀请码" class="invitation-code">
-							<p class="tip-spec">为了准确测试，请如实填写 <span class="tip-inline">请向管理员询问</span></p>
+						<!--<input type="text" id="teamname" name="teamname"  style="width:200px;border-bottom:1px solid #eaefee;"> -->
+							<input type="text" name="team_invitecode" id="team_invitecode" placeholder="请输入团体邀请码" class="invitation-code">
+							<p class="tip-green">请向管理员询问</p>
 						</div>
 						</if>
 						<!-- ///////////来源地////////// -->
 						<div>
 							<span class="item">来源地：</span>
-                                <select class="pl5 pr5" style="width:425px;">
+                                <select name="from_add" id="from_add" class="pl5 pr5" style="width:425px;">
                                 	<volist name="config.from" id="vo">
 									<if condition="$user['from_add'] eq $vo['key']">
 										<option value="{$vo.key}" selected="true">{$vo.value}</option>
@@ -124,7 +106,7 @@
 	                        <!-- ///////////团体性质////////// -->
 	                        <div>
 		                        <span class="item">团体性质：</span>
-                                <select class="pl5 pr5" style="width:425px;">
+                                <select id="team_nature" name="team_nature" class="pl5 pr5" style="width:425px;">
                                 <volist name="config.nature" id="vo">
 									<if condition="$team['nature'] eq $vo['key']">
 										<option value="{$vo.key}" selected="true">{$vo.value}</option>
@@ -139,7 +121,7 @@
 	                        <!-- ///////////行业属性：////////// -->
 	                        <div>
 	                            <span class="item">行业属性：</span>
-                                <select class="pl5 pr5" style="width:425px;">
+                                <select id="team_attribute" name="team_attribute" class="pl5 pr5" style="width:425px;">
                                 <volist name="config.attribute" id="vo">
 									<if condition="$team['attribute'] eq $vo['key']">
 										<option value="{$vo.key}" selected="true">{$vo.value}</option>
@@ -158,9 +140,10 @@
 	                        </div>
                         </if>
 						<div>
-							<p class="submit">完成</p>
+<!-- 							<p id="submit_button" class="submit" onclick="chgpwd_submit()"">完成</p> -->
+							<button class="submit" onclick="upComplete()">完成</button>
 						</div>
-						 </form>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -174,10 +157,51 @@
 	<load href="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.min.js" />
 	<load href="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" />
 	<script type="text/javascript">
+		//时间控件
 		$('#datetimepicker').datetimepicker({
 			language: "zh-CN",
 			minView: '2',
 			bootcssVer: 3
 		});
+		//updatePersonalInfo按钮响应
+	    function upComplete(){
+	    	//前端检查变量检查
+	        var sex=$('input:radio[name="sex"]:checked').val();
+	        var birth=$("#datetimepicker").val();
+	        var work_id=$("#work_id").val();
+	        //ajax变量
+	        var data=$('#personalInfo_form').serialize();
+	        var url="{:U('User/updatePersonalInfo')}";
+	        $.ajax({
+	            type : "POST",
+	            data : data,
+	            url : url,
+	            success:function(msg){
+	            	// alert(msg.statu);return false;
+	                if (msg.statu == 'ok') {
+	                    window.location.assign(msg.callback);
+	                 }
+	                if (msg.statu == 'no') {
+	                    alert(msg.info);
+	                 }
+	                for (err_info in msg){
+	                    switch(err_info){
+	                        case "password":
+	                            $("#password_err").text(msg.password).css({'color':'red'}).show();
+	                            $("#password").focus();
+	                            break;
+	                        case "repassword":
+	                            $("#repassword").next().text(msg.repassword).css({'color':'red'}).show();
+	                            $("#repassword_err").show();
+	                            $("#password").focus();
+	                            break;
+	                        default:
+	                            break
+	                    }
+	                }
+	            }
+	        });
+	        return false;
+	    }
 	</script>
 </html>

@@ -25,6 +25,8 @@ class UserController extends BaseController {
         //将用户信息传到前端页面
         $userMode = D('user');
         $user = $userMode->getUserField($userId);
+        $work = $userMode->workList();
+        $this->assign('work',$work);
         $this->assign('user',$user);
         //页面跳转
         $this->display("personal_info");

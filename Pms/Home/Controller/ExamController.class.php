@@ -20,17 +20,16 @@ class ExamController extends BaseController {
             return "完善资料";die();
         }
         $from = C('from');
-        $user['from_add'] = $from[$user['from_add']];
+        
         $work = $userModel->getWrok($user['work_id'],'name');
         $user['work'] = $work['name'];
         
         $teamId = (int)$user['team_id'];
         if($teamId != 0){
             $team = D('Team')->getTeamField($teamId,'team_name,nature,attribute');
-            $nature = C('nature');
-            $attribute = C('attribute');
-            $team['nature'] =$nature[$team['nature']];
-            $team['attribute'] =$attribute[$team['attribute']];
+            
+            $team['nature'] =$team['nature'];
+            $team['attribute'] =$team['attribute'];
             $team['sum'] = D('Team')->count($teamId);
         }
         $this->assign('team',$team);

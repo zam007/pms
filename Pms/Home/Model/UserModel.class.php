@@ -49,4 +49,9 @@ class UserModel extends Model {
         $work = M("Work");
         return $work->field($filed)->where('work_id='.$workId)->find();
     }
+
+    public function workList(){
+        $work = M("Work");
+        return $work->select();
+    }
 }

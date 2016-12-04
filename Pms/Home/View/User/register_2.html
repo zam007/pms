@@ -35,8 +35,8 @@
 						</div>
 						<div>
 							<span class="item">性别：</span>
-							<label><input type="radio" checked="true" name="sex" id="sex1" value="1" class="pr10"><span class="pl5">男</span></label>
-							<label class="pl30"><input type="radio" name="sex" id="sex2" value="0" class="pr10"><span class="pl5">女</span></label>
+							<label><input type="radio" checked="true" name="sex" id="sex1" value="0" class="pr10"><span class="pl5">男</span></label>
+							<label class="pl30"><input type="radio" name="sex" id="sex2" value="1" class="pr10"><span class="pl5">女</span></label>
 						</div>
 						<div>
 							<span class="item">生日：</span>
@@ -61,9 +61,10 @@
 						<div>
 							<span class="item" name="from_add">来源地：</span>
 							<select name="from_add" id="from_add" class="pl5 pr5" style="width:425px;">
-								<option value="1">城镇</option>
-								<option value="2">乡村</option>
-							</select>
+                            	<volist name="config.from" id="vo">
+									<option value="{$vo.key}">{$vo.value}</option>
+								</volist>
+                        	</select>
 							<p class="grey tip-grey">县级以上城市、农村</p>
 						</div>
 						<div>

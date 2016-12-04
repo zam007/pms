@@ -28,9 +28,9 @@
 									<span>您的职业：</span><span>{$user.work}</span>
 								</div>
 								<div>
-									<span>您的来源地：</span><span>{$user.from_add}</span>
+									<span>您的来源地：</span><span>{$config['from'][$user['from_add']]['value']}</span>
 								</div>
-								<p class="edited">信息有误？马上<a href="#">修改</a></p>
+								<p class="edited">信息有误？马上<a href="{:U('User/personal_info')}">修改</a></p>
 							</div>
 							<if condition="$team neq null ">
 							<div class="confirm-groups">
@@ -39,10 +39,10 @@
 									<span>团体名称：</span><span>{$team.team_name}</span>
 								</div>
 								<div>
-									<span>团体性质：</span><span>{$team.nature}</span>
+									<span>团体性质：</span><span>{$config['nature'][$team['nature']]['value']}</span>
 								</div>
 								<div>
-									<span>行业属性：</span><span>{$team.attribute}</span>
+									<span>行业属性：</span><span>{$config['attribute'][$team['attribute']]['value']}</span>
 								</div>
 								<div>
 									<span>团体人数：</span><span>{$team.sum}</span>

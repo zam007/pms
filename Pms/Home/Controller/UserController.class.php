@@ -219,15 +219,18 @@ class UserController extends BaseController {
             );
             $this->ajaxReturn($msg);
         }
+
         //如果用户输入了姓名，将姓名存入SESSION
         if (I("name")) {
             SESSION("user_name",I("name"));
         }
+
         //ajax 正确返回
         $msg = array(
         'statu' => 'ok',
         'callback' => U('Index/index')
         );
+
         $this->ajaxReturn($msg);
     }
     /**

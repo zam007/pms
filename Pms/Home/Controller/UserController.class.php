@@ -563,6 +563,33 @@ class UserController extends BaseController {
                 $this->ajaxReturn($team->getError());
             }
         }
+
+        //如果存在团队邀请码，验证邀请码是否存在
+        if (I("team_invitecode")) {
+            $team = D('Team');
+            $teamInfo['code'] = I("team_invitecode");
+            $teaminfo = $team->getTeam($teamInfo);
+            if (!$teaminfo) {
+                 $msg = array(
+                'statu' => 'no',
+                'info' => '团队邀请码不存在，请输入正确的邀请码'
+                );
+                $this->ajaxReturn($msg);
+            }
+            //对应插入数据到team_user
+            $teamuser = D('TeamUser');
+            $teamuserInfo['team_id'] = $teaminfo['team_id'];
+            $teamuserInfo['user_id'] = $userId;
+            $teamuserInfo['created'] = date('Y-m-d H:i:s',time());
+            if (!$teamuser->addteam($teamuserInfo)) {
+                 $msg = array(
+                'statu' => 'no',
+                'info' => '加入团队失败,请重试！'
+                );
+                $this->ajaxReturn($msg);
+            }
+        }
+
         //用户详细信息添加到数据库
         if (!$index->modify($userId,$user)) {
              $msg = array(

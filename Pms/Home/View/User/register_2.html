@@ -46,9 +46,13 @@
 						<div>
 							<span class="item">职业：</span>
 							<select name="work_id" id="work_id" class="pl5 pr5" style="width:425px;">
-								<option value="1">医生</option>
-								<option value="2">程序员</option>
-								<option value="3">教师</option>
+								<volist name="work" id="vo">
+								<if condition="$user['work_id'] eq $vo['work_id']">
+										<option value="{$vo.work_id}" selected="true">{$vo.name}</option>
+									<else/>
+										<option value="{$vo.work_id}">{$vo.name}</option>
+									</if>
+								</volist>
 							</select>
 							<p class="grey tip-grey">&nbsp;</p>
 						</div>

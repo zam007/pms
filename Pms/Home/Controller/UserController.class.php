@@ -6,6 +6,29 @@ class UserController extends BaseController {
     public function improveHtml(){
         $this->display("register_1");
     }
+
+    /**
+     * 个人注册跳转
+     */
+    public function personalRegSkip(){
+        //工作信息
+        $userMode = D('user');
+        $work = $userMode->workList();
+        $this->assign('work',$work);
+        $this->display("register_2");
+    }
+
+    /**
+     * 团体注册跳转
+     */
+    public function goupRegSkip(){
+        //工作信息
+        $userMode = D('user');
+        $work = $userMode->workList();
+        $this->assign('work',$work);
+        $this->display("register_group");
+    }
+
     /**
      * 左边动作菜单跳转
      */
@@ -67,6 +90,7 @@ class UserController extends BaseController {
      */
     public function registerTwo(){
         $index = D("user");
+        $userMode = D('user');
         $userId = $this->userId;
         $rules = array(
             #array('password','/^[a-z]\w{6,20}$/i','8位以上，同时包含字母和数字'),
@@ -82,13 +106,13 @@ class UserController extends BaseController {
         if(I('session.user_type') == 0){
             $msg = array(
             'info' => 'ok',
-            'callback' => U('user/register_2')
+            'callback' => U('User/personalRegSkip')
             );
             $this->ajaxReturn($msg);
         }else{
             $msg = array(
             'info' => 'ok',
-            'callback' => U('User/register_group')
+            'callback' => U('User/goupRegSkip')
             );
             $this->ajaxReturn($msg);
         }

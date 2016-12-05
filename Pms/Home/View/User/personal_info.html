@@ -58,7 +58,6 @@
 							<span class="item">职业：</span>
 							<select name="work_id" id="work_id" class="pl5 pr5" style="width:425px;">
 								<volist name="work" id="vo">
-								
 								<if condition="$user['work_id'] eq $vo['work_id']">
 										<option value="{$vo.work_id}" selected="true">{$vo.name}</option>
 									<else/>

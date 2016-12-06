@@ -12,9 +12,10 @@ class UserController extends BaseController {
      */
     public function personalRegSkip(){
         //工作信息
-        $userMode = D('user');
+        $userMode = D('User');
         $work = $userMode->workList();
         $this->assign('work',$work);
+        //skip
         $this->display("register_2");
     }
 
@@ -23,9 +24,10 @@ class UserController extends BaseController {
      */
     public function goupRegSkip(){
         //工作信息
-        $userMode = D('user');
+        $userMode = D('User');
         $work = $userMode->workList();
         $this->assign('work',$work);
+        //skip
         $this->display("register_group");
     }
 
@@ -527,6 +529,9 @@ class UserController extends BaseController {
     * 进入后信息修改
     */
     public function updatePersonalInfo(){
+        //数据库实例化
+        $index = D("user");
+        $team = D('Team');
         //个人信息获取
         $userId = $this->userId;
         $teamId = I('session.team_id');
@@ -545,7 +550,6 @@ class UserController extends BaseController {
         $teaminfo["attribute"] = I("team_attribute");
         $teaminfo["team_user"] = I("name") ;
         //个人资料完善合法验证
-        $index = D("user");
         $rules = array(
              array('sex','require','请选择性别'),
              array('birth','require','请补充生日信息'),
@@ -556,7 +560,6 @@ class UserController extends BaseController {
         }
         //团队资料合法验证
         if ($teamId) {
-            $team = D("team");
             $teamrules = array(
                  array('team_name','require','请输入团体名称'),
                  array('nature','require','请输入团体性质'),
@@ -569,7 +572,6 @@ class UserController extends BaseController {
 
         //如果存在团队邀请码，验证邀请码是否存在
         if (I("team_invitecode")) {
-            $team = D('Team');
             $teamInfo['code'] = I("team_invitecode");
             $teaminfo = $team->getTeam($teamInfo);
             if (!$teaminfo) {
@@ -605,8 +607,13 @@ class UserController extends BaseController {
         if (I("name")) {
             SESSION("user_name",I("name"));
         }
+
         //团队信息添加到数据库
-        $team->modify($teamId,$teaminfo);
+        $userInfo = $index->getUserField($userId);
+        if ($userInfo['team_id']) {
+          $team->modify($teamId,$teaminfo);
+        }
+
         //ajax正确返回
          $msg = array(
         'statu' => 'ok',

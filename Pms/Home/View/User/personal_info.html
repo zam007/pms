@@ -102,40 +102,74 @@
 							<p class="grey tip-grey">咨询时，获得优先注册和服务</p>
 						</div>
                         <if condition="$team neq null">
-	                        <div>
-	                            <span class="item">团体名称：</span>
-								<input type="text" id="team_name" name="team_name" value="{$team.team_name}" placeholder="" style="width:425px;">
-								<p class="grey tip-grey">公司名，组织名</p>
-	                        </div>
+	                        <!-- ///////////团体名称////////// -->
+	                        <if condition="$user['team_id'] neq null">
+		                        <div>
+		                            <span class="item">团体名称：</span>
+									<input type="text" id="team_name" name="team_name" value="{$team.team_name}" placeholder="" style="width:425px;">
+									<p class="grey tip-grey">公司名，组织名</p>
+		                        </div>
+             			    <else/>
+		                        <div>
+		                            <span class="item">团体名称：</span>
+									<input readonly="readonly" type="text" value="{$team.team_name}" placeholder="" style="width:425px;">
+									<p class="grey tip-grey">公司名，组织名</p>
+		                        </div>
+                   			</if>
+	                        <!-- ///////////团体名称////////// -->
 	                        <!-- ///////////团体性质////////// -->
-	                        <div>
-		                        <span class="item">团体性质：</span>
-                                <select id="team_nature" name="team_nature" class="pl5 pr5" style="width:425px;">
-                                <volist name="config.nature" id="vo">
-									<if condition="$team['nature'] eq $vo['key']">
-										<option value="{$vo.key}" selected="true">{$vo.value}</option>
-									<else/>
-										<option value="{$vo.key}">{$vo.value}</option>
-									</if>
-								</volist>
-                            	</select>
-								<p class="grey tip-grey">所在行业</p>
-	                        </div>
+	                        <if condition="$user['team_id'] neq null">
+		                        <div>
+			                        <span class="item">团体性质：</span>
+	                                <select id="team_nature" name="team_nature" class="pl5 pr5" style="width:425px;">
+	                                <volist name="config.nature" id="vo">
+										<if condition="$team['nature'] eq $vo['key']">
+											<option value="{$vo.key}" selected="true">{$vo.value}</option>
+										<else/>
+											<option value="{$vo.key}">{$vo.value}</option>
+										</if>
+									</volist>
+	                            	</select>
+									<p class="grey tip-grey">所在行业</p>
+		                        </div>
+		                    <else/>
+		                        <div>
+			                        <span class="item">团体性质：</span>
+	                                <volist name="config.nature" id="vo">
+										<if condition="$team['nature'] eq $vo['key']">
+											<input readonly="readonly" type="text" value="{$vo.value}" placeholder="" style="width:425px;">
+										</if>
+									</volist>
+									<p class="grey tip-grey">所在行业</p>
+		                        </div>
+                   			</if>
 	                        <!-- ///////////团体性质////////// -->
 	                        <!-- ///////////行业属性：////////// -->
-	                        <div>
-	                            <span class="item">行业属性：</span>
-                                <select id="team_attribute" name="team_attribute" class="pl5 pr5" style="width:425px;">
-                                <volist name="config.attribute" id="vo">
-									<if condition="$team['attribute'] eq $vo['key']">
-										<option value="{$vo.key}" selected="true">{$vo.value}</option>
-									<else/>
-										<option value="{$vo.key}">{$vo.value}</option>
-									</if>
-								</volist>
-                            	</select>
-	                            <p class="grey tip-grey">所在行业属性</p>
-	                        </div>
+	                        <if condition="$user['team_id'] neq null">
+		                        <div>
+		                            <span class="item">行业属性：</span>
+	                                <select id="team_attribute" name="team_attribute" class="pl5 pr5" style="width:425px;">
+	                                <volist name="config.attribute" id="vo">
+										<if condition="$team['attribute'] eq $vo['key']">
+											<option value="{$vo.key}" selected="true">{$vo.value}</option>
+										<else/>
+											<option value="{$vo.key}">{$vo.value}</option>
+										</if>
+									</volist>
+	                            	</select>
+		                            <p class="grey tip-grey">所在行业属性</p>
+		                        </div>
+		                    <else/>
+		                        <div>
+			                        <span class="item">行业属性：</span>
+	                                <volist name="config.attribute" id="vo">
+										<if condition="$team['attribute'] eq $vo['key']">
+											<input readonly="readonly" type="text" value="{$vo.value}" placeholder="" style="width:425px;">
+										</if>
+									</volist>
+									<p class="grey tip-grey">所在行业属性</p>
+		                        </div>
+                   			</if>
 	                        <!-- ///////////行业属性：////////// -->
 	                        <div>
 	                            <span class="item">团体邀请码：</span>

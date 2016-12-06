@@ -4,14 +4,14 @@ use Think\Controller;
 
 class IndexController extends Controller {
     public function reg(){
-            $this->display("register");
+        $this->display("register");
     }
     public function log(){
-            $this->display("login");
+        $this->display("login");
 
     }
     public function index(){
-            $this->display("index");
+        $this->display("index");
 
     }
 	/**
@@ -96,13 +96,13 @@ class IndexController extends Controller {
                 if ($teamUser["team_id"]) {
                     $msg = array(
                     'info' => 'ok',
-                    'callback' => U('User/register_group')
+                    'callback' => U('User/personalRegSkip')
                     );
                     $this->ajaxReturn($msg);
                 }
                 $msg = array(
                 'info' => 'ok',
-                'callback' => U('User/register_2')
+                'callback' => U('User/goupRegSkip')
                 );
                 $this->ajaxReturn($msg);
             }

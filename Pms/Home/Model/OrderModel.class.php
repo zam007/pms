@@ -25,7 +25,7 @@ class OrderModel extends Model {
             'order.flag' => 1,
         );
         $data['count'] = $order->where($where)->count();
-        $data['item'] = $order->field($filed)->join('left join answer_sheet on answer_sheet.order_id=order.order_id ')
+        $data['item'] = $order->field($filed)->join('left join exam on exam.order_id=order.order_id ')
                         ->where($where)->order('order.order_id desc')->limit($pageMin,$pageMax)->select();
         return $data;
     }

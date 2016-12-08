@@ -107,7 +107,7 @@
 						</div>
 						<div>
 <!-- 							<p id="submit_button" class="submit" onclick="chgpwd_submit()"">完成</p> -->
-							<button class="submit" onclick="regComplete()">完成</button>
+							<button class="submit" onclick="regComplete();return false;">完成</button>
 						</div>
 						<p class="step">
 							<img src="__PUBLIC__/img/step_2.png" alt="" />
@@ -144,7 +144,7 @@
 	            url : url,
 	            success:function(msg){
 	                if (msg.statu == 'ok') {
-	                    window.location.assign(msg.callback);
+	                    window.location.href(msg.callback)
 	                 }
 	                if (msg.statu == 'no') {
 	                    alert(msg.info);

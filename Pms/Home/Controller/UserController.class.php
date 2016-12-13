@@ -403,7 +403,7 @@ class UserController extends BaseController {
            $msg = array(
             'staut' => 'ok',
             'info' => '手机号码绑定成功',
-            'callback' => U('User/personal_info')
+            'callback' => U('User/account_bind')
             );
             $this->ajaxReturn($msg);
         }
@@ -442,7 +442,7 @@ class UserController extends BaseController {
            $msg = array(
             'staut' => 'ok',
             'info' => '邮箱绑定成功',
-            'callback' => U('User/personal_info')
+            'callback' => U('User/account_bind')
             );
             $this->ajaxReturn($msg);
         }

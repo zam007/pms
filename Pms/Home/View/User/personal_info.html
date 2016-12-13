@@ -40,11 +40,17 @@
 						<div>
 							<span class="item">性别：</span>
                             <if condition="$user.sex neq 1">
-	                            <label><input type="radio" name="sex" id="sex1" value="1" class="pr10"><span class="pl5">男</span></label>
-								<label class="pl30"><input type="radio" checked name="sex" id="sex2" value="0" class="pr10"><span class="pl5">女</span></label>
+	                            <label>
+	                            	<input type="radio" name="sex" checked id="sex1" value="0" class="pr10">
+	                            	<span class="pl5">男</span>
+	                            </label>
+								<label class="pl30">
+									<input type="radio" name="sex" id="sex2" value="1" class="pr10">
+									<span class="pl5">女</span>
+								</label>
                             <else/>
-	                            <label><input type="radio"  name="sex" id="sex3" value="1" checked class="pr10"><span class="pl5">男</span></label>
-								<label class="pl30"><input type="radio" name="sex" id="sex4" value="0" class="pr10"><span class="pl5">女</span></label>
+	                            <label><input type="radio"  name="sex" id="sex3" value="0" class="pr10"><span class="pl5">男</span></label>
+								<label class="pl30"><input type="radio" name="sex" checked id="sex4" value="1" class="pr10"><span class="pl5">女</span></label>
                             </if>
 						</div>
 						<div>

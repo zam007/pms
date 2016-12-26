@@ -15,7 +15,7 @@
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 
 //定义后台目录
-//define('BIND_MODULE','PmsFIQ');
+// define('BIND_MODULE','Admin');
 
 // 定义应用目录
 define('APP_PATH','./Pms/');

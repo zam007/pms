@@ -23,9 +23,11 @@ class IndexController extends Controller {
         $info["password"] = md5(PWD_KEY.$pwd);
         $info["flag"] = 1;
         $memberInfo = $member->getMember($info);
+        
         if($memberInfo){
             SESSION("member_id",$memberInfo["member_id"]);
-            $this->display("User/userList");
+            // $this->display("User/userList");
+            $this->redirect('User/userList');
         }else{
             echo "用户名或密码错误";exit;
         }

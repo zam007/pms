@@ -1,0 +1,97 @@
+*{margin: 0;padding: 0;}
+body{font-family: "Microsoft YaHei";font-size: 14px;font-weight: normal;}
+a{text-decoration: none;color: #00b0dc;outline: none;}
+a:hover{cursor: pointer;text-decoration: underline;}
+a:focus{outline:none;}
+/**/
+.pl5{padding-left: 5px;}
+.pr5{padding-right: 5px;}
+/**/
+.header .main,
+.content .main{
+	width: 1448px;
+	margin: 0 auto;
+}
+.content .main .search-options{
+	overflow: hidden;
+	padding: 30px 0;
+}
+.content .main .search-options .title{
+	float: left;
+	height: 40px;line-height: 40px;
+	font-size: 16px;
+	font-weight: normal;
+}
+.content .main .search-options .options{
+	float: right;
+}
+.content .main .search-options .options .date{
+	width: 150px;height: 30px;line-height: 30px;
+	font-size: 14px;
+	outline: none;border: none;
+	border: 1px solid #ddd;
+}
+.content .main .search-options .options .list{
+	width: 150px;height: 30px;line-height: 30px;
+	outline: none;border: none;
+	border-bottom: 1px solid #ddd;
+}
+.content .main .search-options .options .list option{
+	height: 30px;line-height: 30px;
+}
+.content .main .search-options .options .search{
+	width: 150px;height: 30px;line-height: 30px;
+	outline: none;border: none;
+	border-bottom: 1px solid #ddd;
+	font-size: 14px;font-family: inherit;
+	text-indent: 10px;
+}
+.content .main .search-list table tr th{
+	height: 40px;line-height: 40px;
+	background-color: #eee;
+	text-align: center;
+	font-weight: normal;
+	border: 1px solid #ddd;
+}
+.content .main .search-list table tr td{
+	height: 40px;line-height: 40px;
+	text-align: center;
+}
+.content .main .search-list table tr:nth-child(odd){
+	background-color: #eee;
+}
+#managerModal .modal-body-content{
+	display: flex;
+	flex-wrap: wrap;
+}
+#managerModal .modal-body-content div{
+	width: 50%;
+	height: 30px;line-height: 30px;
+}
+#cancelModal .modal-body-content-title{
+	width: 100%;
+	text-align: center;
+}
+#cancelModal .modal-footer{
+	text-align: center;
+}
+#reportModal .modal-body-content-list{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+  	align-items: center;
+  	padding: 15px 0;
+}
+#reportModal .modal-body-content-list p,
+#reportModal .modal-body-content-list h4{
+	margin: 0;
+}
+#reportModal .modal-body-content-list .img{
+	flex: 10%;
+}
+#reportModal .modal-body-content-list .content{
+	flex: 90%;
+}
+#reportModal .modal-body-content-list .link{
+	flex: 10%;
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单位管理</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" href="danweiguanli.css">
+</head>
+<body>
+	<header class="header">
+		<div class="main">
+			
+		</div>
+	</header>
+	<section class="content">
+		<div class="main">
+			<div class="search-options">
+				<div class="title">单位管理</div>
+				<div class="options">
+					<input class="date" type="date">
+					<select class="list">
+						<option value="">选择团体</option>
+					</select>
+					<input class="search" type="text" placeholder="输入查询信息">
+				</div>
+			</div>
+			<div class="search-list">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<th>序号</th>
+						<th>团体名称</th>
+						<th>团体属性</th>
+						<th>所属行业</th>
+						<th>管理员</th>
+						<th>成员人数</th>
+						<th>邀请码</th>
+						<th>注册时间</th>
+						<th>操作</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>成都不存在科技有限公司</td>
+						<td>事业单位</td>
+						<td>服务业</td>
+						<td><a href="#">张三</a></td>
+						<td>36</td>
+						<td>ZJlj8</td>
+						<td>2016-04-23</td>
+						<td>
+							<a href="#" class="pl5 pr5">测试报告</a>
+							<a href="#" class="pl5 pr5">删除</a>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>成都不存在科技有限公司</td>
+						<td>事业单位</td>
+						<td>服务业</td>
+						<td><a href="#">张三</a></td>
+						<td>36</td>
+						<td>ZJlj8</td>
+						<td>2016-04-23</td>
+						<td>
+							<a href="#" class="pl5 pr5">测试报告</a>
+							<a href="#" class="pl5 pr5">删除</a>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>成都不存在科技有限公司</td>
+						<td>事业单位</td>
+						<td>服务业</td>
+						<td><a href="#" data-toggle="modal" data-target="#managerModal">张三</a></td>
+						<td>36</td>
+						<td>ZJlj8</td>
+						<td>2016-04-23</td>
+						<td>
+							<a href="#" class="pl5 pr5" data-toggle="modal" data-target="#reportModal">测试报告</a>
+							<a href="#" class="pl5 pr5" data-toggle="modal" data-target="#cancelModal">删除</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</section>
+	
+	<!-- managerModal -->
+	<div id="managerModal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">张三</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="modal-body-content">
+	        	<div>手机号：<span>13876546789</span></div>
+	        	<div>生日：<span>1994-02-20</span></div>
+	        	<div>邮箱：<span>Een.J.Wang@163.com</span></div>
+	        	<div>企业：<span>阿里巴巴电子商务有限公司</span></div>
+	        	<div>微信号<span>Alibaba</span></div>
+	        	<div>单位：<span>Taobao.com</span></div>
+	        	<div>QQ：<span>100013678</span></div>
+	        	<div>来源地：<span>杭州市</span></div>
+	        	<div>性别：<span>男</span></div>
+	        </div>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- reportModal -->
+	<div id="reportModal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">成都不存在科技有限公司测试报告</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="modal-body-content">
+	        	<div class="modal-body-content-list">
+	        		<div class="img"><img src="" alt=""></div>
+	        		<div class="content">
+	        			<p>订单号：<span>WCGR18CT-20161018-0001</span></p>
+	        			<h4>成都不存在科技有限公司 网测团体报告 2016-04-04</h4>
+	        			<p><span>￥0.00</span>（<span>支付宝</span>）</p>
+	        		</div>
+	        		<div class="link">
+	        			<a href="#">下载</a>
+	        		</div>
+	        	</div>
+	        	<div class="modal-body-content-list">
+	        		<div class="img"><img src="" alt=""></div>
+	        		<div class="content">
+	        			<p>订单号：<span>WCGR18CT-20161018-0001</span></p>
+	        			<h4>成都不存在科技有限公司 网测团体报告 2016-04-04</h4>
+	        			<p><span>￥0.00</span>（<span>支付宝</span>）</p>
+	        		</div>
+	        		<div class="link">
+	        			<a href="#">下载</a>
+	        		</div>
+	        	</div>
+	        	<div class="modal-body-content-list">
+	        		<div class="img"><img src="" alt=""></div>
+	        		<div class="content">
+	        			<p>订单号：<span>WCGR18CT-20161018-0001</span></p>
+	        			<h4>成都不存在科技有限公司 网测团体报告 2016-04-04</h4>
+	        			<p><span>￥0.00</span>（<span>支付宝</span>）</p>
+	        		</div>
+	        		<div class="link">
+	        			<a href="#">下载</a>
+	        		</div>
+	        	</div>
+	        </div>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<!-- cancelModal -->
+	<div id="cancelModal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <div class="modal-body-content">
+	        	<h4 class="modal-body-content-title">确定删除该单位？</h4>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+	        <button type="button" class="btn btn-primary">取消</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- script -->
+	<script src="jquery.min.js"></script>
+	<script src="modal.js"></script>
+</body>
+</html>

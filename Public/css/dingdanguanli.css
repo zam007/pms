@@ -1,0 +1,60 @@
+*{margin: 0;padding: 0;}
+body{font-family: "Microsoft YaHei";font-size: 14px;font-weight: normal;}
+a{text-decoration: none;color: blue;outline: none;}
+a:hover{cursor: pointer;text-decoration: underline;}
+a:focus{outline:none;}
+.header .main,
+.content .main{
+	width: 1448px;
+	margin: 0 auto;
+}
+.content .main .title{
+	height: 40px;line-height: 40px;
+	font-size: 16px;
+	font-weight: normal;
+}
+.content .main .top-data{
+	display: flex;
+}
+.content .main .top-data > div {
+	flex: 1;
+	text-align: center;
+	background: #eee;
+	border: 1px solid #ddd;
+}
+.content .main .top-data > div:hover{
+	background-color: #00b0dc;
+	color: #fff;
+}
+.content .main .top-data > div:hover .num,
+.content .main .top-data > div:hover .desc{
+	color: #fff;
+	cursor: pointer;
+}
+.content .main .top-data > div .num{
+	font-size: 48px;
+	color: #00b0dc;
+	padding: 20px 0;
+}
+.content .main .top-data > div .desc{
+	font-size: 14px;
+	color: #999;
+	padding-bottom: 30px;
+}
+.content .main .content-table{
+	margin: 20px 0;
+}
+.content .main .content-table table tr th{
+	height: 40px;line-height: 40px;
+	background-color: #eee;
+	text-align: center;
+	font-weight: normal;
+	border: 1px solid #ddd;
+}
+.content .main .content-table table tr td{
+	height: 40px;line-height: 40px;
+	text-align: center;
+}
+.content .main .content-table table tr:nth-child(odd){
+	background-color: #eee;
+}

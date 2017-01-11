@@ -1,5 +1,5 @@
 <?php
-namespace PmsFIQ\Model;
+namespace Admin\Model;
 use Think\Model;
 class UserModel extends Model {
     protected $tablePrefix = '';
@@ -30,6 +30,7 @@ class UserModel extends Model {
 
     public function userList($info, $page = 1, $size = 20){
         $User = M('User'); // 实例化User对象
+        
         // 进行分页数据查询 
         $list = $User->where($info)->page($page.','.$size)->select();
         $this->assign('list',$list);// 赋值数据集

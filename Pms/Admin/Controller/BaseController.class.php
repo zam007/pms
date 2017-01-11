@@ -8,7 +8,7 @@ class BaseController extends Controller {
     	parent::__construct();
          $memberId = I('session.member_id',0);
          if($memberId == 0){
-         	$this->error('您还未登录！','../Index/index');
+         	$this->error('您还未登录！','/Admin/Index/index');
          }
          $this->memberId = $memberId;
      }

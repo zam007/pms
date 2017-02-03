@@ -15,15 +15,14 @@ class IndexController extends Controller {
             echo "验证码不能为空";exit;
         }
         
-        // if(!check_verify($code)){
-        //    echo "验证码错误";exit;
-        // }
+        if(!check_verify($code)){
+           echo "验证码错误";exit;
+        }
         $member = D("Member");
         $info["member_name"] = $memberName;
         $info["password"] = md5(PWD_KEY.$pwd);
         $info["flag"] = 1;
         $memberInfo = $member->getMember($info);
-        
         if($memberInfo){
             SESSION("member_id",$memberInfo["member_id"]);
             // $this->display("User/userList");

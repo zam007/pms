@@ -12,10 +12,10 @@
 	
   <include file="Index:header" />
 		<div class="content">
-			<div class="content-main">
-        
-     
-      
+		<div class="content-main">
+    <volist name="list" id="vo">
+        {$vo.user_id}:{$vo.name}<br/>
+    </volist>
 		</div>
 	</div>
   <div class="pages">{$page}</div>

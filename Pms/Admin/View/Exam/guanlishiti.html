@@ -3,9 +3,9 @@
 <head>
 	<meta charset="UTF-8">
     <title>五行财商研究中心</title>
-    <link rel="stylesheet" type="text/css" href="../css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="../css/base.css">
-	<link rel="stylesheet" type="text/css" href="../css/guanlishiti.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/guanlishiti.css">
 </head>
 <body>
 	<div class="wrap">
@@ -71,45 +71,29 @@
           <th>答案</th>
           <th width="150">操作</th>
         </tr>
+        <volist name="list" id="vo" key="key">
+        
         <tr>
-          <td>1</td>
+          <td>{$key}</td>
           <td>8</td>
           <td>B1</td>
           <td>5</td>
-          <td>城市</td>
+          <td>城市/农村</td>
           <td>
-            <span>如果你去一家超市买下周学校春游要用的东西，你会怎么做？</span>
+            <span>{$vo.question}</span>
             <p>选择图片：<input type="file" name="file-img" value=""></p>
             <p>选择视频：<input type="file" name="file-video" value=""></p>
             <p>选择音频：<input type="file" name="file-audio" value="选择音频"></p>
           </td>
           <td>
             <ul>
+            <volist name="vo['answers']" id="ans">
               <li>
-                <p class="item">A：想到什么马上就去买</p>
-                <p class="score">2分</p>
-                <p class="review">执行能力较强，但计划和组织能力较弱，随意性较强</p>
+                <p class="item">{$ans.answer}</p>
+                <p class="score">{$ans.score}分</p>
+                <p class="review">{$incl[$ans['inclination_id']]['inclination']}</p>
               </li>
-              <li>
-                <p class="item">B：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">C：看别的同学怎么买，自己跟着一样买</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">D：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">E：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
+              </volist>
             </ul>
           </td>
           <td>
@@ -117,100 +101,11 @@
             <a href="#">删除</a>
           </td>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>8</td>
-          <td>B1</td>
-          <td>5</td>
-          <td>城市</td>
-          <td>
-            <span>如果你去一家超市买下周学校春游要用的东西，你会怎么做？</span>
-            <p>选择图片：<input type="file" name="file-img" value=""></p>
-            <p>选择视频：<input type="file" name="file-video" value=""></p>
-            <p>选择音频：<input type="file" name="file-audio" value="选择音频"></p>
-          </td>
-          <td>
-            <ul>
-              <li>
-                <p class="item">A：想到什么马上就去买</p>
-                <p class="score">2分</p>
-                <p class="review">执行能力较强，但计划和组织能力较弱，随意性较强</p>
-              </li>
-              <li>
-                <p class="item">B：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">C：看别的同学怎么买，自己跟着一样买</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">D：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">E：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-            </ul>
-          </td>
-          <td>
-            <a href="#">修改</a>
-            <a href="#">删除</a>
-          </td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>8</td>
-          <td>B1</td>
-          <td>5</td>
-          <td>城市</td>
-          <td>
-            <span>如果你去一家超市买下周学校春游要用的东西，你会怎么做？</span>
-            <p>选择图片：<input type="file" name="file-img" value=""></p>
-            <p>选择视频：<input type="file" name="file-video" value=""></p>
-            <p>选择音频：<input type="file" name="file-audio" value="选择音频"></p>
-          </td>
-          <td>
-            <ul>
-              <li>
-                <p class="item">A：想到什么马上就去买</p>
-                <p class="score">2分</p>
-                <p class="review">执行能力较强，但计划和组织能力较弱，随意性较强</p>
-              </li>
-              <li>
-                <p class="item">B：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">C：看别的同学怎么买，自己跟着一样买</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">D：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-              <li>
-                <p class="item">E：先分析整个春游的计划和安排列出清单和预算一次性买完</p>
-                <p class="score">3分</p>
-                <p class="review">有较强的计划和组织能力</p>
-              </li>
-            </ul>
-          </td>
-          <td>
-            <a href="#">修改</a>
-            <a href="#">删除</a>
-          </td>
-        </tr>
+        
+      </volist>
       </table>
 		</div>
 	</div>
+  <div class="pages">{$page}</div>
 </body>
 </html>

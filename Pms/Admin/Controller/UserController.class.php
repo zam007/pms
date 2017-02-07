@@ -8,11 +8,12 @@ class UserController extends BaseController {
         $where = array(
             'flag' => 1,
             );
-        $count = $m->where($where)->count();
+        $count = $model->where($where)->count();
         $p = getpage($count);
-        $list = $m->field(true)->where($where)->limit($p->firstRow, $p->listRows)->select();
+        $list = $model->field(true)->where($where)->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 赋值数据集
         $this->assign('page', $p->show()); // 赋值分页输出
         $this->display();
+        die();
     }
 }

@@ -4,7 +4,6 @@ namespace Util;
  * 公用工具
  */
 class Util {
-
 	/**
 	 * 计算时间差，年月日
 	 */

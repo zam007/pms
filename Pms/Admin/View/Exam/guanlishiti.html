@@ -9,35 +9,23 @@
 </head>
 <body>
 	<div class="wrap">
-		<div class="header">
-			<div class="wrap-content">
-				<div class="wrap-header-content">
-					<img class="inline-block" src="" alt="logo">
-					<div class="inline-block">
-						<h1 class="fz-20 fw-500 grey-deep">西南财经大学五行财商研究中心</h1>
-						<h3 class="fz-14 fw-100 grey">财商测评系统（v1.0）</h3>
-					</div>
-					<div class="fr link">
-						<a href="#" class="fz-14 pl10 pr10 grey-deep">用户管理</a>
-            <a href="#" class="fz-14 pl10 pr10 grey-deep">单位管理</a>
-            <a href="#" class="fz-14 pl10 pr10 grey-deep">试题管理</a>
-            <a href="#" class="fz-14 pl10 pr10 grey-deep">测试订单</a>
-						<a href="login.html" class="ml5 mr5 pl10 pr10 hover">登陆</a>
-					</div>
-				</div>
-			</div>
-		</div>
+		<include file="Index:header" />
+    <form method="post" action="{:U('Exam/readExcel')}" enctype="multipart/form-data">
+         <h3>批量导入试题：</h3><input  type="file" name="file_stu" />
+           <input type="submit"  value="导入" />
+    </form>
 		<div class="content">
 			<div class="content-main">
         <div class="deep-grey">
           <p class="content-main-title">管理试题</p>
           <ul class="options">
+            <from>
             <li>全部试题</li>
-            <li>保钱（B）</li>
-            <li>花钱（H）</li>
-            <li>借钱（J）</li>
-            <li>投钱（T）</li>
-            <li>挣钱（Z）</li>
+            <li>保钱</li>
+            <li>花钱</li>
+            <li>借钱</li>
+            <li>投钱</li>
+            <li>挣钱</li>
             <li>
               <select class="" name="">
                 <option value="option">难度系数</option>
@@ -48,16 +36,13 @@
                 <option value="option">年龄段</option>
               </select>
             </li>
-            <li>
-              <select class="" name="">
-                <option value="option">团体名称</option>
-              </select>
-            </li>
             <li style="padding-right:0;color:#eee;">|</li>
             <li>
               <input type="text" name="" value="" placeholder="输入查询信息">
+              <input type="submit" value="查询">
             </li>
-            <li><a data-type="button" href="tianjiashiti.html">添加试题</a></li>
+            </from>
+            <li><a data-type="button" href="addExam.html">添加试题</a></li>
           </ul>
 			</div>
       <table cellspacing="0" cellpadding="0">
@@ -75,15 +60,21 @@
         
         <tr>
           <td>{$key}</td>
-          <td>8</td>
-          <td>B1</td>
-          <td>5</td>
+          <td>{$level[$vo['level_id']]['min_age']}-{$level[$vo['level_id']]['max_age']}</td>
+          <td>{$classify[$vo[classify_id]]['classify_name']}</td>
+          <td>{$vo.difficulty}</td>
           <td>城市/农村</td>
           <td>
             <span>{$vo.question}</span>
-            <p>选择图片：<input type="file" name="file-img" value=""></p>
+            <!-- <p>选择图片：<input type="file" name="file-img" value=""></p>
             <p>选择视频：<input type="file" name="file-video" value=""></p>
-            <p>选择音频：<input type="file" name="file-audio" value="选择音频"></p>
+            <p>选择音频：<input type="file" name="file-audio" value="选择音频"></p> -->
+            <if condition="$vo.type == 1">
+              <img src="{$vo.url}">
+            </if>
+            <if condition="$vo.type == 2 or $vo.type == 3">
+               
+            </if>
           </td>
           <td>
             <ul>

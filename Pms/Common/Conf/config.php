@@ -12,6 +12,9 @@ return array(
 	'URL_ROUTE_RULES' => array(
 	    'new/:name' => 'Home/Index/hello',
 	),
+    'TMPL_CACHE_ON' => false,//禁止模板编译缓存
+    'HTML_CACHE_ON' => false,//禁止静态缓存 
+    'APP_DEBUG' => true,//
 	//加密字符
     'PWD_KEY'=>'wuxingcaishang',
 

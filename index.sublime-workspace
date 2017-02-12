@@ -1,0 +1,1050 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"re",
+				"response\tstatement"
+			],
+			[
+				"reque",
+				"request"
+			],
+			[
+				"a_",
+				"a_file\tstatement"
+			],
+			[
+				"in",
+				"insert\tfunction"
+			],
+			[
+				"ra",
+				"raoman1\tmodule"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"fo",
+				"for\tFor Loop"
+			],
+			[
+				"g",
+				"glob\tmodule"
+			],
+			[
+				"st",
+				"st_mtime"
+			],
+			[
+				"pa",
+				"PendingDeprecationWarning\tclass"
+			],
+			[
+				"try",
+				"try\tTry/Except"
+			],
+			[
+				"ty",
+				"type_set\tstatement"
+			],
+			[
+				"if",
+				"if\tIf Condition"
+			],
+			[
+				"_",
+				"__doc__\tinstance"
+			],
+			[
+				"ma",
+				"match\tfunction"
+			],
+			[
+				"var",
+				"var_dump〔function〕"
+			],
+			[
+				"echo",
+				"echo\techo \"…\""
+			],
+			[
+				"fa",
+				"false"
+			],
+			[
+				"un",
+				"unbindEmail"
+			],
+			[
+				"e",
+				"email"
+			],
+			[
+				"d",
+				"div\tTag"
+			],
+			[
+				"bindEmai",
+				"bindEmail〔variable〕"
+			],
+			[
+				"bindEm",
+				"bindEmailVerify"
+			],
+			[
+				"bindMO",
+				"bindMobileVerify"
+			],
+			[
+				"bind",
+				"bindEmailVerify"
+			],
+			[
+				"bin",
+				"bindUser"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"a",
+				"alert"
+			],
+			[
+				"team",
+				"team_id"
+			],
+			[
+				"tea",
+				"teamuserInfo"
+			],
+			[
+				"teamI",
+				"teamInfo"
+			],
+			[
+				"dat",
+				"data"
+			],
+			[
+				"fr",
+				"from_add"
+			],
+			[
+				"wo",
+				"work_id"
+			],
+			[
+				"ne",
+				"next"
+			],
+			[
+				"di",
+				"die"
+			],
+			[
+				"f",
+				"find_pwd_one"
+			],
+			[
+				"fi",
+				"findpwd_verify_err"
+			],
+			[
+				"pst",
+				"parents〔function〕"
+			],
+			[
+				"o",
+				"oldpassword_err"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"ajax",
+				"ajaxReturn"
+			],
+			[
+				"statu",
+				"$status〔variable〕"
+			],
+			[
+				"aj",
+				"ajaxReturn"
+			],
+			[
+				"veri",
+				"$verifyCode〔variable〕"
+			],
+			[
+				"che",
+				"checkVerify〔function〕"
+			],
+			[
+				"use",
+				"user"
+			],
+			[
+				"code",
+				"$code〔variable〕"
+			],
+			[
+				"co",
+				"code"
+			],
+			[
+				"el",
+				"else"
+			],
+			[
+				"m",
+				"mobile"
+			],
+			[
+				"mail",
+				"mailCode"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"er",
+				"error"
+			],
+			[
+				"he",
+				"href"
+			],
+			[
+				"su",
+				"submit〔function〕"
+			],
+			[
+				"I",
+				"IS_POST"
+			],
+			[
+				"reg",
+				"register_1"
+			],
+			[
+				"p",
+				"public"
+			],
+			[
+				"po",
+				"post"
+			],
+			[
+				"ad",
+				"addUser"
+			],
+			[
+				"inde",
+				"$index_team_user〔variable〕"
+			],
+			[
+				"te",
+				"team_user"
+			],
+			[
+				"uesr",
+				"user_id"
+			],
+			[
+				"pri",
+				"print_r〔function〕"
+			],
+			[
+				"log",
+				"login"
+			],
+			[
+				"dis",
+				"display"
+			],
+			[
+				"com",
+				"completion"
+			],
+			[
+				"se",
+				"sex"
+			],
+			[
+				"us",
+				"user"
+			],
+			[
+				"lo",
+				"login"
+			],
+			[
+				"ac",
+				"action\tAttr"
+			],
+			[
+				"vr",
+				"verify"
+			],
+			[
+				"v",
+				"verify"
+			],
+			[
+				"Ind",
+				"index"
+			],
+			[
+				"fuc",
+				"function"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"dum",
+				"var_dump"
+			],
+			[
+				"th",
+				"this"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Pms/Admin/View/Index/login.html",
+			"settings":
+			{
+				"buffer_size": 674,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "pull",
+		"selected_items":
+		[
+			[
+				"pull",
+				"Git: Pull Current Branch"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"upg",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"push",
+				"Git: Push Current Branch"
+			],
+			[
+				"com",
+				"Git: Commit"
+			],
+			[
+				"add",
+				"Git: Add All"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"ad",
+				"Git: Add All"
+			],
+			[
+				"pus",
+				"Git: Push Current Branch"
+			],
+			[
+				"puh",
+				"Git: Push Current Branch"
+			],
+			[
+				"pushh",
+				"Git: Push Current Branch"
+			],
+			[
+				"comm",
+				"Git: Commit"
+			],
+			[
+				"pu",
+				"Git: Push Current Branch"
+			],
+			[
+				"co",
+				"Git: Commit"
+			],
+			[
+				"pul",
+				"Git: Pull Current Branch"
+			],
+			[
+				"gitadd",
+				"Git: Add All"
+			],
+			[
+				"PULL",
+				"Git: Pull Current Branch"
+			],
+			[
+				"dff",
+				"Git: Diff All Files"
+			],
+			[
+				"git cle",
+				"Git: Diff Current File"
+			],
+			[
+				"git pull",
+				"Git: Pull Current Branch"
+			],
+			[
+				"gitpull",
+				"Git: Pull Current Branch"
+			],
+			[
+				"git",
+				"Git: Pull"
+			],
+			[
+				"gitad",
+				"Git: Add All"
+			],
+			[
+				"i",
+				"Package Control: Install Package"
+			],
+			[
+				"g",
+				"Git: Pull"
+			],
+			[
+				"gitpu",
+				"Git: Pull Current Branch"
+			],
+			[
+				"gull",
+				"Git: Pull"
+			],
+			[
+				"gitsta",
+				"Git: Status"
+			],
+			[
+				"bran",
+				"Git: Change Branch"
+			],
+			[
+				"giup",
+				"Git: Pull Current Branch"
+			],
+			[
+				"gipu",
+				"Git: Pull Current Branch"
+			],
+			[
+				"gitp",
+				"Git: Push Current Branch"
+			],
+			[
+				"cmo",
+				"Git: Commit"
+			],
+			[
+				"gitcom",
+				"Git: Commit"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import  urllib.request,os;pf='Package Control.sublime-package';ipp=sublime.installed_packages_path();urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler()));open(os.path.join(ipp,pf),'wb').write(urllib.request.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/project/pms/Pms",
+		"/D/project/pms/Pms/Admin",
+		"/D/project/pms/Pms/Admin/Common",
+		"/D/project/pms/Pms/Admin/Conf",
+		"/D/project/pms/Pms/Admin/Controller",
+		"/D/project/pms/Pms/Admin/Model",
+		"/D/project/pms/Pms/Admin/View"
+	],
+	"file_history":
+	[
+		"/D/project/pms/Pms/Admin/Controller/IndexController.class.php",
+		"/D/project/pms/phpinfo.php",
+		"/D/project/pms/index.php",
+		"/D/project/pyshell/examples/roman1.py",
+		"/D/project/pyshell/examples/romantest1.py",
+		"/D/project/pyshell/examples/test.log",
+		"/C/Users/Administrator/Desktop/11.py",
+		"/C/Users/Administrator/Desktop/home.html",
+		"/C/Users/Administrator/Desktop/3.6.py",
+		"/D/project/pycharm_project/zabbx_api_3.0.py",
+		"/C/Users/Administrator/Desktop/knowledge.sql",
+		"/C/Users/Administrator/Desktop/1.py",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/Anaconda.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Python PEP8 Autoformat/pep8_autoformat.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/pep8_autoformat.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Anaconda/Anaconda.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/ConvertToUTF8/ConvertToUTF8.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/ConvertToUTF8.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Anaconda/anaconda_server/jsonserver.py",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Jedi - Python autocompletion/sublime_jedi.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/sublime_jedi.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/Python Django.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Default/Default (Windows).sublime-keymap",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/SublimeLinter.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/python36.sublime-build",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Default/Preferences.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/Preferences.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/SublimeCodeIntel/SublimeCodeIntel.py",
+		"/D/Project/pms/Pms/Admin/Conf/config.php",
+		"/C/Users/Administrator/Desktop/gonghui.sql",
+		"/C/Users/Administrator/Desktop/hello.py",
+		"/C/Users/Administrator/Desktop/infor.php",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Jedi - Python autocompletion/Default.sublime-keymap",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Python PEP8 Autoformat/Default (Windows).sublime-keymap",
+		"/D/Project/pms/Pms/Home/Controller/BaseController.class.php",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Anaconda/README.md",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Pylinter/Pylinter.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/untitled.sublime-build",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Git/Git.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/Git.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/Pylinter.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/User/SublimeREPL.sublime-settings",
+		"/D/Project/pms/Pms/Home/Controller/UserController.class.php",
+		"/D/Project/pms/Pms/Home/View/User/register_group.html",
+		"/D/Project/pms/Pms/Home/View/User/register_2.html",
+		"/D/Project/pms/Pms/Home/View/User/personal_info.html",
+		"/C/Users/Administrator/Desktop/shell.txt",
+		"/C/Users/Administrator/Desktop/TestBird.php",
+		"/C/Users/Administrator/Desktop/sline_line_day.sql",
+		"/C/Users/Administrator/Desktop/sline_line_day_old.sql",
+		"/C/Users/Administrator/Desktop/sline_line__xxxxxx.sql",
+		"/C/Users/Administrator/Desktop/sline_line.sql",
+		"/D/Project/pms/Pms/Home/Controller/IndexController.class.php",
+		"/D/Project/pms/Pms/Home/View/Public/header.html",
+		"/D/Project/pms/Pms/Home/View/User/register_1.html",
+		"/D/Project/pms/Pms/Home/View/Index/fundpwd_1.html",
+		"/D/Project/pms/Pms/Home/Model/UserModel.class.php",
+		"/D/Project/pms/Pms/Home/Model/WorkModel.class.php",
+		"/D/Project/pms/Pms/Common/Conf/config.php",
+		"/D/Project/pms/Pms/Home/Common/function.php",
+		"/D/Project/pms/Pms/Home/Conf/config.php",
+		"/D/Project/pms/Pms/Home/Model/TeamModel.class.php",
+		"/D/Project/pms/Pms/Home/Model/TeamUserModel.class.php",
+		"/D/Project/pms/Pms/Home/View/Index/index.html",
+		"/D/Project/pms/Pms/Home/View/User/completion.html",
+		"/D/Project/pms/Pms/Home/View/User/account_bind.html",
+		"/D/xampp/apache/conf/vhost/zam.souxw.com.conf",
+		"/D/Downloads/showdoc-master/Application/Home/Controller/MemberController.class.php",
+		"/D/Downloads/showdoc-master/Application/Home/Controller/IndexController.class.php",
+		"/D/Downloads/showdoc-master/Application/Home/Controller/CommonController.class.php",
+		"/D/Project/pms/Pms/Home/View/User/change_pwd.html",
+		"/D/Project/pms/Pms/Home/Controller/ExamController.class.php",
+		"/D/Project/pms/Pms/Home/Controller/SendmailController.class.php",
+		"/D/Project/pms/Pms/Home/View/Index/fundpwd_2.html",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Alignment/Base File.sublime-settings",
+		"/D/Project/pms/Pms/Home/Model/index.html",
+		"/C/Users/Administrator/Desktop/五行财商测评系统2016-08-25/CODE/html/home.html",
+		"/D/Project/pms/Pms/Home/Model/AnswerModel.class.php",
+		"/D/Project/pms/Pms/Home/View/Index/login.html",
+		"/D/Project/pms/Public/css/info.css",
+		"/C/Users/Administrator/Desktop/2016.08.12/CODE/html/home.html",
+		"/D/project/pms/Pms/Home/View/Public/titlecss.html",
+		"/D/Project/pms/Public/css/login.css",
+		"/D/Project/pms/Public/css/info-confirm.css",
+		"/C/Users/Administrator/Desktop/hengjiwang_souxw_com.sql",
+		"/D/project/pms/pms.sql",
+		"/D/OneDrive/Program Files/Sublime Text Build 3103 x64/Data/Packages/Package Control/Package Control.sublime-settings",
+		"/C/Users/Administrator/Desktop/导入/sline_car_kind.sql",
+		"/C/Users/Administrator/Desktop/导入/sline_hotel.sql",
+		"/C/Users/Administrator/Desktop/导入/sline_help_kind.sql",
+		"/C/Users/Administrator/Desktop/导入/sline_help.sql",
+		"/C/Users/Administrator/Desktop/www_homelc_cn.sql",
+		"/C/Users/Administrator/Desktop/导入/car.sql",
+		"/C/Users/Administrator/Desktop/导入/article.sql",
+		"/C/Users/Administrator/Desktop/new_homelc_cn.sql",
+		"/C/Users/Administrator/Desktop/amazingtravel_souxw_com.sql",
+		"/C/Users/Administrator/Desktop/stourwebcms.sql",
+		"/C/Users/Administrator/Desktop/sline_spot.sql",
+		"/D/project/pms/out.html",
+		"/D/pms/Pms/Home/Controller/ExamController.class.php",
+		"/D/Project/pms/Public/js/zamadd/check.js",
+		"/D/Project/pms/Public/js/zamadd/other.js",
+		"/D/Project/pms/Pms/Home/View/Index/register.html",
+		"/D/project/python3_webapp/www/static/js/awesome.js",
+		"/C/Users/Administrator/Desktop/0054_souxw_com.sql",
+		"/D/Downloads/opensearch.php",
+		"/C/Users/Administrator/Desktop/0105_souxw_com.sql",
+		"/D/Project/pms/Pms/Home/View/User/test_record.html",
+		"/D/Project/pms/Pms/Home/View/Public/footer.html",
+		"/C/Users/Administrator/Desktop/ty_souxw_com.sql",
+		"/C/Users/Administrator/Desktop/五行财商测评系统2016-08-25/CODE/html/test-record.html",
+		"/D/project/pms/Pms/Home/View/User/account_bind.html",
+		"/D/project/pms/Pms/Home/View/User/change_pwd.html",
+		"/D/project/pms/Pms/Home/View/User/test_record.html",
+		"/C/Users/Administrator/Desktop/五行财商测评系统2016-08-25/CODE/html/account-bind.html",
+		"/C/Users/Administrator/Desktop/五行财商测评系统2016-08-25/CODE/html/change-pwd.html",
+		"/D/project/pms/Pms/Home/View/User/personal-info.html",
+		"/C/Users/Administrator/Desktop/五行财商测评系统2016-08-25/CODE/html/personal-info.html",
+		"/D/project/pms/Pms/Home/View/User/register_group.html",
+		"/C/Users/Administrator/Desktop/五行财商测评系统2016-08-25/CODE/html/register_group.html",
+		"/D/project/pms/Pms/Home/View/User/register_2.html",
+		"/D/Project/pms/Pms/Home/View/User/improve.html",
+		"/C/Users/Administrator/Desktop/五行财商测评系统2016-08-25/CODE/html/register_2.html",
+		"/D/project/pms/Pms/Home/View/Index/register_1.html"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"D:\\xampp\\pms\\Pms\\Runtime"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"runpy",
+			"suppress_word_completions",
+			"localhost",
+			"startup",
+			"python",
+			"))\n",
+			"pep8",
+			"anaconda_linting",
+			"complete_parameters",
+			"suppress_word_completions",
+			"Users",
+			"python_interpreter",
+			"path",
+			"python",
+			"pytcho",
+			"getUserField",
+			"user",
+			"User",
+			"session",
+			"SESSION",
+			"SESSION(\"user_name\",I(\"name\"))",
+			"val",
+			"();\n",
+			"form",
+			"index",
+			"8位",
+			"存在",
+			"已存在",
+			"8位",
+			"verifyCode",
+			"password",
+			"8位",
+			"8",
+			"modify",
+			"addUser",
+			"userId",
+			"userid",
+			";\n",
+			"时间戳",
+			"不存在",
+			"email",
+			"if",
+			"no",
+			">\n",
+			"user_accout",
+			"user_name",
+			"trim",
+			"密码修改失败",
+			"密码",
+			"密码修改",
+			"密码修改失败",
+			"getUserField",
+			"getUser",
+			"getUserField",
+			"company",
+			"alert",
+			"D(\"team\")",
+			"邮箱不合法或者已经存在",
+			"value",
+			"form",
+			"code",
+			">\n",
+			"updatePwd",
+			"$msg['info'] = 'ok';\n            $this->ajaxReturn($msg);",
+			"findPwd",
+			"getUser",
+			"获取验证码",
+			"生日",
+			"请输入密码",
+			"form",
+			"user_id",
+			"session",
+			"form-box",
+			"form-box error",
+			"form-box",
+			"user_type",
+			"请输入密码",
+			"error-tip",
+			"mobileCode",
+			"registerOne",
+			"getCode",
+			"verify",
+			"die",
+			"发送验证码",
+			"send",
+			"search",
+			"search_line",
+			"change_pwd",
+			"11位",
+			"register_form",
+			"btn-login",
+			"Public",
+			"Public/img/",
+			"register_submit",
+			"username",
+			"请输入手机",
+			"请输入手机号码",
+			"个人",
+			"团体",
+			"11",
+			"请输入",
+			"tooltip1",
+			"..",
+			"from1",
+			"form",
+			"..",
+			"name",
+			"improve",
+			"..",
+			"if",
+			"..",
+			"../",
+			"type",
+			"../",
+			"team",
+			"user",
+			"sline_search",
+			"sline_serach",
+			"form",
+			"reg1",
+			"home",
+			"register",
+			">\n",
+			"home",
+			"getUserField",
+			"userInfo",
+			"improve",
+			"userName"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"work",
+			"Work",
+			"reg-tip1",
+			"__PUBLIC__",
+			"__PUBLIC__/",
+			"teamUser",
+			"team",
+			"index",
+			"home",
+			"AllowOverride All"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Pms/Admin/View/Index/login.html",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 674,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								674,
+								674
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"encoding_helper_encoding": "UTF-8",
+							"encoding_thread_running": true,
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 142.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 142.0
+	},
+	"pinned_build_system": "Packages/User/php.sublime-build",
+	"project": "index.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 250.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

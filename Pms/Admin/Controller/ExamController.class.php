@@ -6,7 +6,7 @@ use Org\Util\PHPExcel;
 class ExamController extends BaseController {
 
     public function readExcel(){
-
+        set_time_limit(0);
         $upload = new \Think\Upload();// 实例化上传类
         $upload->maxSize   =     3145728 ;// 设置附件上传大小
         $upload->exts      =     array('xls', 'xlsx');// 设置附件上传类型
@@ -38,10 +38,13 @@ class ExamController extends BaseController {
         $currentSheet = $PHPExcel->getSheet(1);
         //获取总行数
         $allRow=$currentSheet->getHighestRow();
+        if($allRow > 1005){
+            echo "数据过多";die();
+        }
         $allColumn=$currentSheet->getHighestColumn();
 
         //循环获取表中的数据，$currentRow表示当前行，从哪行开始读取数据，索引值从0开始
-        for($currentRow=3;$currentRow<=$allRow;$currentRow++){
+        for($currentRow=3;$currentRow<$allRow;$currentRow++){
             //从哪列开始，A表示第一列
             for($currentColumn='B';$currentColumn<=$allColumn;$currentColumn++){
                 //数据坐标
@@ -51,7 +54,17 @@ class ExamController extends BaseController {
             }
         }
 
-        dump($arr);
+        // echo $allRow;exit;
+        // $arr = (array_slice($arr,3,100) );
+
+        $model = D('exam');
+        $key = $model->importQuestion($arr);
+
+        if($key !== true){
+            echo $key;
+        }
+        $this->success('批量导入成功', 'examList');
+        // echo json_encode($arr);
     }
     public function examList() {
         $m = M('Question');

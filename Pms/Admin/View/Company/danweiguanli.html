@@ -38,48 +38,22 @@
 						<th>注册时间</th>
 						<th>操作</th>
 					</tr>
+					<volist name="list" id="vo" key='key'>
 					<tr>
-						<td>1</td>
-						<td>成都不存在科技有限公司1</td>
-						<td>事业单位</td>
-						<td>服务业</td>
-						<td><a href="#">张三</a></td>
-						<td>36</td>
-						<td>ZJlj8</td>
-						<td>2016-04-23</td>
+						<td>{$key}</td>
+						<td>{$vo.team_name}</td>
+						<td>{$config['nature'][$vo['nature']]['value']}</td>
+						<td>{$config['attribute'][$vo['attribute']]['value']}</td>
+						<td><a href="#">{$userList[$vo['team_user']]['name']}</a></td>
+						<td>{$num[$vo['team_id']]['num']}</td>
+						<td>{$vo.code}</td>
+						<td>{$vo.created}</td>
 						<td>
 							<a href="#" class="pl5 pr5">测试报告</a>
 							<a href="#" class="pl5 pr5">删除</a>
 						</td>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>成都不存在科技有限公司2</td>
-						<td>事业单位</td>
-						<td>服务业</td>
-						<td><a href="#">张三</a></td>
-						<td>36</td>
-						<td>ZJlj8</td>
-						<td>2016-04-23</td>
-						<td>
-							<a href="#" class="pl5 pr5">测试报告</a>
-							<a href="#" class="pl5 pr5">删除</a>
-						</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>成都不存在科技有限公司3</td>
-						<td>事业单位</td>
-						<td>服务业</td>
-						<td><a href="#" data-toggle="modal" data-target="#managerModal">张三</a></td>
-						<td>36</td>
-						<td>ZJlj8</td>
-						<td>2016-04-23</td>
-						<td>
-							<a href="#" class="pl5 pr5" data-toggle="modal" data-target="#reportModal">测试报告</a>
-							<a href="#" class="pl5 pr5" data-toggle="modal" data-target="#cancelModal">删除</a>
-						</td>
-					</tr>
+					</volist>
 				</table>
 			</div>
 		</div>
@@ -178,5 +152,6 @@
 	<!-- script -->
 	<script src="jquery.min.js"></script>
 	<script src="modal.js"></script>
+	<div class="pages">{$page}</div>
 </body>
 </html>

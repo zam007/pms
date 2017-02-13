@@ -17,6 +17,10 @@ class UserModel extends Model {
         return $userInfo;
     }
 
+    public function getList($ids){
+        $user = M("User"); // 实例化User对象
+        return $user->where('user_id in ('.$ids.')')->select();
+    }
     /**
      * 修改用户
      * @param type $userId 用户id

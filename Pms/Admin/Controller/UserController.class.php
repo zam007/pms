@@ -4,7 +4,7 @@ use Think\Controller;
 use Util\Util;
 class UserController extends BaseController {
     public function userList() {
-        $m = M('User');
+        $model = M('User');
         $where = array(
             'flag' => 1,
             );

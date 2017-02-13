@@ -88,4 +88,126 @@ class ExamModel extends Model {
         $queModel->commit();
         return true;
     }
+
+    public function saveInclination($title){
+        $m = M('inclination');
+        $info = [
+            'inclination'=>$title,
+        ];
+        return $m->add($info);
+
+    }
+
+    public function importQuestion($list){
+        $classify = $this->classifyList();
+        $classify = array_column($classify,null,'classify_name');
+        $inclination = $this->inclList();
+        $inclination = array_column($inclination,null,'inclination');
+
+        $questionMode = M('question');
+        $answerModel = M('answer');
+        foreach($list as $key=>$que){
+        $questionMode->startTrans();
+            $question = [
+                'question'=>$que['E'],
+                'level_id'=>1,
+                'difficulty'=>$que['D'],
+                'classify_id'=>$classify[$que['C']]['classify_id'],
+            ];
+            $questionId = $questionMode->add($question);
+            if($questionId === false){
+                $questionMode->rollback();
+                return $key;
+            }
+            $title = $que['N'];
+            // var_dump($inclination[$que['N1']]) ;
+            if(!isset($inclination[$title])){
+                $id = $this->saveInclination($title);
+                if($id !== false){
+                    $inclination[$title] = [
+                        'inclination'=>$title,
+                        'inclination_id'=>$id,
+                    ];
+                }else{
+                    $questionMode->rollback();
+                    return $key;
+                }
+                
+            }
+            $answer[] = [
+                'question_id'=>1,
+                'answer'=>$que['F'],
+                'inclination_id'=>$inclination[$que['N']]['inclination_id'],
+                'score'=>$que['J'],
+            ];
+            $title = $que['O'];
+            // var_dump($inclination[$que['N1']]) ;
+            if(!isset($inclination[$title])){
+                $id = $this->saveInclination($title);
+                if($id !== false){
+                    $inclination[$title] = [
+                        'inclination'=>$title,
+                        'inclination_id'=>$id,
+                    ];
+                }else{ 
+                    $questionMode->rollback();
+                    return $key;
+                }
+                
+            }
+            $answer[] = [
+                'question_id'=>1,
+                'answer'=>$que['G'],
+                'inclination_id'=>$inclination[$que['O']]['inclination_id'],
+                'score'=>$que['K'],
+            ];$title = $que['P'];
+            // var_dump($inclination[$que['N1']]) ;
+            if(!isset($inclination[$title])){
+                $id = $this->saveInclination($title);
+                if($id !== false){
+                    $inclination[$title] = [
+                        'inclination'=>$title,
+                        'inclination_id'=>$id,
+                    ];
+                }else{ 
+                    $questionMode->rollback();
+                    return $key;
+                }
+                
+            }
+            $answer[] = [
+                'question_id'=>1,
+                'answer'=>$que['H'],
+                'inclination_id'=>$inclination[$que['P']]['inclination_id'],
+                'score'=>$que['L'],
+            ];$title = $que['P'];
+            // var_dump($inclination[$que['N1']]) ;
+            if(!isset($inclination[$title])){
+                $id = $this->saveInclination($title);
+                if($id !== false){
+                    $inclination[$title] = [
+                        'inclination'=>$title,
+                        'inclination_id'=>$id,
+                    ];
+                }else{ 
+                    $questionMode->rollback();
+                    return $key;
+                }
+                
+            }
+            $answer[] = [
+                'question_id'=>1,
+                'answer'=>$que['I'],
+                'inclination_id'=>$inclination[$que['Q']]['inclination_id'],
+                'score'=>$que['M'],
+            ];
+            if($answerModel->addAll($answer) === false){ 
+                $questionMode->rollback();
+                return $key;
+            }
+            $questionMode->commit();
+        }
+
+        return true;
+    }
 }

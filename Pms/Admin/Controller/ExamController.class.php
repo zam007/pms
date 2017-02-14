@@ -6,6 +6,10 @@ use Org\Util\PHPExcel;
 class ExamController extends BaseController {
 
     public function readExcel(){
+        $levelId = (int)I('level');
+        if($levelId<=0){
+            $this->error('请选择适用年龄');
+        }
         set_time_limit(0);
         $upload = new \Think\Upload();// 实例化上传类
         $upload->maxSize   =     3145728 ;// 设置附件上传大小
@@ -17,11 +21,7 @@ class ExamController extends BaseController {
         if(!$info) {// 上传错误提示错误信息
 
             $this->error($upload->getError());
-        }else{// 上传成功
-            // print_r($info);exit;
-            // $this->success('上传成功！');
         }
-        // print_r($info);
         
         $path = realpath(__ROOT__);
         $filename = $path."/Public/excel/".$info['file_stu']['savepath'].$info['file_stu']['savename'];
@@ -38,8 +38,9 @@ class ExamController extends BaseController {
         $currentSheet = $PHPExcel->getSheet(1);
         //获取总行数
         $allRow=$currentSheet->getHighestRow();
-        if($allRow > 1005){
-            echo "数据过多";die();
+
+        if($allRow > 1100){
+            $this->error('当前上传数据为'.$allRow.',超过最大上传限制(限制上传1000)');
         }
         $allColumn=$currentSheet->getHighestColumn();
 
@@ -54,17 +55,13 @@ class ExamController extends BaseController {
             }
         }
 
-        // echo $allRow;exit;
-        // $arr = (array_slice($arr,3,100) );
-
         $model = D('exam');
-        $key = $model->importQuestion($arr);
+        $key = $model->importQuestion($arr, $levelId);
 
         if($key !== true){
-            echo $key;
+            $this->error('数据导入失败,请检查第'.$key.'行数据');
         }
         $this->success('批量导入成功', 'examList');
-        // echo json_encode($arr);
     }
     public function examList() {
         $m = M('Question');

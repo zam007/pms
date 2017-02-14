@@ -11,8 +11,16 @@
 	<div class="wrap">
 		<include file="Index:header" />
     <form method="post" action="{:U('Exam/readExcel')}" enctype="multipart/form-data">
-         <h3>批量导入试题：</h3><input  type="file" name="file_stu" />
-           <input type="submit"  value="导入" />
+          
+          <h3>批量导入试题：</h3>
+          <label>适用年龄段：</label>
+          <select class="input-score" name="level">
+              <volist name="level" id="vo">
+              <option value="{$vo.level_id}">{$vo.min_age}-{$vo.max_age}</option>
+              </volist>
+            </select>
+          <input  type="file" name="file_stu" />
+          <input type="submit"  value="导入" />
     </form>
 		<div class="content">
 			<div class="content-main">

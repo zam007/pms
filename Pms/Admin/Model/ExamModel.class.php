@@ -98,7 +98,7 @@ class ExamModel extends Model {
 
     }
 
-    public function importQuestion($list){
+    public function importQuestion($list, $levelId){
         $classify = $this->classifyList();
         $classify = array_column($classify,null,'classify_name');
         $inclination = $this->inclList();
@@ -110,7 +110,7 @@ class ExamModel extends Model {
         $questionMode->startTrans();
             $question = [
                 'question'=>$que['E'],
-                'level_id'=>1,
+                'level_id'=>$levelId,
                 'difficulty'=>$que['D'],
                 'classify_id'=>$classify[$que['C']]['classify_id'],
             ];
@@ -135,7 +135,7 @@ class ExamModel extends Model {
                 
             }
             $answer[] = [
-                'question_id'=>1,
+                'question_id'=>$questionId,
                 'answer'=>$que['F'],
                 'inclination_id'=>$inclination[$que['N']]['inclination_id'],
                 'score'=>$que['J'],
@@ -156,7 +156,7 @@ class ExamModel extends Model {
                 
             }
             $answer[] = [
-                'question_id'=>1,
+                'question_id'=>$questionId,
                 'answer'=>$que['G'],
                 'inclination_id'=>$inclination[$que['O']]['inclination_id'],
                 'score'=>$que['K'],
@@ -176,7 +176,7 @@ class ExamModel extends Model {
                 
             }
             $answer[] = [
-                'question_id'=>1,
+                'question_id'=>$questionId,
                 'answer'=>$que['H'],
                 'inclination_id'=>$inclination[$que['P']]['inclination_id'],
                 'score'=>$que['L'],
@@ -196,7 +196,7 @@ class ExamModel extends Model {
                 
             }
             $answer[] = [
-                'question_id'=>1,
+                'question_id'=>$questionId,
                 'answer'=>$que['I'],
                 'inclination_id'=>$inclination[$que['Q']]['inclination_id'],
                 'score'=>$que['M'],
@@ -206,6 +206,7 @@ class ExamModel extends Model {
                 return $key;
             }
             $questionMode->commit();
+            unset($answer);
         }
 
         return true;

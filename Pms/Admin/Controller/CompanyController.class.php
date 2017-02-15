@@ -14,8 +14,10 @@ class CompanyController extends BaseController {
         $team = array_column($list,'team_user');
         $userIds = join(',',$team);
         $userModel = D('user');
-        $userList = $userModel->getList($userIds);
-        $userList = array_column($userList,null,'user_id');
+        if(!$userIds){
+            $userList = $userModel->getList($userIds);
+            $userList = array_column($userList,null,'user_id');
+        }
         $sql = "select team_id,(select count(*) from team_user where team_user.team_id = team.team_id) num from team";
         $num = $m->query($sql);
         $num = array_column($num,null,'team_id');

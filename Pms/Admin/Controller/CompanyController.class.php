@@ -13,7 +13,7 @@ class CompanyController extends BaseController {
         $list = $m->field(true)->where($where)->limit($p->firstRow, $p->listRows)->select();
         $team = array_column($list,'team_user');
         $userModel = D('user');
-        if(empty($team)){
+        if(!empty($team)){
             $userIds = join(',',$team);
             $userList = $userModel->getList($userIds);
             $userList = array_column($userList,null,'user_id');

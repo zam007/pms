@@ -13,7 +13,7 @@ class UserController extends BaseController {
         $list = $model->field(true)->where($where)->limit($p->firstRow, $p->listRows)->select();
         $this->assign('list', $list); // 赋值数据集
         $this->assign('page', $p->show()); // 赋值分页输出
-        $this->display();
+        $this->display('user');
         die();
     }
 }

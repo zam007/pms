@@ -2,33 +2,24 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>单位管理</title>
+	<title>用户管理</title>
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/danweiguanli.css">
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css">
 </head>
 <body>
-	<header class="header">
-		<div class="main">
-		</div>
-	</header>
+	<div class="wrap">
+	<include file="Index:header" />
 	<section class="content">
 		<div class="main">
 			<div class="search-options">
-				<div class="title">单位管理</div>
-				<div class="options">
-					<input class="date" type="date">
-					<select class="list">
-						<option value="">选择团体</option>
-					</select>
-					<input class="search" type="text" placeholder="输入查询信息">
-				</div>
+				<div class="title">用户管理</div>
 			</div>
 			<div class="search-list">
 				<table width="100%" cellpadding="0" cellspacing="0">
 					<tr>
 						<th>序号</th>
-						<th>团体名称</th>
+						<th>姓名</th>
 						<th>团体属性</th>
 						<th>所属行业</th>
 						<th>管理员</th>
@@ -40,7 +31,7 @@
 					<volist name="list" id="vo" key='key'>
 					<tr>
 						<td>{$key}</td>
-						<td>{$vo.team_name}</td>
+						<td>{$vo.name}</td>
 						<td>{$config['nature'][$vo['nature']]['value']}</td>
 						<td>{$config['attribute'][$vo['attribute']]['value']}</td>
 						<td><a href="#">{$userList[$vo['team_user']]['name']}</a></td>
@@ -147,7 +138,7 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
+	</div>
 	<!-- script -->
 	<script src="jquery.min.js"></script>
 	<script src="modal.js"></script>

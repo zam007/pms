@@ -12,9 +12,9 @@ class CompanyController extends BaseController {
         $p = getpage($count);
         $list = $m->field(true)->where($where)->limit($p->firstRow, $p->listRows)->select();
         $team = array_column($list,'team_user');
-        $userIds = join(',',$team);echo 1.$userIds;print_r($list);exit;
         $userModel = D('user');
-        if(empty($userIds)){
+        if(empty($team)){
+            $userIds = join(',',$team);
             $userList = $userModel->getList($userIds);
             $userList = array_column($userList,null,'user_id');
         }

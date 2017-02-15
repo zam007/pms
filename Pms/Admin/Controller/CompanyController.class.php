@@ -12,7 +12,7 @@ class CompanyController extends BaseController {
         $p = getpage($count);
         $list = $m->field(true)->where($where)->limit($p->firstRow, $p->listRows)->select();
         $team = array_column($list,'team_user');
-        $userIds = join(',',$team);
+        $userIds = join(',',$team);var_dump($userIds);exit;
         $userModel = D('user');
         if(!$userIds){
             $userList = $userModel->getList($userIds);

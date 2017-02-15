@@ -11,8 +11,8 @@ class CompanyController extends BaseController {
         $count = $m->where($where)->count();
         $p = getpage($count);
         $list = $m->field(true)->where($where)->limit($p->firstRow, $p->listRows)->select();
-        $team = array_column($list,'team_user');print_r($list);exit;
-        $userIds = join(',',$team);
+        $team = array_column($list,'team_user');
+        $userIds = join(',',$team);echo 1.$userIds;print_r($list);exit;
         $userModel = D('user');
         if(empty($userIds)){
             $userList = $userModel->getList($userIds);

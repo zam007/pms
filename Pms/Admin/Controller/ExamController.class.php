@@ -102,14 +102,56 @@ class ExamController extends BaseController {
         $level = $model->lvList();
         $incl = $model->inclList();
         $classify = $model->getClassily();
+        $en = ['A','B','C','D'];
         $this->assign('classify', $classify);
+        $this->assign('en', $en);
         $this->assign('incl', $incl);
         $this->assign('level', $level);
         $this->display('tianjiashiti');
     }
 
+    public function updateExam(){
+        $model = D("exam");
+        //年龄段
+        $level = $model->lvList();
+        $incl = $model->inclList();
+        $classify = $model->getClassily();
+        $en = ['A','B','C','D'];
+        $this->assign('classify', $classify);
+        $this->assign('en', $en);
+        $this->assign('incl', $incl);
+        $this->assign('level', $level);
+        $this->display('tianjiashiti');
+    }
+
+    public function del(){
+        $model = D("exam");
+        $id = (int)I('id');
+        if($id <= 0 ){
+            $this->error('试题不存在');
+        }
+        if($model->delQuestion($id) === false){
+           $this->error('删除试题错误'); 
+        }
+        $this->success('删除成功', 'examList');
+    }
+
     public function addQuestion(){
         $data = $_POST;
+        if($data['question']['type'] != 0){
+            $path = date("Y-m-d",time());
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize   =     3145728 ;// 设置附件上传大小
+            $upload->exts      =     array('jpg','mp3','mp4');// 设置附件上传类型
+            $upload->rootPath  =     './Public/upload/'; // 设置附件上传根目录
+            $upload->savePath  =     ''; // 设置附件上传（子）目录
+            // 上传文件 
+            $info   =   $upload->upload();
+            if(!$info) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+            }
+            $data['url'] = "/Public/upload/".$info['url']['savepath'].$info['url']['savename'];
+        }
         $model = D("exam");
         if($model->saveQuestion($data)){
              $this->success('新增成功', 'examList');
@@ -118,7 +160,4 @@ class ExamController extends BaseController {
         }
     }
 
-    public function addQuestionList(){
-
-    }
 }

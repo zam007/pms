@@ -54,6 +54,13 @@ return array(
             2 => array( 'key' => 2, 'value' =>'IT' ),
             3 => array( 'key' => 3, 'value' =>'建筑' ),
         ),
+        //试题分类
+        'questionType' => array(
+            0 => array( 'key' => 0, 'value' =>'文字' ),
+            1 => array( 'key' => 1, 'value' =>'图片' ),
+            2 => array( 'key' => 2, 'value' =>'语音' ),
+            3 => array( 'key' => 3, 'value' =>'视频' ),
+        ),
     ),
     
 );

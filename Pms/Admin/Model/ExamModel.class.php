@@ -57,16 +57,25 @@ class ExamModel extends Model {
         return array_column($classify,null,'classify_id');
     }
 
+    public function delQuestion($id){
+        $queModel = M('question');
+        $update['flag'] = 0;
+        $update["update_time"] = date("Y-m-d H:i:s", time());
+        return $queModel->where('question_id='.$id)->save($update);
+    }
+
     public function saveQuestion($data){
         $ansModel = M('answer');
         $queModel = M('question');
         $queModel->startTrans();
         $question = $data['question'];
         $info = [
-            'question_id'=>$question['question'],
+            'question'=>$question['question'],
             'level_id'=>$question['level'],
             'difficulty'=>$question['dif'],
             'classify_id'=>$question['classify'],
+            'type'=>$question['type'],
+            'file'=>$data['url'],
         ];
         $questionId = $queModel->add($info);
         if(!$questionId){
@@ -114,6 +123,10 @@ class ExamModel extends Model {
                 'difficulty'=>$que['D'],
                 'classify_id'=>$classify[$que['C']]['classify_id'],
             ];
+            if(empty($question['classify_id'])){
+                $questionMode->rollback();
+                return $key;
+            }
             $questionId = $questionMode->add($question);
             if($questionId === false){
                 $questionMode->rollback();
@@ -160,7 +173,8 @@ class ExamModel extends Model {
                 'answer'=>$que['G'],
                 'inclination_id'=>$inclination[$que['O']]['inclination_id'],
                 'score'=>$que['K'],
-            ];$title = $que['P'];
+            ];
+            $title = $que['P'];
             // var_dump($inclination[$que['N1']]) ;
             if(!isset($inclination[$title])){
                 $id = $this->saveInclination($title);
@@ -180,7 +194,8 @@ class ExamModel extends Model {
                 'answer'=>$que['H'],
                 'inclination_id'=>$inclination[$que['P']]['inclination_id'],
                 'score'=>$que['L'],
-            ];$title = $que['P'];
+            ];
+            $title = $que['P'];
             // var_dump($inclination[$que['N1']]) ;
             if(!isset($inclination[$title])){
                 $id = $this->saveInclination($title);

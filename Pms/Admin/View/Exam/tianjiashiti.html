@@ -11,22 +11,23 @@
 <body>
 <include file="Index:header" />
 	<div class="wrap">
-		<form method="post" action="{:U('Exam/addQuestion')}">
+		<form method="post" action="{:U('Exam/addQuestion')}" enctype="multipart/form-data">
 		<div class="content">
 			<div class="content-main">
         <div class="add-topics deep-grey">
           <p class="fz20 pt30 pb30">添加试题</p>
           <p><span class="pl20 fz16 grey-deep">题目内容：</span><input type="text" name="question[question]" value="" placeholder="请输题目内容" class="input-item"></p>
           <ul>
+          <volist name="en" id="e" key="k">
 			<li>
-				<span class="pl67 fz16">A：</span>
-				<input type="text" name="answer[0][ans]" value="" placeholder="请输选项内容" class="input-item">
-				<select class="input-score" name="answer[0][inc]">
+				<span class="pl67 fz16">{$e}：</span>
+				<input type="text" name="answer[{$k}][ans]" value="" placeholder="请输选项内容" class="input-item">
+				<select class="input-score" name="answer[{$k}][inc]">
 					<volist name="incl" id="vo">
 						<option value="{$vo.inclination_id}">{$vo.inclination}</option>
 					</volist>
 				</select>
-				<select class="input-score" name="answer[0][score]">
+				<select class="input-score" name="answer[{$k}][score]">
 					<option value="1">1分</option>
 					<option value="2">2分</option>
 					<option value="3">3分</option>
@@ -34,88 +35,50 @@
 					<option value="5">5分</option>
 				</select>
 			</li>
-			<li>
-				<span class="pl67 fz16">B：</span>
-				<input type="text" name="answer[1][ans]" value="" placeholder="请输选项内容" class="input-item">
-				<select class="input-score" name="answer[1][inc]">
-					<volist name="incl" id="vo">
-						<option value="{$vo.inclination_id}">{$vo.inclination}</option>
-					</volist>
-				</select>
-				<select class="input-score" name="answer[1][score]">
-					<option value="1">1分</option>
-					<option value="2">2分</option>
-					<option value="3">3分</option>
-					<option value="4">4分</option>
-					<option value="5">5分</option>
-				</select>
-			</li>
-			<li>
-				<span class="pl67 fz16">C：</span>
-				<input type="text" name="answer[2][ans]" value="" placeholder="请输选项内容" class="input-item">
-				<select class="input-score" name="answer[2][inc]">
-					<volist name="incl" id="vo">
-						<option value="{$vo.inclination_id}">{$vo.inclination}</option>
-					</volist>
-				</select>
-				<select class="input-score" name="answer[2][score]">
-					<option value="1">1分</option>
-					<option value="2">2分</option>
-					<option value="3">3分</option>
-					<option value="4">4分</option>
-					<option value="5">5分</option>
-				</select>
-			</li>
-			<li>
-				<span class="pl67 fz16">D：</span>
-				<input type="text" name="answer[3][ans]" value="" placeholder="请输选项内容" class="input-item">
-				<select class="input-score" name="answer[3][inc]">
-					<volist name="incl" id="vo">
-						<option value="{$vo.inclination_id}">{$vo.inclination}</option>
-					</volist>
-				</select>
-				<select class="input-score" name="answer[3][score]">
-					<option value="1">1分</option>
-					<option value="2">2分</option>
-					<option value="3">3分</option>
-					<option value="4">4分</option>
-					<option value="5">5分</option>
-				</select>
-			</li>
+			</volist>
+			
           </ul>
-					<p class="set-age"><span class="pl20 fz16 grey-deep">适用年龄：</span>
-					<select class="input-score" name="question[level]">
-							<volist name="level" id="vo">
-							<option value="{$vo.level_id}">{$vo.min_age}-{$vo.max_age}</option>
-							</volist>
-						</select>
-					</p>
-					<p class="difficulty"><span class="pl20 fz16 grey-deep">难度系数：</span>
-						<select class="input-score" name="question[dif]">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-						</select>
-					</p>
-					<div class="classification">
-						<span class="pl20 fz16 grey-deep">所属分类：</span>
-						<ul>
-							<volist name="classify" id="vo">
-							<li>
-								<span class="title">{$vo.classify_name}</span>
-								<volist name="vo.cla" id="val">
-									<span class="item rad">
-										<input class="inp" type="radio" value="{$val.classify_id}" name="question[classify]" styel="display:none">
-										{$val.classify_name}
-									</span>
-								</volist>
-							</li>
-							</volist>
-							
-						</ul>
-					</div>
+          	<p class="set-age"><span class="pl20 fz16 grey-deep">类型：</span>
+				<select class="input-score" name="question[type]">
+					<volist name="config.questionType" id="vo">
+						<option value="{$vo.key}">{$vo.value}</option>
+					</volist>
+				</select>
+				<input  type="file" name="url" />
+			</p>
+			<p class="set-age"><span class="pl20 fz16 grey-deep">适用年龄：</span>
+				<select class="input-score" name="question[level]">
+					<volist name="level" id="vo">
+					<option value="{$vo.level_id}">{$vo.min_age}-{$vo.max_age}</option>
+					</volist>
+				</select>
+			</p>
+			<p class="difficulty"><span class="pl20 fz16 grey-deep">难度系数：</span>
+				<select class="input-score" name="question[dif]">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
+			</p>
+			<div class="classification">
+				<span class="pl20 fz16 grey-deep">所属分类：</span>
+				<ul>
+					<volist name="classify" id="vo">
+					<li>
+						<span class="title">{$vo.classify_name}</span>
+						<volist name="vo.cla" id="val">
+							<span class="item rad">
+								<input class="inp" type="radio" value="{$val.classify_id}" name="question[classify]" styel="display:none">
+								{$val.classify_name}
+							</span>
+						</volist>
+					</li>
+					</volist>
+					
+				</ul>
+			</div>
         </div>
 				<input type="submit" name="name" value="完成">
 			</div>

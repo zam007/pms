@@ -50,7 +50,7 @@
               <input type="submit" value="查询">
             </li>
             </from>
-            <li><a data-type="button" href="addExam.html">添加试题</a></li>
+            <li><a data-type="button" href="{:U('Exam/addExam')}">添加试题</a></li>
           </ul>
 			</div>
       <table cellspacing="0" cellpadding="0">
@@ -73,15 +73,19 @@
           <td>{$vo.difficulty}</td>
           <td>城市/农村</td>
           <td>
-            <span>{$vo.question}</span>
+            <span>{$vo.question}</span><br/>
             <!-- <p>选择图片：<input type="file" name="file-img" value=""></p>
             <p>选择视频：<input type="file" name="file-video" value=""></p>
             <p>选择音频：<input type="file" name="file-audio" value="选择音频"></p> -->
             <if condition="$vo.type == 1">
-              <img src="{$vo.url}">
+              <img src="{$vo.file}" width="50">
             </if>
-            <if condition="$vo.type == 2 or $vo.type == 3">
-               
+            <if condition="$vo.type == 3">
+              <video src="{$vo.file}" controls="controls">
+              </video>
+            </if>
+            <if condition="$vo.type == 2">
+              <audio src="{$vo.file}" preload="auto" controls></audio>
             </if>
           </td>
           <td>

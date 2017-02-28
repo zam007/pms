@@ -133,7 +133,7 @@ class ExamController extends BaseController {
         if($model->delQuestion($id) === false){
            $this->error('删除试题错误'); 
         }
-        $this->success('删除成功', 'examList');
+        $this->success('删除成功', '/Admin/Exam/examList');
     }
 
     public function addQuestion(){
@@ -144,7 +144,7 @@ class ExamController extends BaseController {
             $upload->maxSize   =     3145728 ;// 设置附件上传大小
             $upload->exts      =     array('jpg','mp3','mp4');// 设置附件上传类型
             $upload->rootPath  =     './Public/upload/'; // 设置附件上传根目录
-            $upload->savePath  =     ''; // 设置附件上传（子）目录
+            $upload->savePath  =     $path; // 设置附件上传（子）目录
             // 上传文件 
             $info   =   $upload->upload();
             if(!$info) {// 上传错误提示错误信息

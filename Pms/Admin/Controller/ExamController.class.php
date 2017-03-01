@@ -112,16 +112,22 @@ class ExamController extends BaseController {
 
     public function updateExam(){
         $model = D("exam");
+        $id = (int)I('id');
         //年龄段
         $level = $model->lvList();
         $incl = $model->inclList();
         $classify = $model->getClassily();
+        $data = $model->getQuestion($id);
+        if (!$data) {
+            $this->error('试题不存在');
+        }
         $en = ['A','B','C','D'];
         $this->assign('classify', $classify);
         $this->assign('en', $en);
         $this->assign('incl', $incl);
         $this->assign('level', $level);
-        $this->display('tianjiashiti');
+        $this->assign('data', $data);
+        $this->display('update');
     }
 
     public function del(){
@@ -138,6 +144,10 @@ class ExamController extends BaseController {
 
     public function addQuestion(){
         $data = $_POST;
+        $id = I('id');
+        $model = D("exam");
+        // print_r($data);
+        $data['url'] == '';
         if($data['question']['type'] != 0){
             $path = date("Y-m-d",time());
             $upload = new \Think\Upload();// 实例化上传类
@@ -145,18 +155,40 @@ class ExamController extends BaseController {
             $upload->exts      =     array('jpg','mp3','mp4');// 设置附件上传类型
             $upload->rootPath  =     './Public/upload/'; // 设置附件上传根目录
             $upload->savePath  =     $path; // 设置附件上传（子）目录
+            
+            $question = false;
+            $flag = 0;
+            if($id>0){
+                $question = $model->getQuestion($id);
+            }
+            if($question){
+                if($question['type'] != 0){
+                    $flag = 1;
+                }
+            }
             // 上传文件 
             $info   =   $upload->upload();
-            if(!$info) {// 上传错误提示错误信息
+            if(!$info and $flag == 0) {// 上传错误提示错误信息
                 $this->error($upload->getError());
             }
-            $data['url'] = "/Public/upload/".$info['url']['savepath'].$info['url']['savename'];
+            if($info){
+                $data['url'] = "/Public/upload/".$info['url']['savepath'].$info['url']['savename'];
+            }else{
+                $data['url'] = $question['file'];
+            }
         }
-        $model = D("exam");
-        if($model->saveQuestion($data)){
-             $this->success('新增成功', 'examList');
+        if($id>0){
+            if($model->saveQuestion($id,$data)){
+                 $this->success('修改成功', 'examList');
+            }else{
+                $this->error('修改失败');
+            }
         }else{
-            $this->success('添加失败', 'addExam');
+            if($model->addQuestion($data)){
+                 $this->success('添加成功', 'examList');
+            }else{
+                $this->error('添加失败');
+            }
         }
     }
 

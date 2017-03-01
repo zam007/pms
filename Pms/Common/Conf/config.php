@@ -61,6 +61,29 @@ return array(
             2 => array( 'key' => 2, 'value' =>'语音' ),
             3 => array( 'key' => 3, 'value' =>'视频' ),
         ),
+        //打分
+        'score' => array(
+            1 => array( 'key' => 1, 'value' =>'1分' ),
+            2 => array( 'key' => 2, 'value' =>'2分' ),
+            3 => array( 'key' => 3, 'value' =>'3分' ),
+            4 => array( 'key' => 4, 'value' =>'4分' ),
+            5 => array( 'key' => 5, 'value' =>'5分' ),
+        ),
+        //难度
+        'difficult' => array(
+            1 => 1,
+            2 => 2,
+            3 => 3,
+            4 => 4,
+            5 => 5,
+        ),
+        //选项
+        'selected' => array(
+            1 => 'A',
+            2 => 'B',
+            3 => 'C',
+            4 => 'D',
+        ),
     ),
     
 );

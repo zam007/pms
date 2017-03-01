@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>五行财商研究中心</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/tianjiashiti.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<include file="Index:header" />
+	<div class="wrap">
+		<form method="post" action="{:U('Exam/addQuestion')}" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$data.question_id}">
+		<div class="content">
+			<div class="content-main">
+        <div class="add-topics deep-grey">
+          <p class="fz20 pt30 pb30">修改试题</p>
+          <p><span class="pl20 fz16 grey-deep">题目内容：</span><input type="text" name="question[question]" value="{$data.question}" placeholder="请输题目内容" class="input-item"></p>
+          <ul>
+          <volist name="data[answer]" id="ans" key="k">
+			<li>
+				<span class="pl67 fz16">{$en.$key}：</span>
+				<input type="hidden" name="answer[{$k}][id]" value="{$ans.answer_id}">
+				<input type="text" name="answer[{$k}][ans]" value="{$ans.answer}" class="input-item">
+				<select class="input-score" name="answer[{$k}][inc]">
+					<volist name="incl" id="vo">
+						<if condition="$vo['inclination_id'] eq $ans['inclination_id']">
+							<option value="{$vo.inclination_id}" selected>{$vo.inclination}</option>
+						<else/>
+							<option value="{$vo.inclination_id}">{$vo.inclination}</option>
+						</if>
+					</volist>
+				</select>
+				<select class="input-score" name="answer[{$k}][score]">
+					<volist name="config['score']" id="vo">
+						<if condition="$vo['key'] == $ans['score']">
+							<option value="{$vo.key}" selected>{$vo.value}</option>
+						<else/>
+							<option value="{$vo.key}">{$vo.value}</option>
+						</if>
+					</volist>
+				</select>
+			</li>
+			</volist>
+          </ul>
+          	<p class="set-age"><span class="pl20 fz16 grey-deep">类型：</span>
+				<select class="input-score" name="question[type]">
+					<volist name="config.questionType" id="vo">
+						<if condition="$key == $data['type']">
+							<option value="{$vo.key}" selected>{$vo.value}</option>
+						<else/>
+							<option value="{$vo.key}">{$vo.value}</option>
+						</if>
+					</volist>
+				</select>
+				<if condition="$data.type == 1">
+					<img src="{$data.file}" width="200px" height="200px">
+				<elseif condition="$data.type == 2"/>
+					<img src="$data.url">
+				<elseif condition="$data.type == 3"/>
+					<img src="$data.url">
+				</if>
+				<input type="file" name="url" />
+			</p>
+			<p class="set-age"><span class="pl20 fz16 grey-deep">适用年龄：</span>
+				<select class="input-score" name="question[level]">
+					<volist name="level" id="vo">
+						<if condition="$vo['level_id'] == $data['level_id']">
+							<option value="{$vo.level_id}" selected>{$vo.min_age}-{$vo.max_age}</option>
+						<else/>
+							<option value="{$vo.level_id}">{$vo.min_age}-{$vo.max_age}</option>
+						</if>
+					</volist>
+				</select>
+			</p>
+			<p class="difficulty"><span class="pl20 fz16 grey-deep">难度系数：</span>
+				<select class="input-score" name="question[dif]">
+					<volist name="config['difficult']" id="vo">
+						<if condition="$vo == $data['difficulty']">
+							<option value="{$vo}" selected>{$vo}</option>
+						<else/>
+							<option value="{$vo}">{$vo}</option>
+						</if>
+					</volist>
+				</select>
+			</p>
+			<div class="classification">
+				<span class="pl20 fz16 grey-deep">所属分类：</span>
+				<ul>
+					<volist name="classify" id="vo">
+					<li>
+						<span class="title">{$vo.classify_name}</span>
+						<volist name="vo.cla" id="val">
+							<span class="item rad">
+								<if condition="$val['classify_id'] == $data['classify_id']">
+									<input class="inp" checked type="radio" value="{$val.classify_id}" name="question[classify]" styel="background-color:#ff0">
+								<else/>
+									<input class="inp" type="radio" value="{$val.classify_id}" name="question[classify]" styel="display:none">
+								</if>
+								{$val.classify_name}
+							</span>
+						</volist>
+					</li>
+					</volist>
+					
+				</ul>
+			</div>
+        </div>
+				<input type="submit" name="name" value="完成">
+			</div>
+		</div>
+		</form>
+	</div>
+</body>
+</html>
+<script>
+	$(".rad").on("click",function(){
+		// alert($(this).children("input").val());
+		$(this).children("input").attr("checked",true); 
+		// $(this).find('.inpu').attr('checked',true);
+		$('.rad').attr("style", "background-color:#fff");
+		$(this).attr("style", "background-color:#ff0");
+	})
+</script>

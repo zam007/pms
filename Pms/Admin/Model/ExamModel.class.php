@@ -64,7 +64,7 @@ class ExamModel extends Model {
         return $queModel->where('question_id='.$id)->save($update);
     }
 
-    public function saveQuestion($data){
+    public function addQuestion($data){
         $ansModel = M('answer');
         $queModel = M('question');
         $queModel->startTrans();
@@ -97,6 +97,41 @@ class ExamModel extends Model {
         $queModel->commit();
         return true;
     }
+    public function saveQuestion($id, $data){
+        $ansModel = M('answer');
+        $queModel = M('question');
+        $queModel->startTrans();
+        $question = $data['question'];
+        $time = date("Y-m-d H:i:s",time());
+        $info = [
+            'question'=>$question['question'],
+            'level_id'=>$question['level'],
+            'difficulty'=>$question['dif'],
+            'classify_id'=>$question['classify'],
+            'type'=>$question['type'],
+            'file'=>$data['url'],
+            'update_time'=>$time,
+        ];
+        if($queModel->where('question_id='.$id)->save($info) === false){
+            $queModel->rollback();
+            return false;
+        }
+        foreach($data['answer'] as $ans){
+            $answer = [
+                'answer'=>$ans['ans'],
+                'inclination_id'=>$ans['inc'],
+                'score'=>$ans['score'],
+                'updated'=>$time,
+            ];
+            if(!$ansModel->where(array('answer_id' => $ans['id']))->save($answer)){
+                $queModel->rollback();
+                return false;
+            }
+            unset($answer);
+        }
+        $queModel->commit();
+        return true;
+    }
 
     public function saveInclination($title){
         $m = M('inclination');
@@ -105,6 +140,15 @@ class ExamModel extends Model {
         ];
         return $m->add($info);
 
+    }
+
+    public function getQuestion($id){
+        $Model = M("Question");
+        $cond['question_id'] = $id;
+        $data = $Model->where($cond)->find();
+        $ansModel = M("Answer");
+        $data['answer'] = $ansModel->where($cond)->select();
+        return $data;
     }
 
     public function importQuestion($list, $levelId){

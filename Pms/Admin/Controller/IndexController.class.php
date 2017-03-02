@@ -12,7 +12,7 @@ class IndexController extends Controller {
         $code = I("code");
         header("Content-type:text/html;charset=utf-8");
         if(empty($code) ){
-            echo "验证码不能为空";exit;
+            echo "验证码不能为空.";exit;
         }
         
         if(!check_verify($code)){

@@ -147,14 +147,13 @@ class ExamController extends BaseController {
         $id = I('id');
         $model = D("exam");
         // print_r($data);
-        $data['url'] == '';
+        $data['url'] = '';
         if($data['question']['type'] != 0){
-            $path = date("Y-m-d",time());
             $upload = new \Think\Upload();// 实例化上传类
             $upload->maxSize   =     3145728 ;// 设置附件上传大小
             $upload->exts      =     array('jpg','mp3','mp4');// 设置附件上传类型
             $upload->rootPath  =     './Public/upload/'; // 设置附件上传根目录
-            $upload->savePath  =     $path; // 设置附件上传（子）目录
+            $upload->savePath  =     ''; // 设置附件上传（子）目录
             
             $question = false;
             $flag = 0;

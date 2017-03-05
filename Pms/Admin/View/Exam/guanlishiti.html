@@ -74,19 +74,6 @@
           <td>城市/农村</td>
           <td>
             <span>{$vo.question}</span><br/>
-            <!-- <p>选择图片：<input type="file" name="file-img" value=""></p>
-            <p>选择视频：<input type="file" name="file-video" value=""></p>
-            <p>选择音频：<input type="file" name="file-audio" value="选择音频"></p> -->
-            <if condition="$vo.type == 1">
-              <img src="{$vo.file}" width="50">
-            </if>
-            <if condition="$vo.type == 3">
-              <video src="{$vo.file}" controls="controls">
-              </video>
-            </if>
-            <if condition="$vo.type == 2">
-              <audio src="{$vo.file}" preload="auto" controls></audio>
-            </if>
           </td>
           <td>
             <ul>

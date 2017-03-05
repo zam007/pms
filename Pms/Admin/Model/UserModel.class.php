@@ -44,4 +44,10 @@ class UserModel extends Model {
         return $show;
     }
 
+    public function getWork(){
+        $work = M('work');
+        $cond['flag'] = 1;
+        return $work->where($cond)->select();
+    }
+
 }

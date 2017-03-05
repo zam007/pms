@@ -20,11 +20,15 @@
 					<tr>
 						<th>序号</th>
 						<th>姓名</th>
-						<th>团体属性</th>
-						<th>所属行业</th>
-						<th>管理员</th>
-						<th>成员人数</th>
-						<th>邀请码</th>
+						<th>手机号</th>
+						<th>邮箱</th>
+						<th>微信</th>
+						<th>QQ</th>
+						<th>性别</th>
+						<th>生日</th>
+						<th>职业</th>
+						<th>所属团队</th>
+						<th>来源地</th>
 						<th>注册时间</th>
 						<th>操作</th>
 					</tr>
@@ -32,15 +36,24 @@
 					<tr>
 						<td>{$key}</td>
 						<td>{$vo.name}</td>
-						<td>{$config['nature'][$vo['nature']]['value']}</td>
-						<td>{$config['attribute'][$vo['attribute']]['value']}</td>
-						<td><a href="#">{$userList[$vo['team_user']]['name']}</a></td>
-						<td>{$num[$vo['team_id']]['num']}</td>
-						<td>{$vo.code}</td>
-						<td>{$vo.created}</td>
+						<td>{$vo.mobile}</td>
+						<td>{$vo.email}</td>
+						<td>{$vo.weixing}</td>
+						<td>{$vo.qq}</td>
+						<td>{$config['sex'][$vo['sex']]['value']}</td>
+						<td>{$vo.birth}</td>
+						<td>{$work[$vo['work_id']]['name']}</td>
+						<td>{$vo.team}</td>
+						<td>{$config['from'][$vo['from_add']]['value']}</td>
+						<td>{$vo.reg_time}</td>
 						<td>
-							<a href="#" class="pl5 pr5">测试报告</a>
-							<a href="#" class="pl5 pr5">删除</a>
+							<!-- <a href="#" class="pl5 pr5">测试报告</a> -->
+							<if condition="$vo['status'] == 9">
+							<a href="{:U('User/recovery',array('id'=>$vo['user_id']))}" class="pl5 pr5">解禁</a>
+							<else/>
+							<a href="{:U('User/disable',array('id'=>$vo['user_id']))}" class="pl5 pr5">禁用</a>
+							</if>
+
 						</td>
 					</tr>
 					</volist>

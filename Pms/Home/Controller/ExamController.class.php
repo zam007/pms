@@ -130,10 +130,7 @@ class ExamController extends BaseController {
         );
         //已答题中同类型难度的题目
         if(!empty($questionHave)){
-//          $questionIds = array_column($questionHave, 'question_id');
-            foreach($questionHave as $res){
-                $questionIds[] = $res['question_id'];
-            }
+            $questionIds = array_column($questionHave, 'question_id');
             $where['question_id'] = array('not in',join(',',$sheet['quesitons']));
 //          $question = $questionMode->getQuestion($where);
         }
